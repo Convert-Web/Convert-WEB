@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080706">
+<title>ConvertWeb — Sites Web pour Restaurants qui Font Sonner le Téléphone</title>
+<meta name="description" content="ConvertWeb crée des sites web premium pour restaurants, kebabs et fast-foods. Mobile-first, SEO local, optimisés conversion. À partir de 49€/mois. Livraison en 72h.">
+<link rel="canonical" href="https://www.convertweb.fr/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#c9a050;--g2:#e2b96a;--g3:#f5e090;--g4:#a07830;
+  --bg:#080706;--bg2:#100e0c;--bg3:#181410;--bg4:#201a14;
+  --txt:#f8f3ec;--muted:rgba(248,243,236,.56);--dim:rgba(248,243,236,.28);
+  --b:rgba(201,160,80,.14);--b2:rgba(201,160,80,.36);--b3:rgba(201,160,80,.6);
+  --grn:#22c55e;--red:#e05a3a;
+  --serif:'Syne',system-ui,sans-serif;
+  --serif2:'Instrument Serif',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --r:12px;--tap:52px;--ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--sans);border:none;background:none;cursor:pointer}
+img{display:block;max-width:100%}
+body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:9999;opacity:.2;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E")}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:calc(.75rem + env(safe-area-inset-top)) 1.2rem .75rem;transition:background .3s}
+.nav.stuck{background:rgba(8,7,6,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--b)}
+.nav-logo{display:flex;align-items:center;gap:.6rem}
+.nav-logo-svg{width:30px;height:30px}
+.logo-name{font-family:var(--serif);font-size:.95rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.logo-name em{font-style:normal;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:none;list-style:none;gap:2rem}
+.nav-links a{font-size:.67rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--g1)}
+.nav-cta{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,var(--g1),var(--g2));color:#080706;font-weight:800;font-size:.7rem;letter-spacing:.8px;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:50px;min-height:38px;box-shadow:0 0 18px rgba(201,160,80,.2);transition:box-shadow .3s,transform .15s}
+.nav-cta:hover{box-shadow:0 0 32px rgba(201,160,80,.4);transform:translateY(-1px)}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(5.5rem + env(safe-area-inset-top)) 1.2rem 4rem;text-align:center;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,160,80,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,160,80,.05) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 85% 75% at 50% 50%,black 25%,transparent 100%)}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,160,80,.1),transparent 65%);pointer-events:none}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,160,80,.07);pointer-events:none;top:50%;left:50%}
+.r1{width:360px;height:360px;transform:translate(-50%,-50%)}
+.r2{width:600px;height:600px;transform:translate(-50%,-50%)}
+.r3{width:840px;height:840px;transform:translate(-50%,-50%)}
+.hero-body{position:relative;z-index:2;max-width:680px;width:100%}
+.hero-pill{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--b2);border-radius:50px;padding:.28rem .88rem;font-size:.62rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.5rem;background:rgba(8,7,6,.6);backdrop-filter:blur(10px)}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--grn);box-shadow:0 0 6px var(--grn);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3;transform:scale(1.4)}}
+.hero-h1{font-family:var(--serif);font-size:clamp(2.5rem,10vw,5.5rem);font-weight:800;letter-spacing:-1px;line-height:.92;margin-bottom:1.1rem;text-transform:uppercase}
+.h1-l1,.h1-l2{display:block;color:var(--txt)}
+.h1-l3{display:block;background:linear-gradient(135deg,var(--g1) 20%,var(--g3) 60%,var(--g1) 100%);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s 1s linear infinite}
+@keyframes shimmer{0%{background-position:0}100%{background-position:200%}}
+.hero-sub{font-family:var(--serif2);font-style:italic;font-size:clamp(.95rem,3.8vw,1.2rem);color:var(--muted);margin-bottom:1.8rem;line-height:1.7}
+.hero-stats{display:flex;border:1px solid var(--b);border-radius:var(--r);overflow:hidden;margin-bottom:2rem}
+.hstat{flex:1;padding:.85rem .5rem;text-align:center;border-right:1px solid var(--b)}
+.hstat:last-child{border-right:none}
+.hstat-num{font-family:var(--serif);font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1;margin-bottom:.12rem}
+.hstat-lab{font-size:.57rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.hero-btns{display:flex;flex-direction:column;gap:.65rem;max-width:400px;margin:0 auto 1rem}
+.btn-gold{display:flex;align-items:center;justify-content:center;gap:.55rem;background:linear-gradient(135deg,var(--g1),var(--g2),var(--g1));background-size:200% 100%;color:#080706;font-weight:800;font-size:.9rem;padding:1.1rem;border-radius:var(--r);width:100%;min-height:var(--tap);box-shadow:0 0 35px rgba(201,160,80,.28),0 8px 25px rgba(0,0,0,.5);transition:background-position .5s,box-shadow .3s,transform .15s;position:relative;overflow:hidden}
+.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 50%);pointer-events:none}
+.btn-gold:hover{background-position:100%;box-shadow:0 0 55px rgba(201,160,80,.5);transform:translateY(-2px)}
+.btn-ghost{display:flex;align-items:center;justify-content:center;gap:.5rem;border:1.5px solid var(--b2);color:var(--txt);font-weight:600;font-size:.88rem;padding:1rem;border-radius:var(--r);width:100%;min-height:var(--tap);background:rgba(255,255,255,.04);backdrop-filter:blur(8px);transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:var(--g1);background:rgba(201,160,80,.07)}
+.hero-reassurance{display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem .7rem;font-size:.67rem;color:var(--muted);font-weight:500}
+.hero-reassurance span{display:flex;align-items:center;gap:.3rem}
+.sep2{color:var(--b3);font-size:.4rem}
+
+/* STRIP */
+.strip{background:linear-gradient(90deg,var(--g4),var(--g1),var(--g4));overflow:hidden;padding:.45rem 0}
+.strip-track{display:flex;white-space:nowrap;animation:marquee 28s linear infinite}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.strip-item{display:inline-flex;align-items:center;padding:0 1.8rem;font-family:var(--serif);font-size:.82rem;font-weight:700;letter-spacing:2.5px;color:#080706;text-transform:uppercase}
+
+/* SECTIONS */
+.sec{padding:4rem 1.2rem}
+.sec-alt{background:var(--bg2)}
+.sec-deep{background:var(--bg3)}
+.wrap{max-width:1000px;margin:0 auto}
+.sh{margin-bottom:1.8rem}
+.sh-eye{display:block;font-size:.6rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--g1);margin-bottom:.4rem}
+.sh-title{font-family:var(--serif);font-size:clamp(1.9rem,6.5vw,3rem);font-weight:800;letter-spacing:-1px;color:var(--txt);line-height:1.05;text-transform:uppercase}
+.sh-title em{font-family:var(--serif2);font-style:italic;font-weight:400;letter-spacing:0;text-transform:none;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sh-body{font-size:.84rem;color:var(--muted);line-height:1.72;max-width:540px;margin-top:.4rem}
+.divider{display:flex;align-items:center;gap:.7rem;margin:1rem 0 1.8rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--b2))}
+.divider-ico{font-size:.6rem;color:var(--g1)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+
+/* CLIENTS */
+.clients{padding:2rem 1.2rem;background:var(--bg2);border-top:1px solid var(--b);border-bottom:1px solid var(--b);text-align:center}
+.clients-label{font-size:.6rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:1.3rem}
+.clients-row{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap}
+.cname{font-family:var(--serif);font-size:1rem;font-weight:700;letter-spacing:2px;color:rgba(248,243,236,.22);text-transform:uppercase;transition:color .25s}
+.cname:hover{color:var(--g1)}
+.cname-you{color:rgba(201,160,80,.35);font-style:italic;font-size:.85rem}
+
+/* PROBLÈME */
+.prob-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.5rem}
+.prob-item{display:flex;align-items:flex-start;gap:.8rem;background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);padding:1rem}
+.prob-ico{font-size:1.2rem;flex-shrink:0;margin-top:.05rem}
+.prob-txt{font-size:.83rem;color:var(--muted);line-height:1.65}
+.prob-txt strong{color:var(--txt)}
+.sol-box{background:rgba(201,160,80,.07);border:1px solid var(--b2);border-radius:var(--r);padding:1.2rem;text-align:center}
+.sol-box p{font-family:var(--serif2);font-style:italic;font-size:1rem;color:var(--txt)}
+.sol-box p span{color:var(--g2)}
+
+/* SERVICES */
+.svc-grid{display:grid;grid-template-columns:1fr;gap:.75rem}
+.svc{background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);padding:1.3rem;transition:border-color .25s,transform .25s}
+.svc:hover{border-color:var(--b2);transform:translateY(-3px)}
+.svc-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.7rem}
+.svc-ico{font-size:1.3rem;flex-shrink:0}
+.svc-name{font-family:var(--serif);font-size:.9rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--txt)}
+.svc-desc{font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:.75rem}
+.svc-chips{display:flex;flex-wrap:wrap;gap:.3rem}
+.chip{font-size:.6rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;background:rgba(201,160,80,.1);border:1px solid var(--b);color:var(--g2);padding:.16rem .5rem;border-radius:50px}
+
+/* PROCESS */
+.steps{display:flex;flex-direction:column}
+.step{display:flex;gap:1.2rem;padding:1.4rem 0;border-bottom:1px solid var(--b)}
+.step:last-child{border-bottom:none}
+.step-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{font-family:var(--serif);font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;width:44px;text-align:center}
+.step-line{width:1px;flex:1;background:linear-gradient(to bottom,var(--b2),transparent);margin-top:.4rem}
+.step-title{font-family:var(--serif);font-size:.88rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--txt);margin-bottom:.3rem}
+.step-desc{font-size:.8rem;color:var(--muted);line-height:1.65}
+.step-badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:rgba(201,160,80,.1);border:1px solid var(--b2);color:var(--g2);padding:.14rem .48rem;border-radius:50px;margin-top:.4rem}
+
+/* PORTFOLIO */
+.pf-row{display:flex;gap:1rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -1.2rem;padding:0 1.2rem .5rem}
+.pf-row::-webkit-scrollbar{display:none}
+.pf{flex:0 0 78vw;max-width:300px;background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);overflow:hidden;transition:border-color .25s,transform .25s}
+.pf:hover{border-color:var(--b2);transform:translateY(-4px)}
+.pf-screen{height:185px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pf-bg{position:absolute;inset:0}
+.pf-tag{position:absolute;top:.65rem;right:.65rem;font-size:.57rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:.16rem .5rem;border-radius:50px;background:rgba(8,7,6,.8);color:var(--g2);border:1px solid var(--b2)}
+.pf-logo{font-family:var(--serif);position:relative;z-index:1}
+.pf-body{padding:.95rem}
+.pf-plan{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(201,160,80,.1);border:1px solid var(--b2);color:var(--g2);padding:.14rem .48rem;border-radius:50px;margin-bottom:.4rem}
+.pf-name{font-family:var(--serif);font-size:.9rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--txt);margin-bottom:.12rem}
+.pf-type{font-size:.72rem;color:var(--muted)}
+.pf-meta{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+.pf-stars{color:var(--g2);font-size:.68rem;letter-spacing:1px}
+.pf-note{font-size:.65rem;color:var(--g1);font-weight:700}
+
+/* TÉMOIGNAGES */
+.testi-row{display:flex;gap:.9rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -1.2rem;padding:0 1.2rem .5rem}
+.testi-row::-webkit-scrollbar{display:none}
+.testi{flex:0 0 82vw;max-width:310px;background:var(--bg3);border:1px solid var(--b);border-left:3px solid var(--g1);border-radius:var(--r);padding:1.1rem}
+.testi-stars{color:var(--g2);font-size:.75rem;letter-spacing:2px;margin-bottom:.45rem}
+.testi-txt{font-family:var(--serif2);font-style:italic;font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:.7rem}
+.testi-txt strong{color:var(--txt);font-style:normal}
+.testi-name{font-size:.74rem;font-weight:700;color:var(--g2)}
+.testi-biz{font-size:.66rem;color:var(--dim)}
+
+/* TARIFS */
+.pricing{display:flex;flex-direction:column;gap:.8rem}
+.price-card{background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);padding:1.6rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.price-card:hover{transform:translateY(-3px)}
+.price-card.feat{border-color:var(--b2);background:var(--bg4)}
+.price-pop{position:absolute;top:1rem;right:1rem;background:var(--g1);color:#080706;font-size:.58rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:.18rem .58rem;border-radius:50px}
+.price-name{font-family:var(--serif);font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt);margin-bottom:.55rem}
+.price-amount{display:flex;align-items:baseline;gap:.3rem;margin-bottom:.2rem}
+.price-num{font-family:var(--serif);font-size:2.9rem;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.price-per{font-size:.78rem;color:var(--muted)}
+.price-setup{font-size:.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic}
+.price-feats{display:flex;flex-direction:column;gap:.48rem;margin-bottom:1.2rem}
+.pf-line{display:flex;align-items:flex-start;gap:.48rem;font-size:.8rem;color:var(--muted)}
+.pf-line.yes{color:var(--txt)}
+.pf-chk{font-size:.78rem;flex-shrink:0;margin-top:.05rem}
+.price-btn{display:flex;align-items:center;justify-content:center;gap:.48rem;background:linear-gradient(135deg,var(--g1),var(--g2));color:#080706;font-weight:800;font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;padding:.9rem;border-radius:50px;width:100%;min-height:var(--tap);transition:box-shadow .2s,transform .15s;box-shadow:0 0 18px rgba(201,160,80,.18)}
+.price-btn:hover{box-shadow:0 0 32px rgba(201,160,80,.4);transform:translateY(-1px)}
+.price-btn.out{background:transparent;color:var(--g1);border:1.5px solid var(--b2);box-shadow:none}
+.price-btn.out:hover{background:rgba(201,160,80,.07);box-shadow:none}
+.price-note{font-size:.67rem;color:var(--dim);text-align:center;margin-top:.65rem;font-style:italic}
+
+/* FAQ */
+.faq-list{max-width:680px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--b)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1rem .2rem;color:var(--txt);font-size:.9rem;font-weight:600;text-align:left;gap:.8rem;cursor:pointer;min-height:var(--tap);transition:color .2s}
+.faq-q:hover{color:var(--g1)}
+.faq-q svg{flex-shrink:0;color:var(--g1);transition:transform .28s var(--ease)}
+.faq-q[aria-expanded=true] svg{transform:rotate(45deg)}
+.faq-a{display:none;padding:.05rem .2rem .85rem;font-size:.83rem;color:var(--muted);line-height:1.7}
+.faq-a.open{display:block}
+.faq-a a{color:var(--g2);font-weight:600}
+
+/* CTA FINAL */
+.cta-box{text-align:center;background:var(--bg3);border:1px solid var(--b2);border-radius:18px;padding:3rem 1.5rem;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,160,80,.1),transparent 65%);pointer-events:none}
+.cta-box h2{font-family:var(--serif);font-size:clamp(1.8rem,6vw,2.8rem);font-weight:800;letter-spacing:-1px;text-transform:uppercase;margin-bottom:.5rem;position:relative;z-index:1}
+.cta-box h2 em{font-family:var(--serif2);font-style:italic;text-transform:none;font-weight:400;letter-spacing:0;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-box p{font-family:var(--serif2);font-style:italic;font-size:1rem;color:var(--muted);margin-bottom:1.8rem;position:relative;z-index:1}
+.cta-btns{display:flex;flex-direction:column;gap:.65rem;max-width:360px;margin:0 auto;position:relative;z-index:1}
+
+/* FOOTER */
+footer{background:#000;border-top:1px solid var(--b);padding:2.8rem 1.2rem 1.5rem}
+.foot-logo{display:flex;align-items:center;gap:.55rem;margin-bottom:.4rem}
+.foot-name{font-family:var(--serif);font-size:1rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.foot-name em{font-style:normal;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.foot-tag{font-family:var(--serif2);font-style:italic;font-size:.82rem;color:var(--muted);margin-bottom:1.1rem}
+.foot-contact{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.3rem}
+.foot-contact a{font-size:.82rem;color:var(--g2);font-weight:600}
+.foot-nav-title{font-size:.58rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g1);margin-bottom:.65rem}
+.foot-nav{display:flex;flex-wrap:wrap;gap:.35rem .75rem;list-style:none;margin-bottom:1.3rem}
+.foot-nav a{font-size:.72rem;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.foot-nav a:hover{color:var(--g1)}
+.foot-seo{font-size:.65rem;color:rgba(248,243,236,.18);line-height:1.7;padding-top:.85rem;border-top:1px solid var(--b);margin-bottom:.5rem}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.4rem}
+.copy{font-size:.6rem;color:rgba(248,243,236,.18)}
+.foot-legal{display:flex;gap:.8rem}
+.foot-legal a{font-size:.6rem;color:rgba(248,243,236,.18)}
+.foot-legal a:hover{color:var(--g1)}
+
+/* STICKY — identique à Efes */
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:700;display:flex;background:rgba(8,7,6,.97);border-top:1px solid var(--b);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);backdrop-filter:blur(20px);box-shadow:0 -6px 30px rgba(0,0,0,.6)}
+.sticky a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.18rem;padding:.7rem .5rem;font-weight:700;font-size:.7rem;letter-spacing:.4px;text-transform:uppercase;min-height:44px}
+.sticky-menu{color:var(--g1);border-right:1px solid var(--b);flex:.45}
+.sticky-menu:active{background:rgba(201,160,80,.07)}
+.sticky-call{background:linear-gradient(135deg,var(--g1),var(--g2));color:#080706;flex:.55;animation:pulse-gold 2.5s ease-in-out infinite}
+@keyframes pulse-gold{0%,100%{box-shadow:none}50%{box-shadow:0 0 16px rgba(201,160,80,.3)}}
+.sticky-call:active{background:var(--g2)}
+.sticky-num{font-size:.6rem;font-weight:600;opacity:.75;letter-spacing:.4px}
+
+/* DESKTOP */
+@media(min-width:769px){
+  body{padding-bottom:0}
+  .sticky{display:none}
+  .nav{padding:.8rem 3rem}
+  .nav-links{display:flex}
+  .hero-btns{flex-direction:row;width:auto}
+  .btn-gold,.btn-ghost{width:auto;padding:1.1rem 2rem}
+  .cta-btns{flex-direction:row;justify-content:center}
+  .sec{padding:5.5rem 2.5rem}
+  .prob-grid{grid-template-columns:1fr 1fr}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .pf-row{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;margin:0;padding:0;gap:1.2rem}
+  .pf{flex:none;max-width:none}
+  .testi-row{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible;margin:0;padding:0;gap:1rem}
+  .testi{flex:none;max-width:none}
+  .pricing{flex-direction:row;align-items:flex-start}
+  .price-card{flex:1}
+  footer{padding:3.5rem 3rem 2rem}
+  .foot-inner{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;max-width:1000px;margin:0 auto 2rem}
+}
+@media(min-width:1100px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="21" stroke="url(#ng)" stroke-width="3" stroke-linecap="round" stroke-dasharray="105 30"/>
+      <polyline points="10,27 20,17 28,30 36,14" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="33,9 40,12 37,19" fill="url(#ng)"/>
+      <defs><linearGradient id="ng" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c9a050"/><stop offset="100%" stop-color="#e2b96a"/></linearGradient></defs>
+    </svg>
+    <span class="logo-name">CONVERT<em>WEB</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Réalisations</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Devis gratuit</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="ring r1" aria-hidden="true"></div>
+  <div class="ring r2" aria-hidden="true"></div>
+  <div class="ring r3" aria-hidden="true"></div>
+  <div class="hero-body">
+    <div class="hero-pill"><span class="pdot"></span>⚡ 2 places disponibles ce mois · Réservez</div>
+    <h1 class="hero-h1">
+      <span class="h1-l1">Sites web qui</span>
+      <span class="h1-l2">font sonner</span>
+      <span class="h1-l3">votre téléphone</span>
+    </h1>
+    <p class="hero-sub">ConvertWeb crée des sites web premium pour restaurants &amp; fast-foods.<br>Mobile-first, SEO local, <strong style="color:var(--txt);font-style:normal">optimisés pour convertir</strong>.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num">3</span><span class="hstat-lab">Sites livrés</span></div>
+      <div class="hstat"><span class="hstat-num">4,4★</span><span class="hstat-lab">Satisfaction</span></div>
+      <div class="hstat"><span class="hstat-num">72h</span><span class="hstat-lab">Délai livraison</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="tel:+33XXXXXXXXX" class="btn-gold">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        📞 Appel découverte gratuit
+      </a>
+      <a href="#portfolio" class="btn-ghost">Voir les réalisations</a>
+    </div>
+    <div class="hero-reassurance">
+      <span>✓ Sans engagement</span>
+      <span class="sep2">◆</span>
+      <span>✓ Devis gratuit en 24h</span>
+      <span class="sep2">◆</span>
+      <span>✓ Site livré en 72h</span>
+    </div>
+  </div>
+</header>
+
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span class="strip-item">Sites Web Premium ·</span>
+    <span class="strip-item">Mobile-First ·</span>
+    <span class="strip-item">SEO Local ·</span>
+    <span class="strip-item">Plus d'Appels ·</span>
+    <span class="strip-item">Livraison 72h ·</span>
+    <span class="strip-item">À partir de 49€/mois ·</span>
+    <span class="strip-item">Sites Web Premium ·</span>
+    <span class="strip-item">Mobile-First ·</span>
+    <span class="strip-item">SEO Local ·</span>
+    <span class="strip-item">Plus d'Appels ·</span>
+    <span class="strip-item">Livraison 72h ·</span>
+    <span class="strip-item">À partir de 49€/mois ·</span>
+  </div>
+</div>
+
+<div class="clients rv">
+  <p class="clients-label">Ils nous font confiance</p>
+  <div class="clients-row">
+    <span class="cname">Efes</span>
+    <span style="color:var(--b);font-size:.5rem">◆</span>
+    <span class="cname">Le Sept 7</span>
+    <span style="color:var(--b);font-size:.5rem">◆</span>
+    <span class="cname">Coin des Amis</span>
+    <span style="color:var(--b);font-size:.5rem">◆</span>
+    <span class="cname cname-you">Votre restaurant ?</span>
+  </div>
+</div>
+
+<section class="sec rv" id="probleme">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Le problème</span><h2 class="sh-title">Votre restaurant mérite <em>mieux</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="prob-grid">
+      <div class="prob-item rv d1"><span class="prob-ico">😤</span><div class="prob-txt"><strong>Pas de site ou site obsolète</strong><br>Vos concurrents sont en ligne, vous perdez des clients chaque jour sans le savoir.</div></div>
+      <div class="prob-item rv d2"><span class="prob-ico">📵</span><div class="prob-txt"><strong>Site non adapté au mobile</strong><br>80% de vos clients cherchent sur téléphone. Un site mal affiché = client perdu.</div></div>
+      <div class="prob-item rv d3"><span class="prob-ico">🙈</span><div class="prob-txt"><strong>Introuvable sur Google</strong><br>Si vous n'apparaissez pas en recherche locale, vous n'existez pas pour les nouveaux clients.</div></div>
+      <div class="prob-item rv d4"><span class="prob-ico">📞</span><div class="prob-txt"><strong>Pas de bouton d'appel visible</strong><br>Un client qui ne trouve pas comment commander en 5 secondes passe au suivant.</div></div>
+    </div>
+    <div class="sol-box rv"><p>ConvertWeb résout tous ces problèmes — <span>en 72 heures.</span></p></div>
+  </div>
+</section>
+
+<section class="sec sec-alt rv" id="services">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Ce qu'on fait</span><h2 class="sh-title">Des sites <em>qui convertissent</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="svc-grid">
+      <div class="svc rv d1"><div class="svc-top"><span class="svc-ico">📱</span><span class="svc-name">Mobile-First</span></div><p class="svc-desc">Conçu pour le pouce avant la souris. 80% de vos clients commandent sur téléphone.</p><div class="svc-chips"><span class="chip">Touch-friendly</span><span class="chip">Sticky bar</span><span class="chip">Appel 1 clic</span></div></div>
+      <div class="svc rv d2"><div class="svc-top"><span class="svc-ico">📍</span><span class="svc-name">SEO Local</span></div><p class="svc-desc">Votre restaurant apparaît quand un client cherche "kebab Montereau". Google vous trouve.</p><div class="svc-chips"><span class="chip">JSON-LD</span><span class="chip">Google Maps</span><span class="chip">Balises géo</span></div></div>
+      <div class="svc rv d3"><div class="svc-top"><span class="svc-ico">⚡</span><span class="svc-name">Chargement rapide</span></div><p class="svc-desc">Un site lent = visiteur parti. Nos sites chargent en moins de 2 secondes, même en 4G.</p><div class="svc-chips"><span class="chip">Score 95+</span><span class="chip">Lazy loading</span><span class="chip">Code optimisé</span></div></div>
+      <div class="svc rv d1"><div class="svc-top"><span class="svc-ico">🎨</span><span class="svc-name">Design Premium</span></div><p class="svc-desc">Pas de template. Chaque site a sa propre identité — couleurs, typo, animations.</p><div class="svc-chips"><span class="chip">Sur-mesure</span><span class="chip">Animations</span><span class="chip">Identité unique</span></div></div>
+      <div class="svc rv d2"><div class="svc-top"><span class="svc-ico">📞</span><span class="svc-name">Conversion maximale</span></div><p class="svc-desc">Numéro visible partout, CTAs sous chaque section. Le visiteur n'a qu'une chose à faire : vous appeler.</p><div class="svc-chips"><span class="chip">CTA partout</span><span class="chip">Carte menu</span><span class="chip">Click-to-call</span></div></div>
+      <div class="svc rv d3"><div class="svc-top"><span class="svc-ico">🔧</span><span class="svc-name">Maintenance incluse</span></div><p class="svc-desc">Horaires, prix, photos — on met à jour pour vous. Votre site reste toujours parfait.</p><div class="svc-chips"><span class="chip">Mises à jour</span><span class="chip">Support</span><span class="chip">Hébergement</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec rv" id="process">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Comment ça marche</span><h2 class="sh-title">De 0 à en ligne <em>en 72h</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="steps">
+      <div class="step rv d1"><div class="step-left"><div class="step-num">01</div><div class="step-line"></div></div><div><div class="step-title">Appel découverte · 15 min</div><div class="step-desc">On discute de votre restaurant, vos besoins. Je recueille menu, horaires, téléphone, photos.</div><div class="step-badge">Gratuit & sans engagement</div></div></div>
+      <div class="step rv d2"><div class="step-left"><div class="step-num">02</div><div class="step-line"></div></div><div><div class="step-title">Je crée votre site</div><div class="step-desc">Design sur-mesure, contenu rédigé, SEO intégré, carte des plats, boutons d'appel partout.</div><div class="step-badge">48–72h de production</div></div></div>
+      <div class="step rv d3"><div class="step-left"><div class="step-num">03</div><div class="step-line"></div></div><div><div class="step-title">Validation & mise en ligne</div><div class="step-desc">Je vous montre le résultat. On ajuste, puis mise en ligne sur votre domaine. Rien à faire de votre côté.</div><div class="step-badge">Livraison clé en main</div></div></div>
+      <div class="step rv d4"><div class="step-left"><div class="step-num">04</div></div><div><div class="step-title">Maintenance mensuelle</div><div class="step-desc">Votre abonnement couvre hébergement, mises à jour, modifications et support. Toujours à jour.</div><div class="step-badge">Inclus dans l'abonnement</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-alt rv" id="portfolio">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Réalisations</span><h2 class="sh-title">Nos derniers <em>sites livrés</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="pf-row">
+      <div class="pf"><div class="pf-screen"><div class="pf-bg" style="background:linear-gradient(135deg,#080706,#201a14)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 65%,rgba(201,160,80,.18),transparent 65%)"></div><span class="pf-tag">Or · Premium</span><span class="pf-logo" style="font-size:3.5rem;color:#c9a050;text-shadow:0 0 35px rgba(201,160,80,.3)">Efes</span></div><div class="pf-body"><span class="pf-plan">Plan Pro · 89€/mois</span><div class="pf-name">Efes Restaurant</div><div class="pf-type">Restaurant turc halal · Montereau</div><div class="pf-meta"><span class="pf-stars">★★★★☆ 4,2</span><span class="pf-note">762 avis</span></div></div></div>
+      <div class="pf"><div class="pf-screen"><div class="pf-bg" style="background:linear-gradient(135deg,#0d0b0b,#231616)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 65%,rgba(232,37,30,.15),transparent 65%)"></div><span class="pf-tag" style="color:#ff6060;border-color:rgba(232,37,30,.4)">Rouge · Urban</span><span class="pf-logo" style="font-size:4rem;color:#e8251e;text-shadow:0 0 35px rgba(232,37,30,.3)">7</span></div><div class="pf-body"><span class="pf-plan">Plan Pro · 89€/mois</span><div class="pf-name">Le Sept 7</div><div class="pf-type">Tacos · Burgers · Fast-food · Montereau</div><div class="pf-meta"><span class="pf-stars">★★★★★ 4,5</span><span class="pf-note">251 avis</span></div></div></div>
+      <div class="pf"><div class="pf-screen"><div class="pf-bg" style="background:linear-gradient(135deg,#1a1210,#2c1820)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 65%,rgba(217,79,106,.14),transparent 65%)"></div><span class="pf-tag" style="color:#ff8fa0;border-color:rgba(217,79,106,.4)">Rose · Chaleureux</span><span class="pf-logo" style="font-size:1.7rem;text-align:center;line-height:1.2;color:#e8607a;text-shadow:0 0 25px rgba(217,79,106,.3)">Coin<br>Amis</span></div><div class="pf-body"><span class="pf-plan">Plan Pro · 89€/mois</span><div class="pf-name">Le Coin des Amis</div><div class="pf-type">Kebab halal · Près du lycée Malraux</div><div class="pf-meta"><span class="pf-stars">★★★★★ 4,6</span><span class="pf-note">132 avis</span></div></div></div>
+    </div>
+    <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:1.2rem;font-family:var(--serif2);font-style:italic">Votre restaurant pourrait être le prochain ↗</p>
+  </div>
+</section>
+
+<section class="sec sec-deep rv">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Témoignages</span><h2 class="sh-title">Nos clients <em>témoignent</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="testi-row">
+      <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-txt">« <strong>Le site est magnifique.</strong> Des clients nous ont dit qu'ils avaient trouvé notre numéro directement dessus. Ça marche vraiment. »</p><div class="testi-name">Efes Restaurant</div><div class="testi-biz">Montereau-Fault-Yonne</div></div>
+      <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-txt">« <strong>Livré en 3 jours</strong>, exactement ce qu'on voulait. Le bouton Uber Eats est bien mis en avant, les clients le voient tout de suite. »</p><div class="testi-name">Le Sept 7</div><div class="testi-biz">Fast-food · Montereau</div></div>
+      <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-txt">« <strong>Le lycée Malraux mis en avant</strong> comme je le voulais. Les lycéens trouvent facilement notre numéro. Très bon travail. »</p><div class="testi-name">Le Coin des Amis</div><div class="testi-biz">Kebab · Montereau</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec rv" id="tarifs">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Tarifs transparents</span><h2 class="sh-title">Simple, <em>sans surprise</em></h2><p class="sh-body">Un abonnement mensuel tout inclus — site, hébergement, maintenance et mises à jour. Pas de frais cachés.</p></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="pricing">
+      <div class="price-card rv d1"><div class="price-name">Starter</div><div class="price-amount"><span class="price-num">49</span><span class="price-per">€ / mois</span></div><p class="price-setup">+ 299 € de frais de création</p><div class="price-feats"><div class="pf-line yes"><span class="pf-chk">✓</span>Site vitrine 1 page mobile-first</div><div class="pf-line yes"><span class="pf-chk">✓</span>SEO local de base</div><div class="pf-line yes"><span class="pf-chk">✓</span>Bouton d'appel + carte Google</div><div class="pf-line yes"><span class="pf-chk">✓</span>Hébergement inclus</div><div class="pf-line yes"><span class="pf-chk">✓</span>1 mise à jour / mois</div><div class="pf-line"><span class="pf-chk" style="color:var(--dim)">✗</span><span style="color:var(--dim)">Menu complet avec prix</span></div><div class="pf-line"><span class="pf-chk" style="color:var(--dim)">✗</span><span style="color:var(--dim)">Animations premium</span></div></div><a href="#contact" class="price-btn out">Choisir Starter</a><p class="price-note">Sans engagement · Résiliable à tout moment</p></div>
+      <div class="price-card feat rv d2"><div class="price-pop">⭐ Populaire</div><div class="price-name">Pro</div><div class="price-amount"><span class="price-num">89</span><span class="price-per">€ / mois</span></div><p class="price-setup">+ 499 € de frais de création</p><div class="price-feats"><div class="pf-line yes"><span class="pf-chk">✓</span>Site premium multi-sections</div><div class="pf-line yes"><span class="pf-chk">✓</span>SEO local avancé (JSON-LD, FAQ)</div><div class="pf-line yes"><span class="pf-chk">✓</span>Menu complet avec prix</div><div class="pf-line yes"><span class="pf-chk">✓</span>Animations & design sur-mesure</div><div class="pf-line yes"><span class="pf-chk">✓</span>Avis Google intégrés</div><div class="pf-line yes"><span class="pf-chk">✓</span>Hébergement + nom de domaine</div><div class="pf-line yes"><span class="pf-chk">✓</span>Mises à jour illimitées</div></div><a href="#contact" class="price-btn">Choisir Pro — le plus populaire</a><p class="price-note">L'offre choisie par Efes, Sept 7 &amp; Coin des Amis</p></div>
+      <div class="price-card rv d3"><div class="price-name">Premium</div><div class="price-amount"><span class="price-num">149</span><span class="price-per">€ / mois</span></div><p class="price-setup">+ 799 € de frais de création</p><div class="price-feats"><div class="pf-line yes"><span class="pf-chk">✓</span>Tout le plan Pro</div><div class="pf-line yes"><span class="pf-chk">✓</span>Stratégie SEO locale mensuelle</div><div class="pf-line yes"><span class="pf-chk">✓</span>Gestion fiche Google My Business</div><div class="pf-line yes"><span class="pf-chk">✓</span>Rapport mensuel de performance</div><div class="pf-line yes"><span class="pf-chk">✓</span>Support prioritaire 24h</div><div class="pf-line yes"><span class="pf-chk">✓</span>Modifications illimitées</div></div><a href="#contact" class="price-btn out">Choisir Premium</a><p class="price-note">Pour dominer votre marché local</p></div>
+    </div>
+    <div style="background:rgba(201,160,80,.06);border:1px solid var(--b2);border-radius:var(--r);padding:1.1rem;margin-top:1rem;text-align:center;margin-top:1.2rem"><p style="font-size:.82rem;color:var(--muted)">💡 Pas sûr de l'offre ? <a href="#contact" style="color:var(--g2);font-weight:700">Appelez-nous</a> — on trouve ensemble ce qui vous convient.</p></div>
+  </div>
+</section>
+
+<section class="sec sec-alt rv" id="faq">
+  <div class="wrap">
+    <div class="sh"><span class="sh-eye">Questions fréquentes</span><h2 class="sh-title">On répond à <em>tout</em></h2></div>
+    <div class="divider"><span class="divider-ico">✦</span></div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="f1">Combien de temps pour avoir mon site ?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a" id="f1">En général entre <strong>48 et 72 heures</strong> après notre appel. Tout dépend de la rapidité avec laquelle vous nous transmettez vos infos (menu, photos, horaires).</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="f2">Le nom de domaine est-il inclus ?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a" id="f2">Oui. L'hébergement et le nom de domaine sont <strong>inclus dans votre abonnement mensuel</strong>. Aucun frais caché.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="f3">Puis-je résilier quand je veux ?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a" id="f3"><strong>Sans engagement, sans pénalité.</strong> Vous nous prévenez un mois à l'avance et on vous transfère les fichiers.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="f4">Mon site sera bien référencé sur Google ?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a" id="f4">Tous nos sites sont construits avec le SEO local : JSON-LD Restaurant, FAQ Schema, balises géographiques, textes optimisés. En quelques semaines vous devriez apparaître sur "kebab <em>votre ville</em>".</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="f5">Je n'ai pas de photos. Vous pouvez faire sans ?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a" id="f5">Oui, on utilise des photos libres de droits pour démarrer. Mais de vraies photos font toute la différence pour la conversion.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec rv" id="contact">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <span class="sh-eye" style="display:block;margin-bottom:.5rem">Prêt à démarrer ?</span>
+      <h2>Votre site en ligne <em>dès cette semaine</em></h2>
+      <p>Appel découverte gratuit et sans engagement.</p>
+      <div class="cta-btns">
+        <a href="tel:+33XXXXXXXXX" class="btn-gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          📞 Appeler maintenant
+        </a>
+        <a href="mailto:contact@convertweb.fr" class="btn-ghost">✉️ Envoyer un email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-logo">
+        <svg width="26" height="26" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21" stroke="url(#fg)" stroke-width="3" stroke-linecap="round" stroke-dasharray="105 30"/><polyline points="10,27 20,17 28,30 36,14" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><polygon points="33,9 40,12 37,19" fill="url(#fg)"/><defs><linearGradient id="fg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c9a050"/><stop offset="100%" stop-color="#e2b96a"/></linearGradient></defs></svg>
+        <span class="foot-name">CONVERT<em>WEB</em></span>
+      </div>
+      <p class="foot-tag">Sites web qui convertissent</p>
+      <div class="foot-contact">
+        <a href="tel:+33XXXXXXXXX">📞 À venir</a>
+        <a href="mailto:contact@convertweb.fr">✉️ contact@convertweb.fr</a>
+        <span style="font-size:.76rem;color:var(--dim)">🌍 France entière</span>
+      </div>
+    </div>
+    <div>
+      <div class="foot-nav-title">Navigation</div>
+      <ul class="foot-nav">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Comment ça marche</a></li>
+        <li><a href="#portfolio">Réalisations</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-nav-title">Spécialités</div>
+      <div style="font-size:.76rem;color:var(--muted);line-height:2">Restaurants turcs & kebabs<br>Fast-foods & sandwicheries<br>Pizzerias & tacos<br>Commerces alimentaires</div>
+    </div>
+  </div>
+  <p class="foot-seo">ConvertWeb — Agence web spécialisée dans la création de sites web pour restaurants, fast-foods et commerces locaux. Sites mobile-first, SEO local, optimisés conversion. À partir de 49€/mois tout inclus. Livraison en 72h. France entière.</p>
+  <div class="foot-bottom">
+    <span class="copy">© <span id="yr"></span> ConvertWeb · Tous droits réservés</span>
+    <div class="foot-legal"><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Confidentialité</a></div>
+  </div>
+</footer>
+
+<!-- STICKY — même structure qu'Efes -->
+<div class="sticky">
+  <a href="#portfolio" class="sticky-menu">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg>
+    Réalisations
+  </a>
+  <a href="tel:+33XXXXXXXXX" class="sticky-call">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+    📞 Devis gratuit
+    <span class="sticky-num">Appel découverte · Gratuit</span>
+  </a>
+</div>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',scrollY>55),{passive:true});
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const open=btn.getAttribute('aria-expanded')==='true';
+    document.querySelectorAll('.faq-q').forEach(b=>{b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).classList.remove('open')});
+    if(!open){btn.setAttribute('aria-expanded','true');document.getElementById(btn.getAttribute('aria-controls')).classList.add('open')}
+  });
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
