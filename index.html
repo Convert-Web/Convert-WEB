@@ -1,0 +1,845 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConvertWeb — Sites web qui font sonner votre téléphone</title>
+<meta name="description" content="ConvertWeb crée des sites web premium pour restaurants et fast-foods. Mobile-first, SEO local, +15 appels garantis ou remboursé.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#050403;
+  --off:#0c0a08;
+  --card:#111009;
+  --border:rgba(255,255,255,.06);
+  --border2:rgba(201,158,68,.22);
+  --gold:#c99e44;
+  --gold2:#e8b95a;
+  --gold3:#f5d080;
+  --cream:#f5ede0;
+  --muted:rgba(245,237,224,.45);
+  --dim:rgba(245,237,224,.22);
+  --r:14px;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Syne',sans-serif;
+  --body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth;cursor:none}
+body{background:var(--black);color:var(--cream);font-family:var(--body);overflow-x:hidden;padding-bottom:80px}
+a{text-decoration:none;color:inherit}
+button{cursor:none;border:none;background:none;font-family:inherit}
+img{display:block;max-width:100%}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;top:0;left:0;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:difference}
+#cursor-ring{position:fixed;top:0;left:0;width:44px;height:44px;border:1px solid rgba(201,158,68,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s ease,width .25s,height .25s,opacity .25s}
+body:hover #cursor-ring{opacity:1}
+@media(max-width:768px){#cursor,#cursor-ring{display:none}html{cursor:auto}button{cursor:pointer}}
+
+/* NOISE OVERLAY */
+body::before{content:'';position:fixed;inset:0;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;pointer-events:none;z-index:1000}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2rem;background:rgba(5,4,3,0);backdrop-filter:blur(0px);transition:background .4s,backdrop-filter .4s,padding .3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(5,4,3,.92);backdrop-filter:blur(24px);border-color:var(--border);padding:1rem 2rem}
+.nav-logo{display:flex;align-items:center;gap:.6rem}
+.nav-logo-mark{width:32px;height:32px;position:relative}
+.nav-logo-mark svg{width:100%;height:100%}
+.nav-brand{font-family:var(--sans);font-size:.85rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.nav-brand em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:none;gap:2.2rem;list-style:none}
+.nav-links a{font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--cream)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-cta{font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.55rem 1.3rem;border-radius:50px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);transition:box-shadow .25s,transform .2s}
+.nav-cta:hover{box-shadow:0 0 28px rgba(201,158,68,.35);transform:translateY(-1px)}
+@media(min-width:900px){.nav-links{display:flex};nav{padding:1.6rem 4rem}.nav.scrolled{padding:1.1rem 4rem}}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 1.5rem 5rem;position:relative;overflow:hidden}
+@media(min-width:900px){.hero{padding:0 6rem 7rem;justify-content:flex-end}}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-gradient{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(201,158,68,.12) 0%,transparent 65%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(201,158,68,.05) 0%,transparent 60%),linear-gradient(180deg,rgba(5,4,3,.2) 0%,rgba(5,4,3,.6) 50%,rgba(5,4,3,.95) 100%)}
+.hero-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.3) 30%,rgba(0,0,0,.3) 70%,transparent 100%)}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none}
+.orb1{width:600px;height:600px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(201,158,68,.07),transparent 70%);animation:float1 8s ease-in-out infinite}
+.orb2{width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(201,158,68,.05),transparent 70%);animation:float2 10s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+@keyframes float2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(20px) rotate(5deg)}}
+
+.hero-kicker{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:1.8rem;position:relative;z-index:2;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero-kicker::before{content:'';width:28px;height:1px;background:var(--gold)}
+.hero-h1{position:relative;z-index:2;opacity:0;animation:fadeUp .9s .35s forwards}
+.h1-line{display:block;font-family:var(--serif);font-weight:300;line-height:1.05;letter-spacing:-1px}
+.h1-line.big{font-size:clamp(3.8rem,10vw,8.5rem);color:var(--cream)}
+.h1-line.italic{font-size:clamp(3.5rem,9.5vw,8rem);font-style:italic;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h1-line.outline{font-size:clamp(3.8rem,10vw,8.5rem);-webkit-text-stroke:1px rgba(245,237,224,.25);color:transparent}
+.hero-sub{position:relative;z-index:2;font-family:var(--body);font-size:clamp(.85rem,1.8vw,1rem);color:var(--muted);line-height:1.8;max-width:480px;margin-top:1.6rem;opacity:0;animation:fadeUp .8s .55s forwards}
+.hero-actions{display:flex;flex-direction:column;gap:.75rem;margin-top:2.2rem;position:relative;z-index:2;opacity:0;animation:fadeUp .8s .7s forwards}
+@media(min-width:600px){.hero-actions{flex-direction:row;align-items:center}}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:1rem 2rem;border-radius:50px;transition:box-shadow .25s,transform .2s;white-space:nowrap}
+.btn-primary:hover{box-shadow:0 0 40px rgba(201,158,68,.4);transform:translateY(-2px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:50px;padding:.9rem 1.8rem;transition:border-color .25s,color .25s,background .25s}
+.btn-secondary:hover{color:var(--cream);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp .6s 1.2s forwards}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--gold));animation:scrollLine 2s ease-in-out infinite}
+.scroll-label{font-family:var(--sans);font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim)}
+@keyframes scrollLine{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.6)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.75rem 0;background:rgba(201,158,68,.03)}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:marqueeSlide 22s linear infinite}
+.marquee-item{font-family:var(--sans);font-size:.58rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--dim);padding:0 2.5rem}
+.marquee-dot{color:var(--gold);margin-right:2.5rem}
+
+/* SECTION BASE */
+.sec{padding:6rem 1.5rem;position:relative}
+@media(min-width:900px){.sec{padding:9rem 6rem}}
+.wrap{max-width:1100px;margin:0 auto}
+.section-label{font-family:var(--sans);font-size:.58rem;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent);max-width:80px}
+.section-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.1;letter-spacing:-1px}
+.section-title em{font-style:italic;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-body{font-size:.9rem;color:var(--muted);line-height:1.85;max-width:520px;margin-top:.9rem}
+
+/* PROBLEM */
+.prob-cols{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:3.5rem}
+@media(min-width:700px){.prob-cols{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.prob-cols{grid-template-columns:repeat(4,1fr)}}
+.prob-col{background:var(--black);padding:2rem 1.6rem;transition:background .25s}
+.prob-col:hover{background:var(--off)}
+.prob-ico{font-size:1.5rem;margin-bottom:1rem}
+.prob-q{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--cream);margin-bottom:.55rem;line-height:1.3}
+.prob-a{font-size:.78rem;color:var(--muted);line-height:1.75}
+.sol-strip{margin-top:2.5rem;background:linear-gradient(135deg,rgba(201,158,68,.1),rgba(201,158,68,.04));border:1px solid var(--border2);border-radius:var(--r);padding:1.6rem 2rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.sol-strip-icon{font-size:1.3rem;flex-shrink:0}
+.sol-strip-txt{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--cream);flex:1;min-width:200px}
+.sol-strip-txt strong{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* === DEMO SECTION === */
+.demo-section{background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.demo-intro{display:flex;flex-direction:column;gap:1.5rem;margin-bottom:3.5rem}
+@media(min-width:900px){.demo-intro{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.demo-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.demo-tab{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:50px;border:1px solid var(--border);color:var(--dim);transition:all .25s;cursor:none}
+@media(max-width:768px){.demo-tab{cursor:pointer}}
+.demo-tab.active{background:var(--gold);color:var(--black);border-color:var(--gold)}
+.demo-tab:not(.active):hover{border-color:rgba(255,255,255,.2);color:var(--cream)}
+
+/* PHONE MOCKUP */
+.demo-stage{display:flex;justify-content:center;align-items:flex-start;gap:3rem;flex-wrap:wrap}
+.phone-wrap{position:relative;flex-shrink:0}
+.phone-frame{width:280px;height:572px;border-radius:38px;border:2px solid rgba(255,255,255,.12);background:#080706;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.05)}
+.phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:28px;background:#080706;border-bottom-left-radius:16px;border-bottom-right-radius:16px;z-index:20;display:flex;align-items:center;justify-content:center;gap:5px}
+.notch-cam{width:8px;height:8px;border-radius:50%;background:#1a1818;border:1px solid rgba(255,255,255,.05)}
+.notch-sensor{width:20px;height:5px;border-radius:3px;background:#1a1818}
+.phone-screen{width:100%;height:100%;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
+.phone-screen::-webkit-scrollbar{display:none}
+
+/* DEMO SCREENS */
+.demo-screen{display:none;width:100%;min-height:100%}
+.demo-screen.active{display:block}
+
+/* KEBAB DEMO */
+.ds-kebab{background:#0a0806;font-family:'DM Sans',sans-serif;color:#f5ede0}
+.ds-k-header{background:linear-gradient(180deg,#0a0806,#12100c);padding:2rem 1.2rem 1.5rem;text-align:center;border-bottom:1px solid rgba(201,120,40,.2)}
+.ds-k-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#e07832;letter-spacing:2px;margin-bottom:.2rem}
+.ds-k-tagline{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:rgba(245,237,224,.4);margin-bottom:.9rem}
+.ds-k-cta{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,#e07832,#f59040);color:#0a0806;font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:.6rem 1.3rem;border-radius:50px;margin-bottom:.7rem;box-shadow:0 0 20px rgba(224,120,50,.3)}
+.ds-k-hours{font-size:.6rem;color:rgba(245,237,224,.35);letter-spacing:1px}
+.ds-k-menu-title{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:rgba(224,120,50,.7);padding:.9rem 1.2rem .4rem;font-weight:700}
+.ds-k-item{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.ds-k-item-info{}
+.ds-k-item-name{font-size:.82rem;font-weight:600;color:#f5ede0;margin-bottom:.1rem}
+.ds-k-item-desc{font-size:.6rem;color:rgba(245,237,224,.4)}
+.ds-k-item-price{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:#e07832}
+.ds-k-sticky{position:sticky;bottom:0;background:rgba(10,8,6,.97);border-top:1px solid rgba(224,120,50,.2);padding:.7rem 1rem;display:flex;gap:.5rem;backdrop-filter:blur(10px)}
+.ds-k-sticky-call{flex:1;background:linear-gradient(135deg,#e07832,#f59040);color:#0a0806;font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center}
+.ds-k-sticky-map{flex:.5;border:1px solid rgba(224,120,50,.35);color:#e07832;font-size:.65rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center}
+
+/* PIZZA DEMO */
+.ds-pizza{background:#06080a;font-family:'DM Sans',sans-serif;color:#f0f2f5}
+.ds-p-header{background:linear-gradient(180deg,#06080a,#0c0f14);padding:2rem 1.2rem 1.5rem;text-align:center;border-bottom:1px solid rgba(255,60,40,.18)}
+.ds-p-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:#fff;letter-spacing:1px;margin-bottom:.15rem}
+.ds-p-logo span{color:#ff3c28}
+.ds-p-badge{display:inline-block;background:rgba(255,60,40,.12);border:1px solid rgba(255,60,40,.3);color:#ff6050;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;padding:.2rem .7rem;border-radius:50px;margin-bottom:.9rem}
+.ds-p-cta{display:inline-flex;align-items:center;gap:.4rem;background:#ff3c28;color:#fff;font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:.6rem 1.3rem;border-radius:50px;box-shadow:0 0 20px rgba(255,60,40,.25)}
+.ds-p-promo{background:rgba(255,60,40,.08);border:1px solid rgba(255,60,40,.15);margin:.9rem 1.2rem;border-radius:10px;padding:.7rem;display:flex;align-items:center;gap:.7rem}
+.ds-p-promo-ico{font-size:1.2rem}
+.ds-p-promo-txt{font-size:.65rem;color:rgba(240,242,245,.7);line-height:1.5}
+.ds-p-promo-txt strong{color:#ff6050}
+.ds-p-menu-title{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,60,40,.6);padding:.9rem 1.2rem .4rem;font-weight:700}
+.ds-p-item{display:flex;align-items:center;gap:.7rem;padding:.65rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.ds-p-item-emoji{font-size:1.4rem;flex-shrink:0}
+.ds-p-item-info{flex:1}
+.ds-p-item-name{font-size:.8rem;font-weight:600;color:#f0f2f5}
+.ds-p-item-size{font-size:.58rem;color:rgba(240,242,245,.38)}
+.ds-p-item-price{font-weight:800;font-size:.85rem;color:#ff6050}
+.ds-p-sticky{position:sticky;bottom:0;background:rgba(6,8,10,.97);border-top:1px solid rgba(255,60,40,.15);padding:.7rem 1rem;display:flex;gap:.5rem;backdrop-filter:blur(10px)}
+.ds-p-sticky-call{flex:1;background:#ff3c28;color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center}
+.ds-p-sticky-wa{flex:.55;border:1px solid rgba(37,211,102,.35);color:#25d366;font-size:.65rem;font-weight:700;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center;letter-spacing:.6px}
+
+/* SUSHI DEMO */
+.ds-sushi{background:#03080a;font-family:'DM Sans',sans-serif;color:#e8f0f2}
+.ds-s-header{background:linear-gradient(180deg,#03080a,#060e12);padding:2rem 1.2rem 1.5rem;text-align:center;border-bottom:1px solid rgba(0,180,200,.15)}
+.ds-s-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:#e8f0f2;letter-spacing:4px;margin-bottom:.1rem}
+.ds-s-logo em{font-style:italic;color:#00b4c8}
+.ds-s-tagline{font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:rgba(232,240,242,.3);margin-bottom:.9rem}
+.ds-s-cta{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid rgba(0,180,200,.5);color:#00c8de;font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem 1.3rem;border-radius:50px}
+.ds-s-divider{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.2rem .3rem}
+.ds-s-divider-line{flex:1;height:1px;background:rgba(0,180,200,.1)}
+.ds-s-divider-txt{font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:rgba(0,180,200,.5);white-space:nowrap}
+.ds-s-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.8rem;padding:.7rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.ds-s-num{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:rgba(0,180,200,.3);min-width:20px;text-align:center}
+.ds-s-name{font-size:.8rem;color:#e8f0f2}
+.ds-s-pieces{font-size:.58rem;color:rgba(232,240,242,.35);margin-top:.1rem}
+.ds-s-price{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#00b4c8}
+.ds-s-sticky{position:sticky;bottom:0;background:rgba(3,8,10,.97);border-top:1px solid rgba(0,180,200,.12);padding:.7rem 1rem;display:flex;gap:.5rem}
+.ds-s-sticky-call{flex:1;background:linear-gradient(135deg,#0095aa,#00b4c8);color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center}
+.ds-s-sticky-map{flex:.5;border:1px solid rgba(0,180,200,.25);color:#00b4c8;font-size:.65rem;font-weight:700;text-transform:uppercase;border-radius:50px;padding:.55rem;text-align:center}
+
+/* DEMO SIDE PANEL */
+.demo-panel{flex:1;min-width:260px;max-width:400px;display:flex;flex-direction:column;gap:1.2rem}
+.demo-panel-title{font-family:var(--serif);font-size:1.6rem;font-weight:300;line-height:1.2;letter-spacing:-.5px}
+.demo-panel-title em{font-style:italic;color:var(--gold2)}
+.demo-panel-body{font-size:.82rem;color:var(--muted);line-height:1.8}
+.demo-features{display:flex;flex-direction:column;gap:.7rem;margin-top:.5rem}
+.demo-feat{display:flex;align-items:flex-start;gap:.8rem;padding:.85rem;background:var(--black);border:1px solid var(--border);border-radius:10px;transition:border-color .25s}
+.demo-feat:hover{border-color:var(--border2)}
+.demo-feat-ico{font-size:1.1rem;flex-shrink:0;margin-top:.05rem}
+.demo-feat-txt{}
+.demo-feat-title{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--cream);margin-bottom:.25rem}
+.demo-feat-desc{font-size:.72rem;color:var(--muted);line-height:1.6}
+.demo-cta-row{display:flex;flex-direction:column;gap:.6rem;margin-top:.5rem}
+
+/* SERVICES */
+.svc-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:3.5rem}
+@media(min-width:600px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
+.svc-card{background:var(--black);padding:2rem 1.6rem;transition:background .3s}
+.svc-card:hover{background:var(--off)}
+.svc-card:hover .svc-icon{transform:scale(1.1);background:rgba(201,158,68,.15)}
+.svc-icon{width:44px;height:44px;border-radius:12px;background:rgba(201,158,68,.08);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1.1rem;transition:transform .3s,background .3s}
+.svc-name{font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cream);margin-bottom:.5rem}
+.svc-desc{font-size:.78rem;color:var(--muted);line-height:1.75}
+.svc-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem}
+.chip{font-family:var(--sans);font-size:.55rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:.2rem .65rem;border-radius:50px;background:rgba(201,158,68,.07);border:1px solid rgba(201,158,68,.15);color:var(--gold)}
+
+/* OFFER */
+.offer-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:3.5rem}
+@media(min-width:850px){.offer-grid{grid-template-columns:1fr 1fr 1fr;align-items:start}}
+.offer-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;position:relative;transition:border-color .25s,transform .25s}
+.offer-card:hover{transform:translateY(-4px)}
+.offer-card.featured{border-color:var(--border2);background:linear-gradient(145deg,rgba(201,158,68,.06),var(--card))}
+.offer-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);font-family:var(--sans);font-size:.55rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.25rem .9rem;border-radius:50px;white-space:nowrap}
+.offer-tier{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
+.offer-price{display:flex;align-items:baseline;gap:.35rem;margin-bottom:.25rem}
+.offer-num{font-family:var(--serif);font-size:3.4rem;font-weight:300;line-height:1;background:linear-gradient(135deg,var(--cream),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.offer-per{font-size:.78rem;color:var(--muted)}
+.offer-setup{font-size:.7rem;color:var(--dim);margin-bottom:1.3rem;font-style:italic}
+.offer-setup strong{color:var(--gold2)}
+.offer-divider{height:1px;background:var(--border);margin-bottom:1.2rem}
+.offer-features{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+.offer-feat{display:flex;align-items:flex-start;gap:.6rem;font-size:.78rem;color:var(--muted);line-height:1.5}
+.offer-feat.yes{color:var(--cream)}
+.offer-check{font-size:.7rem;flex-shrink:0;margin-top:.12rem}
+.offer-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.9rem;border-radius:50px;font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;transition:all .25s}
+.offer-btn.solid{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);box-shadow:0 0 24px rgba(201,158,68,.2)}
+.offer-btn.solid:hover{box-shadow:0 0 40px rgba(201,158,68,.4);transform:translateY(-1px)}
+.offer-btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--border2)}
+.offer-btn.ghost:hover{background:rgba(201,158,68,.06)}
+.offer-note{font-size:.64rem;color:var(--dim);text-align:center;margin-top:.55rem;font-style:italic}
+.guarantee-strip{margin-top:2.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem;padding:1.6rem;background:rgba(201,158,68,.04);border:1px solid var(--border2);border-radius:var(--r)}
+.guar-item{display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:var(--muted)}
+.guar-ico{font-size:1rem;flex-shrink:0}
+.guar-txt strong{color:var(--cream);font-weight:600}
+
+/* LAUNCH OFFER */
+.launch-box{background:linear-gradient(135deg,rgba(201,158,68,.09),rgba(201,158,68,.03));border:1px solid var(--border2);border-radius:18px;padding:2.5rem;margin-top:3.5rem;position:relative;overflow:hidden}
+.launch-box::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,rgba(201,158,68,.08),transparent 70%);pointer-events:none}
+.launch-box-inner{display:flex;flex-direction:column;gap:2rem}
+@media(min-width:850px){.launch-box-inner{flex-direction:row;align-items:flex-start}}
+.launch-left{flex:1.3}
+.launch-label{font-family:var(--sans);font-size:.58rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.9rem;background:rgba(201,158,68,.1);padding:.25rem .8rem;border-radius:50px;border:1px solid var(--border2)}
+.launch-title{font-family:var(--serif);font-size:1.7rem;font-weight:300;line-height:1.2;color:var(--cream);margin-bottom:.7rem}
+.launch-title strong{font-weight:600}
+.launch-body{font-size:.82rem;color:var(--muted);line-height:1.8}
+.launch-perks{display:flex;flex-direction:column;gap:.65rem;margin-top:1.3rem}
+.launch-perk{display:flex;align-items:flex-start;gap:.75rem;font-size:.8rem;color:var(--muted)}
+.launch-perk-ico{width:22px;height:22px;border-radius:50%;background:rgba(201,158,68,.12);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;margin-top:.1rem}
+.launch-perk strong{color:var(--cream)}
+.launch-right{flex:1;display:flex;flex-direction:column;gap:1rem;min-width:240px}
+.spots-box{background:rgba(201,158,68,.08);border:1px solid var(--border2);border-radius:var(--r);padding:1.3rem;text-align:center}
+.spots-num{font-family:var(--serif);font-size:3rem;font-weight:300;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.25rem}
+.spots-label{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* FAQ */
+.faq-list{max-width:720px;margin:3.5rem auto 0;display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;font-family:var(--sans);font-size:.82rem;font-weight:600;letter-spacing:.3px;color:var(--cream);text-align:left;gap:1rem;transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-ico{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s,border-color .25s;font-size:.7rem;color:var(--gold)}
+.faq-q[aria-expanded=true] .faq-ico{transform:rotate(45deg);border-color:var(--border2)}
+.faq-a{display:none;padding:.1rem 0 1.1rem;font-size:.82rem;color:var(--muted);line-height:1.8}
+.faq-a.open{display:block}
+
+/* FINAL CTA */
+.cta-section{text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(201,158,68,.09),transparent 65%)}
+.cta-wrap{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.cta-title{font-family:var(--serif);font-size:clamp(2.5rem,6vw,5rem);font-weight:300;line-height:1.05;letter-spacing:-1.5px;margin-bottom:1rem}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:2.2rem}
+.cta-btns{display:flex;flex-direction:column;gap:.75rem;align-items:center}
+@media(min-width:500px){.cta-btns{flex-direction:row;justify-content:center}}
+.cta-meta{margin-top:1.2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem .9rem;font-size:.65rem;color:var(--dim)}
+.cta-meta span::before{content:'✓ ';color:var(--gold)}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border);padding:3rem 1.5rem 2rem}
+@media(min-width:900px){footer{padding:4rem 6rem 2.5rem}}
+.foot-inner{max-width:1100px;margin:0 auto}
+.foot-top{display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:2.5rem}
+@media(min-width:700px){.foot-top{grid-template-columns:1.5fr 1fr 1fr}}
+.foot-logo-wrap{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.foot-brand{font-family:var(--sans);font-size:.8rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.foot-brand em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.foot-tagline{font-family:var(--serif);font-style:italic;font-size:.88rem;color:var(--muted);line-height:1.7;max-width:260px;margin-bottom:1rem}
+.foot-contact a{display:block;font-size:.78rem;color:var(--gold2);font-weight:600;margin-bottom:.3rem}
+.foot-col-title{font-family:var(--sans);font-size:.55rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.foot-links{display:flex;flex-direction:column;gap:.55rem;list-style:none}
+.foot-links a{font-size:.78rem;color:var(--muted);transition:color .2s}
+.foot-links a:hover{color:var(--cream)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.7rem}
+.foot-copy{font-size:.62rem;color:var(--dim)}
+.foot-legal{display:flex;gap:1.2rem}
+.foot-legal a{font-size:.62rem;color:var(--dim);transition:color .2s}
+.foot-legal a:hover{color:var(--gold)}
+
+/* STICKY BAR */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:700;background:rgba(5,4,3,.96);backdrop-filter:blur(24px);border-top:1px solid var(--border);padding:0;padding-bottom:env(safe-area-inset-bottom);display:flex}
+.sticky-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;padding:.75rem .5rem;font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-height:52px;transition:background .2s}
+.sticky-menu-btn{color:var(--gold);border-right:1px solid var(--border);flex:.45}
+.sticky-menu-btn:hover{background:rgba(201,158,68,.06)}
+.sticky-wa-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);flex:.55;animation:pulseGold 3s ease-in-out infinite}
+@keyframes pulseGold{0%,100%{box-shadow:none}50%{box-shadow:0 -4px 20px rgba(201,158,68,.25)}}
+.sticky-sub{font-size:.52rem;font-weight:500;opacity:.65;letter-spacing:.5px}
+
+/* UTILS */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.rv.visible{opacity:1;transform:none}
+.rv.d1{transition-delay:.05s}.rv.d2{transition-delay:.13s}.rv.d3{transition-delay:.21s}.rv.d4{transition-delay:.29s}
+@keyframes marqueeSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#top" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="20,4 36,13 36,27 20,36 4,27 4,13" stroke="url(#ng1)" stroke-width="1.2" fill="rgba(201,158,68,.06)"/>
+        <polygon points="20,10 30,16 30,24 20,30 10,24 10,16" stroke="url(#ng1)" stroke-width=".6" fill="rgba(201,158,68,.04)"/>
+        <circle cx="20" cy="20" r="3" fill="url(#ng1)"/>
+        <defs><linearGradient id="ng1" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c99e44"/><stop offset="100%" stop-color="#f5d080"/></linearGradient></defs>
+      </svg>
+    </div>
+    <span class="nav-brand">CONVERT<em>WEB</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demo">Démo</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#offre">Offre</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite" class="nav-cta" target="_blank" rel="noopener">Maquette gratuite</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-bg">
+    <div class="hero-gradient"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+  </div>
+  <div class="hero-kicker">Agence web spécialiste restauration</div>
+  <h1 class="hero-h1">
+    <span class="h1-line big">Votre restaurant</span>
+    <span class="h1-line italic">fait sonner</span>
+    <span class="h1-line outline">le téléphone.</span>
+  </h1>
+  <p class="hero-sub">ConvertWeb construit des sites web d'exception pour kebabs, fast-foods et restaurants. Livrés en 72h. <strong style="color:var(--cream)">+15 appels clients par mois garantis</strong> — ou vous ne payez pas.</p>
+  <div class="hero-actions">
+    <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite%20pour%20mon%20restaurant" class="btn-primary" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Maquette gratuite en 24h
+    </a>
+    <a href="#demo" class="btn-secondary">Voir la démo interactive ↓</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Défiler</span>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Sites Premium</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Mobile-First</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">SEO Local</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">+15 Appels Garantis</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Livraison 72h</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Kebabs · Fast-Foods · Restaurants</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Sites Premium</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Mobile-First</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">SEO Local</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">+15 Appels Garantis</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Livraison 72h</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Kebabs · Fast-Foods · Restaurants</span><span class="marquee-dot">◆</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="sec" id="probleme">
+  <div class="wrap">
+    <div class="rv"><span class="section-label">Le problème</span>
+    <h2 class="section-title">Votre restaurant perd des clients<br><em>chaque heure.</em></h2>
+    <p class="section-body">Sans site optimisé, vous existez pour vos habitués. Pas pour les nouveaux clients qui cherchent "kebab près de chez moi" en ce moment.</p></div>
+    <div class="prob-cols rv d2">
+      <div class="prob-col"><div class="prob-ico">📵</div><div class="prob-q">Site non adapté mobile</div><p class="prob-a">80% de vos clients cherchent sur téléphone. Un site mal affiché = fenêtre fermée, concurrent choisi.</p></div>
+      <div class="prob-col"><div class="prob-ico">🙈</div><div class="prob-q">Invisible sur Google</div><p class="prob-a">Si vous n'apparaissez pas en recherche locale, vous n'existez pas pour ceux qui ne vous connaissent pas encore.</p></div>
+      <div class="prob-col"><div class="prob-ico">📞</div><div class="prob-q">Pas de bouton d'appel</div><p class="prob-a">Un client qui ne trouve pas comment commander en 5 secondes passe au concurrent. Automatiquement.</p></div>
+      <div class="prob-col"><div class="prob-ico">💸</div><div class="prob-q">Commission Uber Eats</div><p class="prob-a">Uber Eats prend 30% sur chaque commande. Un appel direct vous coûte 0€. La différence s'accumule.</p></div>
+    </div>
+    <div class="sol-strip rv d3"><span class="sol-strip-icon">⚡</span><span class="sol-strip-txt">ConvertWeb résout tout ça — <strong>en 72 heures chrono, garantie résultats ou remboursé.</strong></span></div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="sec demo-section" id="demo">
+  <div class="wrap">
+    <div class="demo-intro">
+      <div class="rv">
+        <span class="section-label">Démo interactive</span>
+        <h2 class="section-title">Voilà ce qu'on<br><em>construit pour vous.</em></h2>
+        <p class="section-body">Trois exemples de sites réels que l'on peut créer pour votre type d'établissement. Choisissez un style — tout est personnalisable à 100%.</p>
+      </div>
+    </div>
+    <div class="demo-tabs rv d2">
+      <button class="demo-tab active" data-demo="kebab">🥙 Kebab / Grill</button>
+      <button class="demo-tab" data-demo="pizza">🍕 Pizza / Fast-Food</button>
+      <button class="demo-tab" data-demo="sushi">🍱 Sushi / Asian</button>
+    </div>
+    <div class="demo-stage rv d3">
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="notch-sensor"></div><div class="notch-cam"></div></div>
+          <div class="phone-screen">
+
+            <!-- KEBAB SCREEN -->
+            <div class="demo-screen ds-kebab active" id="demo-kebab">
+              <div class="ds-k-header">
+                <div class="ds-k-logo">ISTANBUL GRILL</div>
+                <div class="ds-k-tagline">Kebab · Tacos · Paninis</div>
+                <div class="ds-k-cta">📞 Commander maintenant</div>
+                <div class="ds-k-hours">🟢 Ouvert · Jusqu'à 23h00</div>
+              </div>
+              <div class="ds-k-menu-title">⭐ Nos Kebabs</div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Kebab Classique</div><div class="ds-k-item-desc">Veau · Sauce maison · Salade</div></div><div class="ds-k-item-price">6,50€</div></div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Kebab Spécial</div><div class="ds-k-item-desc">Mixte · Double sauce · Fromage</div></div><div class="ds-k-item-price">7,90€</div></div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Assiette Mixte</div><div class="ds-k-item-desc">Veau + Poulet · Frites · Salade</div></div><div class="ds-k-item-price">12,50€</div></div>
+              <div class="ds-k-menu-title">🌯 Tacos</div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Tacos L</div><div class="ds-k-item-desc">Poulet · Fromage · Sauce algérienne</div></div><div class="ds-k-item-price">8,50€</div></div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Tacos XL</div><div class="ds-k-item-desc">Double viande · Sauce au choix</div></div><div class="ds-k-item-price">11,00€</div></div>
+              <div class="ds-k-menu-title">🧃 Boissons</div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Coca-Cola 33cl</div><div class="ds-k-item-desc"></div></div><div class="ds-k-item-price">2,00€</div></div>
+              <div class="ds-k-item"><div class="ds-k-item-info"><div class="ds-k-item-name">Eau minérale</div><div class="ds-k-item-desc">50cl</div></div><div class="ds-k-item-price">1,50€</div></div>
+              <div style="height:64px"></div>
+              <div class="ds-k-sticky"><div class="ds-k-sticky-call">📞 Appeler</div><div class="ds-k-sticky-map">📍 Itinéraire</div></div>
+            </div>
+
+            <!-- PIZZA SCREEN -->
+            <div class="demo-screen ds-pizza" id="demo-pizza">
+              <div class="ds-p-header">
+                <div class="ds-p-logo">NAPOLI<span>EXPRESS</span></div>
+                <div class="ds-p-badge">🔴 Livraison disponible</div>
+                <div class="ds-p-cta">📞 Passer commande</div>
+              </div>
+              <div class="ds-p-promo"><div class="ds-p-promo-ico">🎉</div><div class="ds-p-promo-txt"><strong>Offre du jour</strong><br>Pizza + Boisson = <strong style="color:#ff6050">-15%</strong> avec le code NAPOLI</div></div>
+              <div class="ds-p-menu-title">🍕 Pizzas Classiques</div>
+              <div class="ds-p-item"><div class="ds-p-item-emoji">🍅</div><div class="ds-p-item-info"><div class="ds-p-item-name">Margherita</div><div class="ds-p-item-size">30cm · 40cm</div></div><div class="ds-p-item-price">9€</div></div>
+              <div class="ds-p-item"><div class="ds-p-item-emoji">🐷</div><div class="ds-p-item-info"><div class="ds-p-item-name">4 Fromages</div><div class="ds-p-item-size">30cm · 40cm</div></div><div class="ds-p-item-price">11€</div></div>
+              <div class="ds-p-item"><div class="ds-p-item-emoji">🥩</div><div class="ds-p-item-info"><div class="ds-p-item-name">Napolitaine</div><div class="ds-p-item-size">30cm · 40cm</div></div><div class="ds-p-item-price">12€</div></div>
+              <div class="ds-p-menu-title">🍔 Burgers</div>
+              <div class="ds-p-item"><div class="ds-p-item-emoji">🔥</div><div class="ds-p-item-info"><div class="ds-p-item-name">Smash Burger</div><div class="ds-p-item-size">Double steak · Cheddar</div></div><div class="ds-p-item-price">10€</div></div>
+              <div class="ds-p-item"><div class="ds-p-item-emoji">🌶️</div><div class="ds-p-item-info"><div class="ds-p-item-name">Crispy Chicken</div><div class="ds-p-item-size">Poulet croustillant · Coleslaw</div></div><div class="ds-p-item-price">9€</div></div>
+              <div style="height:64px"></div>
+              <div class="ds-p-sticky"><div class="ds-p-sticky-call">📞 Appeler</div><div class="ds-p-sticky-wa">💬 WhatsApp</div></div>
+            </div>
+
+            <!-- SUSHI SCREEN -->
+            <div class="demo-screen ds-sushi" id="demo-sushi">
+              <div class="ds-s-header">
+                <div class="ds-s-logo">YUME <em>Sushi</em></div>
+                <div class="ds-s-tagline">Sushi · Pokés · Yakitori</div>
+                <div class="ds-s-cta">Commander · 01 XX XX XX XX</div>
+              </div>
+              <div class="ds-s-divider"><div class="ds-s-divider-line"></div><div class="ds-s-divider-txt">Makis & Rolls</div><div class="ds-s-divider-line"></div></div>
+              <div class="ds-s-item"><div class="ds-s-num">01</div><div><div class="ds-s-name">California Roll</div><div class="ds-s-pieces">8 pièces · Avocat, concombre, surimi</div></div><div class="ds-s-price">8,90€</div></div>
+              <div class="ds-s-item"><div class="ds-s-num">02</div><div><div class="ds-s-name">Spicy Tuna Roll</div><div class="ds-s-pieces">8 pièces · Thon épicé, sésame</div></div><div class="ds-s-price">11,50€</div></div>
+              <div class="ds-s-item"><div class="ds-s-num">03</div><div><div class="ds-s-name">Dragon Roll</div><div class="ds-s-pieces">8 pièces · Crevette tempura, avocat</div></div><div class="ds-s-price">13,00€</div></div>
+              <div class="ds-s-divider"><div class="ds-s-divider-line"></div><div class="ds-s-divider-txt">Pokés</div><div class="ds-s-divider-line"></div></div>
+              <div class="ds-s-item"><div class="ds-s-num">01</div><div><div class="ds-s-name">Poké Saumon</div><div class="ds-s-pieces">Base riz · Saumon · Edamame</div></div><div class="ds-s-price">12,00€</div></div>
+              <div class="ds-s-item"><div class="ds-s-num">02</div><div><div class="ds-s-name">Poké Thon</div><div class="ds-s-pieces">Base quinoa · Thon · Mangue</div></div><div class="ds-s-price">13,50€</div></div>
+              <div style="height:64px"></div>
+              <div class="ds-s-sticky"><div class="ds-s-sticky-call">📞 Commander</div><div class="ds-s-sticky-map">📍 Voir plan</div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="demo-panel rv d4">
+        <div class="demo-panel-title">Ce que ce site<br><em>fait pour vous</em></div>
+        <p class="demo-panel-body">Chaque élément est pensé pour convertir le visiteur en client — pas pour faire joli.</p>
+        <div class="demo-features">
+          <div class="demo-feat"><div class="demo-feat-ico">📞</div><div class="demo-feat-txt"><div class="demo-feat-title">Bouton appel visible</div><div class="demo-feat-desc">En moins de 2 scrolls. Sticky bar en bas. Le client n'a aucune raison de ne pas appeler.</div></div></div>
+          <div class="demo-feat"><div class="demo-feat-ico">📍</div><div class="demo-feat-txt"><div class="demo-feat-title">SEO local intégré</div><div class="demo-feat-desc">JSON-LD, balises géographiques, fiche Google Maps. Vous apparaissez quand on cherche "kebab [votre ville]".</div></div></div>
+          <div class="demo-feat"><div class="demo-feat-ico">⚡</div><div class="demo-feat-txt"><div class="demo-feat-title">Chargement &lt;2 secondes</div><div class="demo-feat-desc">Même en 4G. Un site lent perd 40% de ses visiteurs avant qu'ils aient vu la moindre chose.</div></div></div>
+          <div class="demo-feat"><div class="demo-feat-ico">🎨</div><div class="demo-feat-txt"><div class="demo-feat-title">Design 100% sur-mesure</div><div class="demo-feat-desc">Pas de template. Vos couleurs, votre ambiance, votre menu exact. Identité unique.</div></div></div>
+        </div>
+        <div class="demo-cta-row">
+          <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite%20pour%20mon%20restaurant" class="btn-primary" target="_blank" rel="noopener" style="justify-content:center">
+            💬 Maquette gratuite pour mon restaurant
+          </a>
+          <p style="font-size:.65rem;color:var(--dim);text-align:center">En 24h · Sans engagement · Adaptée à votre type de restaurant</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="rv"><span class="section-label">Ce qu'on fait</span>
+    <h2 class="section-title">Tout ce qu'il faut<br><em>pour convertir.</em></h2></div>
+    <div class="svc-grid">
+      <div class="svc-card rv d1"><div class="svc-icon">📱</div><div class="svc-name">Mobile-First</div><p class="svc-desc">Conçu pour le pouce avant la souris. Sticky bar, bouton appel en évidence, navigation fluide. 90% de vos clients commandent sur téléphone.</p><div class="svc-chips"><span class="chip">Touch-friendly</span><span class="chip">Sticky bar</span><span class="chip">Click-to-call</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-icon">📍</div><div class="svc-name">SEO Local</div><p class="svc-desc">JSON-LD, balises géographiques, intégration Google Maps. Votre restaurant remonte quand un client tape "kebab [votre ville]".</p><div class="svc-chips"><span class="chip">JSON-LD</span><span class="chip">Google Maps</span><span class="chip">Fiches locales</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-icon">⚡</div><div class="svc-name">Performance</div><p class="svc-desc">Score Lighthouse 95+. Chargement en moins de 2 secondes même en 4G. Google favorise les sites rapides dans ses résultats.</p><div class="svc-chips"><span class="chip">Score 95+</span><span class="chip">Lazy loading</span><span class="chip">Code optimisé</span></div></div>
+      <div class="svc-card rv d1"><div class="svc-icon">🎨</div><div class="svc-name">Design Premium</div><p class="svc-desc">Pas de template générique. Chaque site a son identité propre — couleurs, typographie, animations. Votre restaurant mérite mieux qu'un WordPress banal.</p><div class="svc-chips"><span class="chip">Sur-mesure</span><span class="chip">Animations</span><span class="chip">Unique</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-icon">🔧</div><div class="svc-name">Maintenance</div><p class="svc-desc">Horaires, prix, photos — on met à jour pour vous sans délai. Votre site reste toujours parfait sans que vous ayez à toucher quoi que ce soit.</p><div class="svc-chips"><span class="chip">Mises à jour</span><span class="chip">Support direct</span><span class="chip">Hébergement</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-icon">📞</div><div class="svc-name">Conversion Max</div><p class="svc-desc">Numéro visible en moins de 3 scrolls, CTA sous chaque section, WhatsApp intégré. On optimise pour une seule chose : que le visiteur vous appelle.</p><div class="svc-chips"><span class="chip">CTA stratégiques</span><span class="chip">WhatsApp</span><span class="chip">Carte menu</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH OFFER -->
+<section class="sec" id="offre" style="background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="rv"><span class="section-label">Offre de lancement</span>
+    <h2 class="section-title">3 restaurants<br><em>pionniers.</em></h2>
+    <p class="section-body">ConvertWeb est en phase de lancement. On cherche 3 établissements prêts à tester notre méthode en échange d'un tarif exceptionnel et d'une attention maximale.</p></div>
+    <div class="launch-box rv d2">
+      <div class="launch-box-inner">
+        <div class="launch-left">
+          <span class="launch-label">🚀 Offre limitée</span>
+          <h3 class="launch-title">Ce que vous obtenez<br><strong>en tant que pionnier</strong></h3>
+          <p class="launch-body">En échange d'être parmi nos premières références, on vous donne un accès à des conditions qu'on ne proposerons plus jamais.</p>
+          <div class="launch-perks">
+            <div class="launch-perk"><div class="launch-perk-ico">✓</div><div><strong>Frais de création offerts</strong> — valeur 499€ → 0€</div></div>
+            <div class="launch-perk"><div class="launch-perk-ico">✓</div><div><strong>Premier mois offert</strong> — vous testez sans rien payer</div></div>
+            <div class="launch-perk"><div class="launch-perk-ico">✓</div><div><strong>Maquette gratuite en 24h</strong> — avant tout engagement</div></div>
+            <div class="launch-perk"><div class="launch-perk-ico">✓</div><div><strong>Garantie +15 appels/mois</strong> ou remboursé intégralement</div></div>
+            <div class="launch-perk"><div class="launch-perk-ico">✓</div><div><strong>Accès prioritaire</strong> pour toutes les mises à jour futures</div></div>
+          </div>
+        </div>
+        <div class="launch-right">
+          <div class="spots-box">
+            <div class="spots-num">3</div>
+            <div class="spots-label">Places disponibles<br>ce mois-ci</div>
+          </div>
+          <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20l%27offre%20pionnier" class="btn-primary" style="justify-content:center;width:100%" target="_blank" rel="noopener">
+            💬 Je veux cette offre
+          </a>
+          <p style="font-size:.67rem;color:var(--dim);text-align:center">WhatsApp · Réponse en moins de 2h</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="tarifs">
+  <div class="wrap">
+    <div class="rv"><span class="section-label">Tarifs</span>
+    <h2 class="section-title">Simple.<br><em>Transparent.</em></h2>
+    <p class="section-body">Abonnement mensuel tout inclus. Site, hébergement, nom de domaine, maintenance et mises à jour. Pas de frais cachés, pas de surprise.</p></div>
+    <div class="offer-grid">
+      <div class="offer-card rv d1">
+        <div class="offer-tier">Starter</div>
+        <div class="offer-price"><span class="offer-num">49</span><span class="offer-per">€ / mois</span></div>
+        <p class="offer-setup">+ 299€ frais de création <strong>(offerts en lancement)</strong></p>
+        <div class="offer-divider"></div>
+        <div class="offer-features">
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Site 1 page optimisée</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Bouton appel + WhatsApp</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>SEO local de base</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Hébergement inclus</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Livraison en 72h</div>
+          <div class="offer-feat"><span class="offer-check" style="opacity:.3">—</span>Menu multi-sections</div>
+          <div class="offer-feat"><span class="offer-check" style="opacity:.3">—</span>Animations premium</div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20le%20plan%20Starter" class="offer-btn ghost" target="_blank" rel="noopener">Choisir Starter</a>
+        <p class="offer-note">Parfait pour démarrer</p>
+      </div>
+      <div class="offer-card featured rv d2">
+        <div class="offer-badge">⭐ Le plus populaire</div>
+        <div class="offer-tier">Pro</div>
+        <div class="offer-price"><span class="offer-num">89</span><span class="offer-per">€ / mois</span></div>
+        <p class="offer-setup">+ 499€ frais de création <strong>(offerts en lancement)</strong></p>
+        <div class="offer-divider"></div>
+        <div class="offer-features">
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Site multi-sections complet</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Menu avec catégories & prix</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>SEO local avancé (JSON-LD)</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Animations & design premium</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Hébergement + nom de domaine</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Mises à jour illimitées</div>
+          <div class="offer-feat yes"><span class="offer-check">🛡</span><strong>Garanti +15 appels/mois</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20le%20plan%20Pro" class="offer-btn solid" target="_blank" rel="noopener">Choisir Pro</a>
+        <p class="offer-note">Premier mois offert en lancement</p>
+      </div>
+      <div class="offer-card rv d3">
+        <div class="offer-tier">Elite</div>
+        <div class="offer-price"><span class="offer-num">149</span><span class="offer-per">€ / mois</span></div>
+        <p class="offer-setup">+ 799€ frais de création <strong>(offerts en lancement)</strong></p>
+        <div class="offer-divider"></div>
+        <div class="offer-features">
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Tout le plan Pro</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Avis Google automatisés</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Galerie photos pro</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Click-to-WhatsApp avancé</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Rapport mensuel trafic</div>
+          <div class="offer-feat yes"><span class="offer-check">✓</span>Support prioritaire 7j/7</div>
+          <div class="offer-feat yes"><span class="offer-check">🛡</span><strong>Garanti +25 appels/mois</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20le%20plan%20Elite" class="offer-btn ghost" target="_blank" rel="noopener">Choisir Elite</a>
+        <p class="offer-note">Notre offre la plus complète</p>
+      </div>
+    </div>
+    <div class="guarantee-strip rv d4">
+      <div class="guar-item"><span class="guar-ico">🛡</span><span class="guar-txt"><strong>Garantie résultats</strong> — +15 appels ou remboursé</span></div>
+      <div class="guar-item"><span class="guar-ico">⚡</span><span class="guar-txt"><strong>Livraison 72h</strong> — ou premier mois offert</span></div>
+      <div class="guar-item"><span class="guar-ico">🔓</span><span class="guar-txt"><strong>Zéro engagement</strong> — résiliation libre</span></div>
+      <div class="guar-item"><span class="guar-ico">🎁</span><span class="guar-txt"><strong>Maquette gratuite</strong> — avant tout paiement</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="background:var(--off);border-top:1px solid var(--border)">
+  <div class="wrap">
+    <div class="rv"><span class="section-label">Questions fréquentes</span>
+    <h2 class="section-title">Tout ce que vous<br><em>voulez savoir.</em></h2></div>
+    <div class="faq-list">
+      <div class="faq-item rv d1">
+        <button class="faq-q" aria-expanded="false">Comment fonctionne la maquette gratuite ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">On vous contacte sur WhatsApp, on vous pose 5 questions sur votre restaurant (type, ambiance, couleurs), et on vous envoie une maquette personnalisée en 24h. Vous voyez le résultat final avant de vous engager sur quoi que ce soit.</div>
+      </div>
+      <div class="faq-item rv d2">
+        <button class="faq-q" aria-expanded="false">Comment vous garantissez +15 appels par mois ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Quatre leviers concrets : bouton d'appel visible en moins de 3 scrolls, numéro en header et footer, sticky bar mobile permanente, SEO local intégré dès le départ. Ce sont les mécanismes qui transforment les visiteurs en clients qui appellent. Si ces résultats ne sont pas atteints dans les 60 jours, on vous rembourse intégralement.</div>
+      </div>
+      <div class="faq-item rv d3">
+        <button class="faq-q" aria-expanded="false">Combien de temps pour livrer mon site ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">72h après validation de la maquette. Si on dépasse ce délai, votre premier mois est offert automatiquement. Dans les faits, la plupart des sites sont livrés en 48h.</div>
+      </div>
+      <div class="faq-item rv d1">
+        <button class="faq-q" aria-expanded="false">Je peux résilier quand je veux ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Oui, sans préavis et sans pénalité. Si vous résiliez, on vous transfère l'intégralité des fichiers du site — il reste le vôtre. On ne prend pas en otage votre site.</div>
+      </div>
+      <div class="faq-item rv d2">
+        <button class="faq-q" aria-expanded="false">Est-ce que vous faites aussi les mises à jour ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Oui, c'est inclus. Vous nous envoyez un message sur WhatsApp ("Mon kebab spécial est passé à 8,90€"), on met à jour dans les 24h. Horaires, prix, plats, photos — tout.</div>
+      </div>
+      <div class="faq-item rv d3">
+        <button class="faq-q" aria-expanded="false">Vous travaillez avec quel type de restaurants ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Kebabs, fast-foods, pizzerias, sandwicheries, sushis, tacos — tous les établissements dont les clients cherchent d'abord sur téléphone avant de commander ou de se déplacer. C'est notre spécialité unique.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="sec cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="cta-wrap">
+    <div class="rv">
+      <h2 class="cta-title">Votre restaurant<br>mérite <em>mieux.</em></h2>
+      <p class="cta-sub">Maquette gratuite en 24h. Premier mois offert. Garantie résultats ou remboursé. Il n'y a aucune raison de ne pas essayer.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite%20pour%20mon%20restaurant" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Maquette gratuite sur WhatsApp
+        </a>
+        <a href="mailto:contact@convertweb.fr" class="btn-secondary">✉️ Envoyer un email</a>
+      </div>
+      <div class="cta-meta">
+        <span>Réponse en moins de 2h</span>
+        <span>Maquette en 24h</span>
+        <span>Premier mois offert</span>
+        <span>Garantie résultats</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo-wrap">
+          <svg width="24" height="24" viewBox="0 0 40 40" fill="none"><polygon points="20,4 36,13 36,27 20,36 4,27 4,13" stroke="url(#fg)" stroke-width="1.2" fill="rgba(201,158,68,.06)"/><circle cx="20" cy="20" r="3" fill="url(#fg)"/><defs><linearGradient id="fg" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c99e44"/><stop offset="100%" stop-color="#f5d080"/></linearGradient></defs></svg>
+          <span class="foot-brand">CONVERT<em>WEB</em></span>
+        </div>
+        <p class="foot-tagline">Sites web qui font sonner votre téléphone. Spécialiste kebabs, fast-foods et restaurants.</p>
+        <div class="foot-contact">
+          <a href="https://wa.me/33XXXXXXXXX" target="_blank">💬 WhatsApp</a>
+          <a href="mailto:contact@convertweb.fr">✉️ contact@convertweb.fr</a>
+        </div>
+      </div>
+      <div>
+        <div class="foot-col-title">Navigation</div>
+        <ul class="foot-links">
+          <li><a href="#demo">Démo interactive</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#offre">Offre de lancement</a></li>
+          <li><a href="#tarifs">Tarifs</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-col-title">Notre garantie</div>
+        <ul class="foot-links">
+          <li><a href="#offre">+15 appels/mois garantis</a></li>
+          <li><a href="#offre">Livraison en 72h</a></li>
+          <li><a href="#offre">Premier mois offert</a></li>
+          <li><a href="#offre">Zéro engagement</a></li>
+          <li><a href="#offre">Maquette gratuite</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2025 ConvertWeb — Tous droits réservés</span>
+      <div class="foot-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <a href="#offre" class="sticky-btn sticky-menu-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Offre lancement
+    <span class="sticky-sub">Places limitées</span>
+  </a>
+  <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite%20pour%20mon%20restaurant" class="sticky-btn sticky-wa-btn" target="_blank" rel="noopener">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    💬 Maquette gratuite
+    <span class="sticky-sub">WhatsApp · 24h</span>
+  </a>
+</div>
+
+<script>
+// CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+if(cursor && ring){
+  let rx=0,ry=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{
+    cx=e.clientX;cy=e.clientY;
+    cursor.style.left=cx+'px';cursor.style.top=cy+'px';
+  });
+  function animRing(){
+    rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  }animRing();
+  document.querySelectorAll('a,button,.demo-tab').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.borderColor='rgba(201,158,68,.6)'});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='44px';ring.style.height='44px';ring.style.borderColor='rgba(201,158,68,.4)'});
+  });
+}
+
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+},{ passive:true });
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>observer.observe(el));
+
+// DEMO TABS
+const tabs = document.querySelectorAll('.demo-tab');
+const screens = document.querySelectorAll('.demo-screen');
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    screens.forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    const target = document.getElementById('demo-'+tab.dataset.demo);
+    if(target)target.classList.add('active');
+    // scroll phone to top
+    const phone = document.querySelector('.phone-screen');
+    if(phone)phone.scrollTop=0;
+  });
+});
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const expanded = btn.getAttribute('aria-expanded')==='true';
+    document.querySelectorAll('.faq-q').forEach(b=>{
+      b.setAttribute('aria-expanded','false');
+      const a=b.nextElementSibling;
+      if(a)a.classList.remove('open');
+    });
+    if(!expanded){
+      btn.setAttribute('aria-expanded','true');
+      const ans=btn.nextElementSibling;
+      if(ans)ans.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
+HTMLEOF
+echo "done"
