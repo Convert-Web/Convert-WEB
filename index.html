@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConvertWeb — Sites web qui font sonner le téléphone de votre restaurant</title>
+<meta name="description" content="ConvertWeb crée des sites web haute performance pour restaurants. Kebabs, pizzerias, sushis. Maquette gratuite en 24h.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===== INLINE STYLE (full CSS from style.css) ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}:root{--ink:#080806;--paper:#f5efe6;--gold:#d4a843;--gold-lt:#f0c96a;--rust:#c94a2a;--cream:#faf6f0;--muted:rgba(8,8,6,.42);--border:rgba(8,8,6,.09);--f-display:'Bebas Neue',sans-serif;--f-serif:'Instrument Serif',Georgia,serif;--f-body:'Cabinet Grotesk',sans-serif}html{scroll-behavior:smooth}body{background:var(--cream);color:var(--ink);font-family:var(--f-body);overflow-x:hidden;cursor:none}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}@media(max-width:768px){body{cursor:auto}}body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3;mix-blend-mode:multiply}#c-dot{position:fixed;width:6px;height:6px;background:var(--rust);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .12s,height .12s,background .2s}#c-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-color .2s}body.lh #c-dot{width:12px;height:12px;background:var(--gold)}body.lh #c-ring{width:48px;height:48px;border-color:var(--gold)}@media(max-width:768px){#c-dot,#c-ring{display:none}}nav{position:fixed;top:0;inset-inline:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;transition:background .4s,padding .3s,border-color .3s;border-bottom:1px solid transparent}nav.stuck{background:rgba(245,239,230,.95);backdrop-filter:blur(24px);border-color:var(--border);padding:1rem 2.5rem}.nav-logo{display:flex;align-items:center;gap:.55rem}.logo-hex{width:32px;height:32px;flex-shrink:0}.logo-name{font-family:var(--f-display);font-size:1.25rem;letter-spacing:3px;line-height:1}.logo-name span{color:var(--gold)}.nav-links{display:none;gap:2.5rem;list-style:none}.nav-links a{font-size:.62rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .2s}.nav-links a:hover{color:var(--ink)}.nav-cta{font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem 1.5rem;background:var(--ink);color:var(--cream);border-radius:2px;transition:background .2s,transform .2s}.nav-cta:hover{background:var(--rust);transform:translateY(-1px)}@media(min-width:900px){.nav-links{display:flex}nav{padding:1.5rem 5rem}nav.stuck{padding:1rem 5rem}}.hero{min-height:100svh;display:grid;grid-template-columns:1fr;position:relative;overflow:hidden;padding-top:80px}@media(min-width:900px){.hero{grid-template-columns:1fr 1fr}}.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(212,168,67,.09) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 80%,rgba(201,74,42,.06) 0%,transparent 60%)}.hero-left{display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;position:relative;z-index:2}@media(min-width:900px){.hero-left{padding:0 4rem 0 5rem}}.hero-eyebrow{display:flex;align-items:center;gap:.7rem;font-size:.58rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--rust);margin-bottom:1.5rem;opacity:0;animation:rise .7s .1s forwards}.hero-eyebrow::before{content:'';width:20px;height:2px;background:var(--rust)}.hero-h1{font-family:var(--f-display);font-size:clamp(4rem,8.5vw,9rem);line-height:.92;letter-spacing:2px;opacity:0;animation:rise .8s .25s forwards}.hero-h1 .gold{color:var(--gold);display:block}.hero-h1 .out{display:block;-webkit-text-stroke:2px var(--ink);color:transparent}.hero-honest{display:inline-flex;align-items:center;gap:.5rem;margin:1.4rem 0 .5rem;padding:.3rem .8rem;background:rgba(201,74,42,.08);border:1px solid rgba(201,74,42,.2);border-radius:2px;font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--rust);opacity:0;animation:rise .7s .42s forwards}.hero-sub{font-family:var(--f-serif);font-size:clamp(.95rem,1.5vw,1.15rem);font-style:italic;color:var(--muted);line-height:1.75;max-width:420px;opacity:0;animation:rise .7s .52s forwards}.hero-sub strong{color:var(--ink);font-style:normal}.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.9rem;margin-top:2rem;opacity:0;animation:rise .7s .66s forwards}.btn-primary{display:inline-flex;align-items:center;gap:.6rem;background:var(--ink);color:var(--cream);font-family:var(--f-body);font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:1rem 2rem;border-radius:2px;transition:background .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}.btn-primary:hover{background:var(--rust);transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,74,42,.3)}.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:.1rem;transition:color .2s,border-color .2s}.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}.hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem 4rem;opacity:0;animation:rise .9s .35s forwards}@media(min-width:900px){.hero-right{padding:2rem 4rem 2rem 2rem;overflow:hidden}}.hero-right::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(10,10,10,.04) 39px,rgba(10,10,10,.04) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(10,10,10,.04) 39px,rgba(10,10,10,.04) 40px);z-index:0}.phone-scene{position:relative;z-index:1;display:flex;gap:1.2rem;align-items:flex-start}.phone-main{width:240px;flex-shrink:0;border-radius:36px;border:2px solid rgba(0,0,0,.15);background:#111;box-shadow:0 50px 100px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.07);overflow:hidden;position:relative;animation:float 6s ease-in-out infinite}.phone-secondary{width:200px;flex-shrink:0;border-radius:30px;border:2px solid rgba(0,0,0,.12);background:#111;box-shadow:0 35px 70px rgba(0,0,0,.22);overflow:hidden;margin-top:3rem;display:none;animation:float2 7s ease-in-out infinite}@media(min-width:700px){.phone-secondary{display:block}}@keyframes float{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-14px) rotate(.5deg)}}@keyframes float2{0%,100%{transform:translateY(0) rotate(.5deg)}50%{transform:translateY(-10px) rotate(-.5deg)}}.pn{position:absolute;top:0;left:50%;transform:translateX(-50%);width:76px;height:24px;background:#111;border-bottom-left-radius:14px;border-bottom-right-radius:14px;z-index:20}.ps{width:100%;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}.ps::-webkit-scrollbar{display:none}.ps.mh{height:490px}.ps.sh{height:420px}.phone-badge{position:absolute;z-index:15;display:flex;align-items:center;gap:.4rem;background:rgba(245,239,230,.97);backdrop-filter:blur(12px);border:1px solid rgba(212,168,67,.3);border-radius:50px;padding:.35rem .8rem;font-size:.56rem;font-weight:800;color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.12);white-space:nowrap}.pb-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}.pb1{top:-10px;right:-20px;animation:fbadge 4s ease-in-out infinite}.pb2{bottom:100px;left:-30px;animation:fbadge 5s ease-in-out .6s infinite}@keyframes fbadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}.sk{background:#0c0905;color:#f0e8dc;font-family:var(--f-body);min-height:490px}.sk-cover{height:160px;position:relative;overflow:hidden}.sk-cover img{width:100%;height:100%;object-fit:cover}.sk-grad{position:absolute;inset:0;background:linear-gradient(0deg,#0c0905,transparent 60%)}.sk-open{position:absolute;top:28px;right:8px;background:#22c55e;color:#fff;font-size:.46rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:.2rem .5rem;border-radius:50px;display:flex;align-items:center;gap:.3rem}.sk-open::before{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:blink 2s infinite}.sk-head{padding:0 10px 8px}.sk-nm{font-family:var(--f-display);font-size:1.5rem;letter-spacing:2px;color:#f0e8dc;line-height:1}.sk-ty{font-size:.5rem;color:rgba(240,232,220,.35);letter-spacing:2px;text-transform:uppercase;margin-top:.15rem}.sk-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-block:1px solid rgba(255,255,255,.06);margin:6px 0}.sk-st{padding:7px 4px;text-align:center;font-size:.56rem}.sk-st:not(:last-child){border-right:1px solid rgba(255,255,255,.06)}.sk-sv{font-weight:800;color:#f0e8dc;display:block}.sk-sl{color:rgba(240,232,220,.35);font-size:.46rem;text-transform:uppercase;letter-spacing:1px}.sk-ctas{padding:6px 10px;display:flex;flex-direction:column;gap:5px}.sk-call{background:linear-gradient(135deg,#c8570a,#e8731a);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:.62rem;border-radius:8px;text-align:center;box-shadow:0 3px 12px rgba(200,87,10,.35)}.sk-wa{border:1px solid rgba(37,174,96,.3);color:#27ae60;font-size:.58rem;font-weight:700;padding:.5rem;border-radius:8px;text-align:center;background:rgba(37,174,96,.07);text-transform:uppercase;letter-spacing:.6px}.sk-sec{padding:8px 10px 3px;font-size:.46rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(200,87,10,.8)}.sk-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04)}.sk-img{width:46px;height:46px;border-radius:8px;object-fit:cover;flex-shrink:0}.sk-inf{flex:1;min-width:0}.sk-in{font-size:.75rem;font-weight:700;color:#f0e8dc;line-height:1.2}.sk-id{font-size:.52rem;color:rgba(240,232,220,.34);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sk-ip{font-family:var(--f-display);font-size:1rem;color:#e07a30;flex-shrink:0}.sk-sticky{position:sticky;bottom:0;background:rgba(12,9,5,.96);border-top:1px solid rgba(255,255,255,.06);padding:7px 10px;display:flex;gap:6px;backdrop-filter:blur(10px)}.sk-s1{flex:1;background:linear-gradient(135deg,#c8570a,#e8731a);color:#fff;font-size:.58rem;font-weight:800;text-transform:uppercase;border-radius:7px;padding:.52rem;text-align:center}.sk-s2{width:36px;border:1px solid rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem}.sp{background:#fcfaf6;color:#1a1208;font-family:var(--f-body);min-height:420px}.sp-cover{height:130px;position:relative;overflow:hidden}.sp-cover img{width:100%;height:100%;object-fit:cover}.sp-grad{position:absolute;inset:0;background:linear-gradient(0deg,#fcfaf6,transparent 55%)}.sp-head{padding:0 10px 6px}.sp-nm{font-family:var(--f-display);font-size:1.3rem;letter-spacing:2px;color:#1a1208}.sp-rt{display:flex;align-items:center;gap:.3rem;font-size:.56rem;color:rgba(26,18,8,.5);margin-top:.1rem}.sp-rt span{color:#f59e0b}.sp-promo{margin:0 10px 8px;background:linear-gradient(135deg,rgba(220,38,38,.08),rgba(220,38,38,.04));border:1px solid rgba(220,38,38,.14);border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px}.sp-pi{font-size:1rem;flex-shrink:0}.sp-pt{font-size:.55rem;color:rgba(26,18,8,.6);line-height:1.4}.sp-pt strong{color:#dc2626}.sp-cats{display:flex;gap:5px;padding:0 10px 8px;overflow-x:auto;scrollbar-width:none}.sp-cat{font-size:.52rem;font-weight:700;padding:.22rem .6rem;border-radius:50px;white-space:nowrap;flex-shrink:0;border:1px solid rgba(26,18,8,.1);color:rgba(26,18,8,.42)}.sp-cat.a{background:#1a1208;color:#fcfaf6;border-color:#1a1208}.sp-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(26,18,8,.06)}.sp-img{width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0}.sp-inf{flex:1;min-width:0}.sp-in{font-size:.75rem;font-weight:700;color:#1a1208}.sp-id{font-size:.52rem;color:rgba(26,18,8,.38);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sp-ir{flex-shrink:0;text-align:right}.sp-ip{font-size:.8rem;font-weight:800;color:#dc2626}.sp-ia{width:22px;height:22px;border-radius:6px;background:#1a1208;color:#fcfaf6;font-size:.85rem;display:flex;align-items:center;justify-content:center;margin-top:3px;margin-left:auto}.sp-sticky{position:sticky;bottom:0;background:rgba(252,250,246,.96);border-top:1px solid rgba(26,18,8,.08);padding:7px 10px;display:grid;grid-template-columns:1fr 1fr;gap:5px;backdrop-filter:blur(10px)}.sp-s1{background:#1a1208;color:#fcfaf6;font-size:.58rem;font-weight:800;text-transform:uppercase;border-radius:7px;padding:.5rem;text-align:center}.sp-s2{border:1px solid rgba(37,174,96,.3);color:#27ae60;font-size:.58rem;font-weight:700;text-transform:uppercase;border-radius:7px;padding:.5rem;text-align:center}.marquee{background:var(--ink);padding:.9rem 0;overflow:hidden;border-top:3px solid var(--gold)}.mq-track{display:flex;white-space:nowrap;animation:mq 22s linear infinite}.mq-item{font-family:var(--f-display);font-size:1.1rem;letter-spacing:4px;text-transform:uppercase;padding:0 2rem;color:rgba(242,237,230,.5)}.mq-dot{color:var(--gold);padding:0 1rem}@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}.sec{padding:6rem 2.5rem}@media(min-width:900px){.sec{padding:9rem 5rem}}.wrap{max-width:1120px;margin:0 auto}.label{font-size:.58rem;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}.label::before{content:'';width:18px;height:2px;background:var(--rust);flex-shrink:0}.big-title{font-family:var(--f-display);font-size:clamp(2.8rem,5.5vw,5.5rem);line-height:.95;letter-spacing:2px}.big-title em{font-family:var(--f-serif);font-style:italic;color:var(--gold);font-size:1.05em;letter-spacing:0}.rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.rv.vi{opacity:1;transform:none}.d1{transition-delay:.07s}.d2{transition-delay:.15s}.d3{transition-delay:.23s}.d4{transition-delay:.31s}@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}.honest-sec{background:var(--ink);color:var(--cream)}.honest-sec .label{color:var(--gold)}.honest-sec .label::before{background:var(--gold)}.honest-sec .big-title{color:var(--cream)}.honest-body{font-family:var(--f-serif);font-style:italic;font-size:1.05rem;color:rgba(242,237,230,.55);line-height:1.85;max-width:520px;margin-top:1rem}.honest-cards{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-top:3rem}@media(min-width:600px){.honest-cards{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.honest-cards{grid-template-columns:1fr 1fr 1fr}}.hc{background:#0a0a0a;padding:2rem 1.8rem;transition:background .25s}.hc:hover{background:#111}.hc-ico{font-size:1.6rem;margin-bottom:1rem}.hc-t{font-size:.9rem;font-weight:800;color:var(--cream);margin-bottom:.5rem}.hc-d{font-size:.78rem;color:rgba(242,237,230,.42);line-height:1.75}.hc.accent{background:rgba(212,168,67,.06);border-left:3px solid var(--gold)}.hc.accent .hc-t{color:var(--gold)}.honest-pledge{margin-top:2.5rem;padding:2rem;background:var(--gold);color:var(--ink);border-radius:4px}.hp-title{font-family:var(--f-display);font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;margin-bottom:.7rem}.hp-body{font-size:.82rem;line-height:1.8;max-width:600px}.demo-sec{background:var(--paper);position:relative;overflow:hidden}.demo-sec::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(212,168,67,.07),transparent 70%);pointer-events:none}.demo-header{display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:3rem;align-items:end}@media(min-width:900px){.demo-header{grid-template-columns:1.2fr 1fr}}.demo-body{font-family:var(--f-serif);font-style:italic;font-size:1rem;color:var(--muted);line-height:1.85}.demo-hint{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:.4rem .9rem;border-radius:2px}.demo-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}.dtab{font-size:.62rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:2px;border:1.5px solid var(--border);color:var(--muted);background:none;cursor:pointer;transition:all .25s}.dtab.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}.dtab:not(.on):hover{border-color:var(--ink);color:var(--ink)}.demo-stage{display:flex;gap:2rem;align-items:flex-start;overflow-x:auto;padding-bottom:1rem;scrollbar-width:none}.demo-stage::-webkit-scrollbar{display:none}@media(min-width:1100px){.demo-stage{overflow:visible}}.demo-phone{width:260px;flex-shrink:0;border-radius:38px;border:2px solid rgba(0,0,0,.13);background:#111;box-shadow:0 40px 80px rgba(0,0,0,.2),0 0 0 1px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;opacity:0;transform:translateY(22px) scale(.97);transition:opacity .65s,transform .65s,box-shadow .3s}.demo-phone.vi{opacity:1;transform:translateY(0) scale(1)}.demo-phone:nth-child(2){transition-delay:.12s}.demo-phone:nth-child(3){transition-delay:.24s}.demo-phone:hover{box-shadow:0 56px 100px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.5);transform:translateY(-6px) scale(1) !important}.dp-notch{height:28px;background:#111;display:flex;align-items:center;justify-content:center}.dp-pill{width:60px;height:5px;background:#1a1a1a;border-radius:3px}.dp-screen{height:520px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}.dp-screen::-webkit-scrollbar{display:none}.phone-label{text-align:center;margin-top:1rem;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}.phone-label span{color:var(--ink)}.app-sushi{background:#f8f4ef;color:#1a1410;font-family:var(--f-body);min-height:520px}.ys-hero{height:175px;position:relative;overflow:hidden}.ys-hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.9)}.ys-ov{position:absolute;inset:0;background:linear-gradient(0deg,#f8f4ef,transparent 55%)}.ys-bar{position:absolute;top:10px;inset-inline:0;padding:0 10px;display:flex;justify-content:space-between}.ys-award{background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);font-size:.46rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:.2rem .52rem;border-radius:50px}.ys-head{padding:0 12px 8px}.ys-nm{font-family:var(--f-display);font-size:1.6rem;letter-spacing:3px;color:#1a1410;line-height:1}.ys-ty{font-size:.46rem;letter-spacing:3px;text-transform:uppercase;color:rgba(26,20,16,.32);margin-top:.15rem}.ys-chips{display:flex;gap:4px;padding:0 12px 8px;overflow-x:auto;scrollbar-width:none}.ys-chip{font-size:.5rem;font-weight:700;padding:.18rem .52rem;border-radius:50px;white-space:nowrap;flex-shrink:0;background:rgba(26,20,16,.06);color:rgba(26,20,16,.48)}.ys-chip.on{background:#1a1410;color:#f8f4ef}.ys-ctas{padding:0 12px 8px;display:flex;flex-direction:column;gap:5px}.ys-c1{background:linear-gradient(135deg,#1a1410,#2d2218);color:#f8f4ef;font-size:.62rem;font-weight:800;text-transform:uppercase;padding:.65rem;border-radius:9px;text-align:center}.ys-c2{border:1px solid rgba(37,174,96,.3);color:#27ae60;background:rgba(37,174,96,.07);font-size:.58rem;font-weight:700;padding:.52rem;border-radius:9px;text-align:center;text-transform:uppercase}.ys-sec{padding:8px 12px 3px;font-size:.44rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(180,120,60,.8)}.ys-item{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:1px solid rgba(26,20,16,.05)}.ys-img{width:50px;height:50px;border-radius:9px;object-fit:cover;flex-shrink:0}.ys-inf{flex:1;min-width:0}.ys-in{font-size:.78rem;font-weight:700;color:#1a1410;line-height:1.2}.ys-id{font-size:.52rem;color:rgba(26,20,16,.33);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ys-ir{flex-shrink:0;text-align:right}.ys-ip{font-size:.8rem;font-weight:800;color:#b47828}.ys-ia{width:22px;height:22px;border-radius:6px;background:#1a1410;color:#f8f4ef;font-size:.85rem;display:flex;align-items:center;justify-content:center;margin-top:3px;margin-left:auto}.ys-sticky{position:sticky;bottom:0;background:rgba(248,244,239,.96);border-top:1px solid rgba(26,20,16,.07);padding:8px 12px;display:flex;gap:6px;backdrop-filter:blur(12px)}.ys-s1{flex:1;background:linear-gradient(135deg,#1a1410,#2d2218);color:#f8f4ef;font-size:.6rem;font-weight:800;text-transform:uppercase;border-radius:7px;padding:.52rem;text-align:center}.ys-s2{width:36px;border:1px solid rgba(26,20,16,.12);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem}.ba-sec{background:var(--ink);color:var(--cream)}.ba-sec .label{color:var(--gold)}.ba-sec .label::before{background:var(--gold)}.ba-sec .big-title{color:var(--cream)}.ba-wrap{max-width:820px;margin:3rem auto 0}.ba-container{border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5);cursor:ew-resize;position:relative;user-select:none;height:460px}@media(min-width:600px){.ba-container{height:480px}}.ba-after-bg{position:absolute;inset:0;background:#0d0906;display:flex;flex-direction:column}.ba-after-img{height:120px;background:linear-gradient(135deg,#3a1a08,#6b2e0d);display:flex;align-items:center;justify-content:center;font-size:3rem}.ba-after-body{padding:14px;flex:1;display:flex;flex-direction:column;gap:8px}.ba-after-name{font-family:var(--f-display);font-size:1.4rem;color:#f2e8d8;letter-spacing:2px}.ba-after-btn{background:linear-gradient(135deg,#bf4b0a,#e06820);color:#fff;font-size:.6rem;font-weight:800;padding:.6rem;border-radius:8px;text-align:center;text-transform:uppercase}.ba-after-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}.ba-ai-box{width:36px;height:36px;border-radius:7px;background:rgba(255,255,255,.07);flex-shrink:0}.ba-ai-lines{flex:1;display:flex;flex-direction:column;gap:3px}.ba-ai-a{height:8px;border-radius:2px;background:rgba(255,255,255,.14);width:70%}.ba-ai-b{height:6px;border-radius:2px;background:rgba(255,255,255,.06);width:50%}.ba-ai-p{font-family:var(--f-display);color:#e06820;font-size:.9rem}.ba-before-bg{position:absolute;inset:0;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5rem;gap:.8rem}.ba-before-bar{width:100%;height:26px;background:rgba(255,255,255,.05);border-radius:3px;display:flex;align-items:center;gap:.5rem;padding:0 .6rem}.ba-bd{width:7px;height:7px;border-radius:50%}.ba-url{height:14px;flex:1;background:rgba(255,255,255,.04);border-radius:2px}.ba-before-title{font-size:.85rem;color:rgba(255,255,255,.15);font-weight:700;text-align:center;font-family:monospace;margin-top:.3rem}.ba-rows{width:100%;display:flex;flex-direction:column;gap:.5rem}.ba-r{height:10px;border-radius:3px;background:rgba(255,255,255,.05)}.ba-r.t{height:18px;background:rgba(255,255,255,.07)}.ba-cta{width:100%;padding:1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:4px;text-align:center;font-size:.6rem;color:rgba(255,255,255,.12);margin-top:.4rem}.ba-clip{position:absolute;inset:0;overflow:hidden;z-index:3}.ba-div{position:absolute;top:0;bottom:0;z-index:10;width:3px;background:#fff;pointer-events:none}.ba-handle{position:absolute;top:50%;z-index:11;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;gap:4px;pointer-events:none;font-size:.75rem;font-weight:900;color:var(--ink)}.ba-label{position:absolute;top:12px;z-index:12;font-size:.52rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.25rem .7rem;border-radius:2px}.ba-lb{left:12px;background:rgba(201,74,42,.9);color:#fff}.ba-la{right:12px;background:rgba(212,168,67,.95);color:var(--ink)}.ba-hint{text-align:center;margin-top:1.2rem;font-size:.62rem;color:rgba(242,237,230,.3);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.4rem}.proc-sec{background:var(--cream)}.proc-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:3.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}@media(min-width:600px){.proc-grid{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.proc-grid{grid-template-columns:1fr 1fr 1fr 1fr}}.proc-step{padding:2rem 1.8rem;border-bottom:1px solid var(--border);position:relative;transition:background .25s}.proc-step:hover{background:rgba(212,168,67,.05)}@media(min-width:600px){.proc-step:nth-child(odd){border-right:1px solid var(--border)}.proc-step:nth-last-child(-n+2){border-bottom:none}}@media(min-width:1000px){.proc-step{border-right:1px solid var(--border);border-bottom:none}.proc-step:last-child{border-right:none}}.ps-num{font-family:var(--f-display);font-size:4rem;color:rgba(8,8,6,.05);line-height:1;position:absolute;top:1rem;right:1rem}.ps-ico{font-size:1.6rem;margin-bottom:.9rem}.ps-t{font-size:.78rem;font-weight:800;color:var(--ink);margin-bottom:.5rem}.ps-d{font-size:.75rem;color:var(--muted);line-height:1.7}.ps-badge{display:inline-flex;align-items:center;gap:.3rem;margin-top:.8rem;font-size:.52rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:rgba(212,168,67,.12);color:var(--gold);padding:.2rem .6rem;border-radius:2px}.svc-sec{background:var(--paper)}.svc-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-top:3.5rem}@media(min-width:600px){.svc-grid{grid-template-columns:1fr 1fr}}@media(min-width:900px){.svc-grid{grid-template-columns:1fr 1fr 1fr}}.svc-card{background:var(--paper);padding:2.2rem 1.8rem;transition:background .25s;position:relative;overflow:hidden}.svc-card:hover{background:var(--cream)}.svc-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}.svc-card:hover::after{transform:scaleX(1)}.svc-ico{font-size:2rem;margin-bottom:1.2rem}.svc-n{font-size:.9rem;font-weight:800;margin-bottom:.6rem}.svc-d{font-size:.78rem;color:var(--muted);line-height:1.75;margin-bottom:1rem}.chips{display:flex;flex-wrap:wrap;gap:.35rem}.chip{font-size:.52rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(8,8,6,.05);padding:.2rem .55rem;border-radius:2px;color:var(--muted)}.launch-sec{background:var(--ink);color:var(--cream)}.launch-sec .label{color:var(--gold)}.launch-sec .label::before{background:var(--gold)}.launch-sec .big-title{color:var(--cream)}.launch-box{margin-top:3rem;display:grid;grid-template-columns:1fr;border:1px solid rgba(255,255,255,.1);border-radius:4px;overflow:hidden}@media(min-width:900px){.launch-box{grid-template-columns:1.5fr 1fr}}.lb-left{padding:3rem 2.5rem;background:rgba(255,255,255,.02)}.lb-title{font-family:var(--f-display);font-size:clamp(2rem,3.5vw,2.8rem);letter-spacing:2px;color:var(--cream);line-height:.95;margin-bottom:1rem}.lb-title span{color:var(--gold)}.lb-body{font-family:var(--f-serif);font-style:italic;font-size:.95rem;color:rgba(242,237,230,.5);line-height:1.8;max-width:400px;margin-bottom:2rem}.lb-perks{display:flex;flex-direction:column;gap:.7rem}.lb-perk{display:flex;align-items:flex-start;gap:.7rem}.lb-chk{width:18px;height:18px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:var(--ink);flex-shrink:0;margin-top:.1rem}.lb-txt{font-size:.82rem;color:rgba(242,237,230,.7);line-height:1.45}.lb-txt strong{color:var(--cream)}.lb-right{padding:3rem 2.5rem;background:rgba(212,168,67,.08);border-left:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem}.spots-big{font-family:var(--f-display);font-size:7rem;color:var(--gold);line-height:1;text-align:center}.spots-lbl{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(242,237,230,.4);text-align:center}.lb-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--gold);color:var(--ink);font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:1rem 2rem;border-radius:2px;width:100%;transition:background .2s,transform .2s}.lb-btn:hover{background:var(--gold-lt);transform:translateY(-1px)}.lb-note{font-size:.6rem;color:rgba(242,237,230,.3);text-align:center}.price-sec{background:var(--cream)}.price-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-top:3.5rem}@media(min-width:700px){.price-grid{grid-template-columns:1fr 1fr 1fr}}.pc{background:var(--paper);border:1px solid var(--border);border-radius:4px;padding:2.2rem 2rem;display:flex;flex-direction:column;gap:.6rem;transition:transform .3s,box-shadow .3s}.pc:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(0,0,0,.07)}.pc.feat{background:var(--ink);color:var(--cream);border-color:rgba(255,255,255,.07);transform:scale(1.02)}.pc.feat:hover{transform:scale(1.02) translateY(-4px)}.pc-badge{font-size:.55rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:.25rem .7rem;border-radius:2px;display:inline-block;width:fit-content}.pc-tier{font-family:var(--f-display);font-size:1.6rem;letter-spacing:3px}.pc.feat .pc-tier{color:var(--cream)}.pc-num{font-family:var(--f-display);font-size:3.5rem;letter-spacing:-1px;line-height:1}.pc.feat .pc-num{color:var(--gold)}.pc-per{font-size:.75rem;font-weight:700;color:var(--muted)}.pc.feat .pc-per{color:rgba(242,237,230,.5)}.pc-setup{font-size:.68rem;color:var(--muted)}.pc.feat .pc-setup{color:rgba(242,237,230,.4)}.pc-line{height:1px;background:var(--border);margin:.4rem 0}.pc.feat .pc-line{background:rgba(255,255,255,.07)}.pc-feats{flex:1;display:flex;flex-direction:column;gap:.5rem}.pc-f{display:flex;align-items:flex-start;gap:.55rem;font-size:.76rem;color:var(--muted);line-height:1.45}.pc.feat .pc-f{color:rgba(242,237,230,.5)}.pc-f.y{color:var(--ink)}.pc.feat .pc-f.y{color:var(--cream)}.pc-chk{flex-shrink:0;margin-top:.08rem;font-size:.68rem}.pc-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:.9rem;border-radius:2px;font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;transition:all .2s;border:none;cursor:pointer}.pc-btn.solid{background:var(--gold);color:var(--ink)}.pc-btn.solid:hover{background:var(--gold-lt);transform:translateY(-1px)}.pc-btn.outline{border:1.5px solid var(--ink);color:var(--ink);background:transparent}.pc-btn.outline:hover{background:var(--ink);color:var(--cream)}.pc-note{font-size:.62rem;color:var(--muted);text-align:center;font-style:italic}.pc.feat .pc-note{color:rgba(242,237,230,.3)}.guar-row{margin-top:2.2rem;padding:1.5rem 2rem;background:var(--paper);border:1px solid var(--border);border-radius:4px;display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem 3rem}.gi{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--muted)}.gi strong{color:var(--ink)}.faq-sec{background:var(--paper)}.faq-list{max-width:720px;margin:3.5rem auto 0}.faq-item{border-bottom:1px solid var(--border)}.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;font-size:.84rem;font-weight:700;text-align:left;gap:1rem;background:none;cursor:pointer;transition:color .2s;border:none;color:var(--ink)}.faq-q:hover{color:var(--rust)}.faq-plus{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;transition:transform .3s,border-color .2s}.faq-q[aria-expanded=true] .faq-plus{transform:rotate(45deg);border-color:var(--rust);color:var(--rust)}.faq-a{display:none;padding:.1rem 0 1rem;font-family:var(--f-serif);font-size:.95rem;font-style:italic;color:var(--muted);line-height:1.8}.faq-a.open{display:block}.final-cta{background:var(--gold);position:relative;overflow:hidden;padding:6rem 2.5rem}@media(min-width:900px){.final-cta{padding:9rem 5rem}}.fcta-bg{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 35px,rgba(10,10,10,.04) 35px,rgba(10,10,10,.04) 36px),repeating-linear-gradient(-45deg,transparent,transparent 35px,rgba(10,10,10,.04) 35px,rgba(10,10,10,.04) 36px)}.fcta-inner{position:relative;z-index:1;text-align:center;max-width:700px;margin:0 auto}.fcta-t{font-family:var(--f-display);font-size:clamp(3rem,7vw,7rem);line-height:.9;letter-spacing:3px;color:var(--ink);margin-bottom:1.2rem}.fcta-t em{font-family:var(--f-serif);font-style:italic;color:rgba(10,10,10,.55)}.fcta-sub{font-family:var(--f-serif);font-style:italic;font-size:1.05rem;color:rgba(10,10,10,.6);line-height:1.75;margin-bottom:2.2rem}.fcta-btns{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}.fcta-meta{margin-top:1.4rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.2rem;font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(10,10,10,.5)}footer{background:var(--ink);color:rgba(242,237,230,.5);padding:4rem 2.5rem 2rem}@media(min-width:900px){footer{padding:4rem 5rem 2rem}}.ft{max-width:1120px;margin:0 auto}.ft-top{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:3rem}@media(min-width:700px){.ft-top{grid-template-columns:1.5fr 1fr 1fr}}.ft-logo{font-family:var(--f-display);font-size:1.4rem;letter-spacing:3px;color:var(--cream);margin-bottom:.6rem}.ft-logo span{color:var(--gold)}.ft-tag{font-family:var(--f-serif);font-style:italic;font-size:.92rem;color:rgba(242,237,230,.38);line-height:1.7;max-width:260px;margin-bottom:1rem}.ft-contact a{display:block;font-size:.76rem;color:var(--gold);font-weight:700;margin-bottom:.35rem;transition:color .2s}.ft-contact a:hover{color:var(--gold-lt)}.ft-col-t{font-size:.54rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(242,237,230,.2);margin-bottom:.9rem}.ft-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}.ft-links a{font-size:.78rem;color:rgba(242,237,230,.4);transition:color .2s}.ft-links a:hover{color:var(--cream)}.ft-bot{border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.6rem}.ft-copy{font-size:.62rem;color:rgba(242,237,230,.18)}.ft-leg{display:flex;gap:1.2rem}.ft-leg a{font-size:.62rem;color:rgba(242,237,230,.18);transition:color .2s}.ft-leg a:hover{color:var(--gold)}.stickybar{position:fixed;bottom:0;inset-inline:0;z-index:600;background:rgba(8,8,6,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding-bottom:env(safe-area-inset-bottom)}.sb-l{flex:.45;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;padding:.75rem .5rem;font-size:.54rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);border-right:1px solid rgba(255,255,255,.06);transition:background .2s}.sb-l:hover{background:rgba(212,168,67,.06)}.sb-r{flex:.55;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;padding:.75rem .5rem;font-size:.54rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:var(--gold);color:var(--ink)}.sb-sub{font-size:.48rem;font-weight:500;opacity:.6}
+</style>
+</head>
+<body>
+<div id="c-dot"></div><div id="c-ring"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="logo-hex"><svg viewBox="0 0 40 40" fill="none"><polygon points="20,3 37,12.5 37,27.5 20,37 3,27.5 3,12.5" stroke="#d4a843" stroke-width="1.5" fill="rgba(212,168,67,.08)"/><polygon points="20,10 30,16 30,24 20,30 10,24 10,16" stroke="#d4a843" stroke-width=".8" fill="rgba(212,168,67,.06)"/><circle cx="20" cy="20" r="3.5" fill="#d4a843"/></svg></div>
+    <span class="logo-name">CONVERT<span>WEB</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demo">Démo</a></li>
+    <li><a href="#avant-apres">Avant/Après</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/33XXXXXXXXX?text=Maquette%20gratuite" class="nav-cta" target="_blank">Maquette gratuite</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Agence web · Spécialiste restauration</div>
+    <h1 class="hero-h1">
+      <span>ON FAIT</span>
+      <span class="gold">SONNER</span>
+      <span class="out">VOTRE</span>
+      <span>RESTAU.</span>
+    </h1>
+    <div class="hero-honest">🤝 On démarre — honnêteté totale</div>
+    <p class="hero-sub">ConvertWeb crée des sites haute performance pour restaurants. Chaque client sera notre première référence. <strong>On construit ça ensemble, et on vous offre les conditions qu'on ne proposera plus jamais.</strong></p>
+    <div class="hero-actions">
+      <a href="https://wa.me/33XXXXXXXXX?text=Maquette%20gratuite" class="btn-primary" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Maquette gratuite — 24h
+      </a>
+      <a href="#demo" class="btn-ghost">Voir la démo ↓</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="phone-scene">
+      <div class="phone-main" style="position:relative">
+        <div class="phone-badge pb1"><div class="pb-dot"></div>Résultat réel visé</div>
+        <div class="phone-badge pb2">📍 SEO local intégré</div>
+        <div class="pn"></div>
+        <div class="ps mh">
+          <div class="sk">
+            <div class="sk-cover"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80&auto=format&fit=crop" alt="Kebab"><div class="sk-grad"></div><div class="sk-open">Ouvert</div></div>
+            <div class="sk-head"><div class="sk-nm">Istanbul Grill</div><div class="sk-ty">Kebab · Tacos · Halal</div></div>
+            <div class="sk-stats">
+              <div class="sk-st"><span class="sk-sv">20 min</span><span class="sk-sl">Livraison</span></div>
+              <div class="sk-st"><span class="sk-sv">⭐ 4,9</span><span class="sk-sl">Google</span></div>
+              <div class="sk-st"><span class="sk-sv">0€</span><span class="sk-sl">Frais</span></div>
+            </div>
+            <div class="sk-ctas"><div class="sk-call">📞 Commander — 01 XX XX XX XX</div><div class="sk-wa">💬 WhatsApp</div></div>
+            <div class="sk-sec">⭐ Kebabs</div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=120&q=75&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Kebab Classique</div><div class="sk-id">Veau, sauce maison, salade</div></div><div class="sk-ip">6,50€</div></div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=120&q=75&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Kebab Spécial</div><div class="sk-id">Mixte, double sauce, fromage</div></div><div class="sk-ip">7,90€</div></div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=120&q=75&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Assiette Mixte</div><div class="sk-id">Frites, salade, sauce</div></div><div class="sk-ip">12,50€</div></div>
+            <div class="sk-sec">🌯 Tacos</div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=120&q=75&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Tacos L Poulet</div><div class="sk-id">Fromage, sauce algérienne</div></div><div class="sk-ip">8,50€</div></div>
+            <div style="height:52px"></div>
+            <div class="sk-sticky"><div class="sk-s1">📞 Appeler</div><div class="sk-s2">📍</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-secondary">
+        <div class="pn"></div>
+        <div class="ps sh">
+          <div class="sp">
+            <div class="sp-cover"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=75&auto=format&fit=crop" alt="Pizza"><div class="sp-grad"></div></div>
+            <div class="sp-head"><div class="sp-nm">Napoli Express</div><div class="sp-rt"><span>★★★★★</span> 4,7 · 312 avis</div></div>
+            <div class="sp-promo"><div class="sp-pi">🎉</div><div class="sp-pt"><strong>-15% ce soir</strong> · Code NAPOLI15</div></div>
+            <div class="sp-cats"><div class="sp-cat a">🍕 Pizzas</div><div class="sp-cat">🥗 Salades</div><div class="sp-cat">🍦 Desserts</div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=120&q=75&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">Margherita</div><div class="sp-id">Tomate, mozzarella, basilic</div></div><div class="sp-ir"><div class="sp-ip">9€</div><div class="sp-ia">+</div></div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=120&q=75&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">4 Fromages</div><div class="sp-id">Mozza, gorgonzola, chèvre</div></div><div class="sp-ir"><div class="sp-ip">11€</div><div class="sp-ia">+</div></div></div>
+            <div style="height:48px"></div>
+            <div class="sp-sticky"><div class="sp-s1">📞 Commander</div><div class="sp-s2">💬 WhatsApp</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item">Maquette gratuite 24h</span><span class="mq-dot">◆</span><span class="mq-item">Livraison en 72h</span><span class="mq-dot">◆</span><span class="mq-item">SEO local intégré</span><span class="mq-dot">◆</span><span class="mq-item">Premier mois offert</span><span class="mq-dot">◆</span><span class="mq-item">Zéro engagement</span><span class="mq-dot">◆</span><span class="mq-item">Design sur-mesure</span><span class="mq-dot">◆</span><span class="mq-item">WhatsApp inclus</span><span class="mq-dot">◆</span><span class="mq-item">Spécialiste restauration</span><span class="mq-dot">◆</span>
+    <span class="mq-item">Maquette gratuite 24h</span><span class="mq-dot">◆</span><span class="mq-item">Livraison en 72h</span><span class="mq-dot">◆</span><span class="mq-item">SEO local intégré</span><span class="mq-dot">◆</span><span class="mq-item">Premier mois offert</span><span class="mq-dot">◆</span><span class="mq-item">Zéro engagement</span><span class="mq-dot">◆</span><span class="mq-item">Design sur-mesure</span><span class="mq-dot">◆</span><span class="mq-item">WhatsApp inclus</span><span class="mq-dot">◆</span><span class="mq-item">Spécialiste restauration</span><span class="mq-dot">◆</span>
+  </div>
+</div>
+
+<!-- HONEST PITCH -->
+<section class="sec honest-sec" id="pourquoi">
+  <div class="wrap">
+    <div class="rv">
+      <div class="label">Honnêteté d'abord</div>
+      <h2 class="big-title">ON COMMENCE.<br><em>Pour de vrai.</em></h2>
+      <p class="honest-body">On ne va pas vous raconter des histoires. ConvertWeb est nouveau. Pas de clients actuels, pas de portefeuille existant. Ce qu'on a : une expertise technique solide, une vision claire, et des conditions de lancement qu'on ne reproduira jamais.</p>
+    </div>
+    <div class="honest-cards">
+      <div class="hc rv d1">
+        <div class="hc-ico">🏗️</div>
+        <div class="hc-t">On construit notre réputation</div>
+        <p class="hc-d">Nos 3 premiers clients seront notre portfolio. On va travailler deux fois plus dur pour eux — parce que chaque résultat compte double quand c'est le début.</p>
+      </div>
+      <div class="hc rv d2">
+        <div class="hc-ico">⚙️</div>
+        <div class="hc-t">La technique, elle, est là</div>
+        <p class="hc-d">Sites ultra-rapides, SEO local, design sur-mesure, boutons d'appel optimisés — tout ça existe et fonctionne. On maîtrise l'outil. Il faut juste l'appliquer à votre restaurant.</p>
+      </div>
+      <div class="hc rv d3">
+        <div class="hc-ico">🤝</div>
+        <div class="hc-t">Un vrai partenariat</div>
+        <p class="hc-d">Pas un prestataire qui disparaît après livraison. On veut vos retours, vos résultats, votre avis — et on s'ajuste en temps réel. C'est comme ça qu'on construit quelque chose de solide.</p>
+      </div>
+      <div class="hc accent rv d1">
+        <div class="hc-ico">🎯</div>
+        <div class="hc-t">Pourquoi c'est une opportunité pour vous</div>
+        <p class="hc-d">Vous bénéficiez d'une attention totale, de prix de lancement jamais revus, et vous serez nos premières références — ce qui nous engage à tout donner.</p>
+      </div>
+      <div class="hc accent rv d2">
+        <div class="hc-ico">🛡️</div>
+        <div class="hc-t">La garantie qui change tout</div>
+        <p class="hc-d">Maquette gratuite avant tout engagement. Premier mois offert. Si le résultat ne vous convient pas dans les 60 jours, remboursement intégral. Zéro risque — vraiment.</p>
+      </div>
+      <div class="hc accent rv d3">
+        <div class="hc-ico">📈</div>
+        <div class="hc-t">L'objectif est clair</div>
+        <p class="hc-d">+15 appels supplémentaires par mois minimum. Pas une promesse en l'air — un engagement écrit, garanti par contrat, remboursable si non atteint.</p>
+      </div>
+    </div>
+    <div class="honest-pledge rv d2">
+      <div class="hp-title">Notre engagement : transparence totale à chaque étape.</div>
+      <p class="hp-body">Vous savez où on en est. Vous voyez exactement ce qu'on construit pour vous, comment, et pourquoi. Pas de jargon, pas de surprises, pas de clauses cachées. Juste du travail honnête et des résultats mesurables.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="sec demo-sec" id="demo">
+  <div class="wrap">
+    <div class="demo-header">
+      <div class="rv">
+        <div class="label">Démo interactive</div>
+        <h2 class="big-title">CE QUE VOS<br><em>clients voient.</em></h2>
+      </div>
+      <div class="rv d2">
+        <p class="demo-body">Voici exactement le genre de site qu'on crée. Trois styles différents, trois ambiances. Scrollez à l'intérieur de chaque téléphone — c'est entièrement fonctionnel.</p>
+        <div class="demo-hint">👆 Scrollez dans les téléphones</div>
+      </div>
+    </div>
+    <div class="demo-tabs rv d1">
+      <button class="dtab on" data-demo="kebab">🥙 Kebab / Fast-food</button>
+      <button class="dtab" data-demo="pizza">🍕 Pizzeria</button>
+      <button class="dtab" data-demo="sushi">🍣 Sushi / Japonais</button>
+    </div>
+    <div class="demo-stage" id="demoStage">
+
+      <!-- PHONE 1 -->
+      <div class="demo-phone rv" id="ph-kebab">
+        <div class="dp-notch"><div class="dp-pill"></div></div>
+        <div class="dp-screen">
+          <div class="sk">
+            <div class="sk-cover"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500&q=80&auto=format&fit=crop" alt="Istanbul Grill"><div class="sk-grad"></div><div class="sk-open">Ouvert</div></div>
+            <div class="sk-head"><div class="sk-nm">ISTANBUL GRILL</div><div class="sk-ty">Kebab · Tacos · Halal · Paris 18e</div></div>
+            <div class="sk-stats">
+              <div class="sk-st"><span class="sk-sv">20 min</span><span class="sk-sl">Livraison</span></div>
+              <div class="sk-st"><span class="sk-sv">0€</span><span class="sk-sl">Frais</span></div>
+              <div class="sk-st"><span class="sk-sv">11h–23h</span><span class="sk-sl">Horaires</span></div>
+            </div>
+            <div class="sk-ctas"><div class="sk-call">📞 Commander — 01 48 XX XX XX</div><div class="sk-wa">💬 WhatsApp · Réponse immédiate</div></div>
+            <div class="sk-sec">⭐ Incontournables</div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=150&q=80&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Kebab Classique</div><div class="sk-id">Veau, sauce maison, salade fraîche</div></div><div class="sk-ip">6,50€</div></div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=150&q=80&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Kebab Spécial</div><div class="sk-id">Mixte veau/poulet, double sauce</div></div><div class="sk-ip">7,90€</div></div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=150&q=80&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Assiette Mixte</div><div class="sk-id">Frites, salade, sauce au choix</div></div><div class="sk-ip">12,50€</div></div>
+            <div class="sk-sec">🌯 Tacos</div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=150&q=80&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Tacos L Poulet</div><div class="sk-id">Fromage fondu, sauce algérienne</div></div><div class="sk-ip">8,50€</div></div>
+            <div class="sk-item"><img class="sk-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=150&q=80&auto=format&fit=crop" alt=""><div class="sk-inf"><div class="sk-in">Tacos XL Mixte</div><div class="sk-id">Double viande, triple sauce</div></div><div class="sk-ip">10,90€</div></div>
+            <div class="sk-sec">🥤 Boissons</div>
+            <div class="sk-item"><div class="sk-img" style="display:flex;align-items:center;justify-content:center;background:#1a0d07;font-size:1.5rem">🥤</div><div class="sk-inf"><div class="sk-in">Ayran / Limonata</div><div class="sk-id">Boisson fraîche orientale</div></div><div class="sk-ip">2€</div></div>
+            <div style="height:56px"></div>
+            <div class="sk-sticky"><div class="sk-s1">📞 Appeler maintenant</div><div class="sk-s2">📍</div></div>
+          </div>
+        </div>
+        <div class="phone-label"><span>Istanbul Grill</span> · Kebab / Halal</div>
+      </div>
+
+      <!-- PHONE 2 -->
+      <div class="demo-phone rv d2" id="ph-pizza" style="display:none">
+        <div class="dp-notch"><div class="dp-pill"></div></div>
+        <div class="dp-screen">
+          <div class="sp">
+            <div class="sp-cover"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&q=80&auto=format&fit=crop" alt="Napoli"><div class="sp-grad"></div></div>
+            <div class="sp-head"><div class="sp-nm">NAPOLI EXPRESS</div><div class="sp-rt"><span>★★★★★</span> 4,7 · 312 avis Google</div></div>
+            <div class="sp-promo"><div class="sp-pi">🎉</div><div class="sp-pt"><strong>-15% ce soir seulement</strong> · Code NAPOLI15</div></div>
+            <div class="sp-cats"><div class="sp-cat a">🍕 Pizzas</div><div class="sp-cat">🔥 Spéciales</div><div class="sp-cat">🥗 Salades</div><div class="sp-cat">🍦 Desserts</div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150&q=80&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">Margherita</div><div class="sp-id">Tomate, mozzarella fior di latte, basilic</div></div><div class="sp-ir"><div class="sp-ip">9,50€</div><div class="sp-ia">+</div></div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150&q=80&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">Quatre Fromages</div><div class="sp-id">Mozza, gorgonzola, chèvre, parmesan</div></div><div class="sp-ir"><div class="sp-ip">12€</div><div class="sp-ia">+</div></div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&q=80&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">Diavola</div><div class="sp-id">Salami piquant, mozzarella, poivrons</div></div><div class="sp-ir"><div class="sp-ip">11,50€</div><div class="sp-ia">+</div></div></div>
+            <div class="sp-item"><img class="sp-img" src="https://images.unsplash.com/photo-1571066811602-716837d681de?w=150&q=80&auto=format&fit=crop" alt=""><div class="sp-inf"><div class="sp-in">Végétarienne</div><div class="sp-id">Aubergines, courgettes, tomates séchées</div></div><div class="sp-ir"><div class="sp-ip">10,50€</div><div class="sp-ia">+</div></div></div>
+            <div style="height:56px"></div>
+            <div class="sp-sticky"><div class="sp-s1">📞 Commander</div><div class="sp-s2">💬 WhatsApp</div></div>
+          </div>
+        </div>
+        <div class="phone-label"><span>Napoli Express</span> · Pizzeria</div>
+      </div>
+
+      <!-- PHONE 3 -->
+      <div class="demo-phone rv d3" id="ph-sushi" style="display:none">
+        <div class="dp-notch"><div class="dp-pill"></div></div>
+        <div class="dp-screen">
+          <div class="app-sushi">
+            <div class="ys-hero"><img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&q=80&auto=format&fit=crop" alt="Yume Sushi"><div class="ys-ov"></div><div class="ys-bar"><span class="ys-award">🏆 Sushi premium</span></div></div>
+            <div class="ys-head"><div class="ys-nm">YUME SUSHI</div><div class="ys-ty">Sushi · Maki · Pokébowl · Japonais</div></div>
+            <div class="ys-chips"><div class="ys-chip on">🍣 Sushi</div><div class="ys-chip">🌀 Maki</div><div class="ys-chip">🥣 Poké</div><div class="ys-chip">🍱 Bento</div></div>
+            <div class="ys-ctas"><div class="ys-c1">📞 Réserver — 01 47 XX XX XX</div><div class="ys-c2">💬 Commande WhatsApp · 20 min</div></div>
+            <div class="ys-sec">✨ Sushi Premium</div>
+            <div class="ys-item"><img class="ys-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=150&q=80&auto=format&fit=crop" alt=""><div class="ys-inf"><div class="ys-in">Saumon Tataki</div><div class="ys-id">6 pcs, sauce yuzu, ciboulette</div></div><div class="ys-ir"><div class="ys-ip">14€</div><div class="ys-ia">+</div></div></div>
+            <div class="ys-item"><img class="ys-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=150&q=80&auto=format&fit=crop" alt=""><div class="ys-inf"><div class="ys-in">Thon Spicy</div><div class="ys-id">8 pcs, sriracha mayo, avocat</div></div><div class="ys-ir"><div class="ys-ip">16€</div><div class="ys-ia">+</div></div></div>
+            <div class="ys-item"><img class="ys-img" src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=150&q=80&auto=format&fit=crop" alt=""><div class="ys-inf"><div class="ys-in">Pokébowl Saumon</div><div class="ys-id">Riz vinaigré, edamame, mangue</div></div><div class="ys-ir"><div class="ys-ip">13,50€</div><div class="ys-ia">+</div></div></div>
+            <div class="ys-item"><img class="ys-img" src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=150&q=80&auto=format&fit=crop" alt=""><div class="ys-inf"><div class="ys-in">Bento Signature</div><div class="ys-id">Saumon teriyaki, salade, riz</div></div><div class="ys-ir"><div class="ys-ip">17€</div><div class="ys-ia">+</div></div></div>
+            <div style="height:56px"></div>
+            <div class="ys-sticky"><div class="ys-s1">📞 Commander maintenant</div><div class="ys-s2">📍</div></div>
+          </div>
+        </div>
+        <div class="phone-label"><span>Yume Sushi</span> · Sushi & Pokés</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="sec ba-sec" id="avant-apres">
+  <div class="wrap">
+    <div class="rv">
+      <div class="label">Avant / Après</div>
+      <h2 class="big-title">LA DIFFÉRENCE<br><em>est flagrante.</em></h2>
+      <p style="font-family:var(--f-serif);font-style:italic;font-size:1rem;color:rgba(242,237,230,.5);line-height:1.8;max-width:500px;margin-top:.8rem">La plupart des restaurants ont soit rien, soit un site générateur des années 2000. Voilà ce que ça change.</p>
+    </div>
+    <div class="ba-wrap rv d2">
+      <div class="ba-container" id="baContainer">
+        <!-- AFTER -->
+        <div class="ba-after-bg">
+          <div class="ba-after-img">🥙</div>
+          <div class="ba-after-body">
+            <div class="ba-after-name">ISTANBUL GRILL</div>
+            <div class="ba-after-btn">📞 Commander — 01 48 XX XX XX</div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+              <div class="ba-after-item"><div class="ba-ai-box"></div><div class="ba-ai-lines"><div class="ba-ai-a"></div><div class="ba-ai-b"></div></div><span class="ba-ai-p">6,50€</span></div>
+              <div class="ba-after-item"><div class="ba-ai-box"></div><div class="ba-ai-lines"><div class="ba-ai-a"></div><div class="ba-ai-b"></div></div><span class="ba-ai-p">7,90€</span></div>
+              <div class="ba-after-item"><div class="ba-ai-box"></div><div class="ba-ai-lines"><div class="ba-ai-a"></div><div class="ba-ai-b"></div></div><span class="ba-ai-p">8,50€</span></div>
+              <div style="margin-top:auto;padding-top:8px;display:flex;gap:6px">
+                <div style="flex:1;background:linear-gradient(135deg,#bf4b0a,#e06820);color:#fff;font-size:.52rem;font-weight:800;padding:.5rem;border-radius:7px;text-align:center">📞 Appeler</div>
+                <div style="width:34px;border:1px solid rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem">📍</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- BEFORE (clipped on right) -->
+        <div class="ba-clip" id="baClip" style="left:50%;right:0">
+          <div class="ba-before-bg" style="position:absolute;inset:0;width:100%">
+            <div class="ba-before-bar"><div class="ba-bd" style="background:#ff5f57"></div><div class="ba-bd" style="background:#febc2e"></div><div class="ba-bd" style="background:#28c840"></div><div class="ba-url"></div></div>
+            <div class="ba-before-title">monkebab-paris.fr</div>
+            <div class="ba-rows">
+              <div class="ba-r t"></div>
+              <div class="ba-r" style="width:75%"></div>
+              <div class="ba-r" style="width:90%"></div>
+              <div class="ba-r" style="width:60%"></div>
+            </div>
+            <div class="ba-cta">Appelez-nous au 01 XX XX XX XX<br>Ouvert tous les jours de 11h à 23h</div>
+            <div class="ba-rows">
+              <div class="ba-r" style="width:85%"></div>
+              <div class="ba-r" style="width:70%"></div>
+              <div class="ba-r" style="width:55%"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Labels -->
+        <span class="ba-label ba-lb">✅ Après</span>
+        <span class="ba-label ba-la">❌ Avant</span>
+        <div class="ba-div" id="baDivider" style="left:50%"></div>
+        <div class="ba-handle" id="baHandle" style="left:50%">◀▶</div>
+      </div>
+    </div>
+    <div class="ba-hint rv d3">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l-4 4 4 4M17 4l4 4-4 4"/></svg>
+      Glissez le curseur pour comparer
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec proc-sec" id="process">
+  <div class="wrap">
+    <div class="rv"><div class="label">Comment ça marche</div><h2 class="big-title">4 ÉTAPES.<br><em>72 heures.</em></h2></div>
+    <div class="proc-grid">
+      <div class="proc-step rv d1"><div class="ps-num">01</div><div class="ps-ico">💬</div><div class="ps-t">WhatsApp en 2 minutes</div><p class="ps-d">Envoyez-nous un message. On répond en moins de 2h. 5 questions sur votre restaurant — ambiance, couleurs, spécialités.</p><div class="ps-badge">Aujourd'hui</div></div>
+      <div class="proc-step rv d2"><div class="ps-num">02</div><div class="ps-ico">🎨</div><div class="ps-t">Maquette en 24h</div><p class="ps-d">On crée une maquette personnalisée à votre image. Vous la validez ou demandez des modifications. Aucun paiement à ce stade.</p><div class="ps-badge">J+1</div></div>
+      <div class="proc-step rv d3"><div class="ps-num">03</div><div class="ps-ico">⚡</div><div class="ps-t">Site livré en 72h</div><p class="ps-d">Après validation, votre site est en ligne en 72h. SEO local configuré, boutons d'appel intégrés, Google Maps connecté.</p><div class="ps-badge">J+3</div></div>
+      <div class="proc-step rv d4"><div class="ps-num">04</div><div class="ps-ico">📞</div><div class="ps-t">Le téléphone sonne</div><p class="ps-d">Dans les 60 jours, +15 appels supplémentaires par mois — ou on vous rembourse intégralement. Garanti par contrat, sans condition.</p><div class="ps-badge">J+30 à 60</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec svc-sec" id="services">
+  <div class="wrap">
+    <div class="rv"><div class="label">Ce qu'on fait</div><h2 class="big-title">CHAQUE DÉTAIL<br><em>compte.</em></h2></div>
+    <div class="svc-grid">
+      <div class="svc-card rv d1"><div class="svc-ico">⚡</div><div class="svc-n">Performance Extrême</div><p class="svc-d">Score PageSpeed 95+. Temps de chargement &lt;1s. Images optimisées, code minimal, CDN mondial. Google récompense la vitesse.</p><div class="chips"><span class="chip">Core Web Vitals</span><span class="chip">CDN</span><span class="chip">&lt;1s</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-ico">📍</div><div class="svc-n">SEO Local Avancé</div><p class="svc-d">Balisage JSON-LD, schema Restaurant, Google Maps intégré, mots-clés de proximité. Votre nom apparaît quand vos clients cherchent.</p><div class="chips"><span class="chip">JSON-LD</span><span class="chip">Google Maps</span><span class="chip">Schema.org</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-ico">📞</div><div class="svc-n">Conversion Maximum</div><p class="svc-d">Numéro visible en moins de 3 scrolls. CTA sous chaque section. Sticky bar mobile permanente. Une obsession : que vous décrochiez.</p><div class="chips"><span class="chip">CTA stratégiques</span><span class="chip">WhatsApp</span><span class="chip">Sticky bar</span></div></div>
+      <div class="svc-card rv d1"><div class="svc-ico">📱</div><div class="svc-n">100% Mobile-First</div><p class="svc-d">Conçu d'abord pour téléphone, là où 82% de vos clients cherchent. Design parfait sur tous les écrans, PWA prête.</p><div class="chips"><span class="chip">Mobile-first</span><span class="chip">Touch-optimized</span><span class="chip">PWA</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-ico">🎨</div><div class="svc-n">Design Sur-Mesure</div><p class="svc-d">Chaque site est unique — couleurs, typographie, ambiance. On s'adapte à votre identité. Votre concurrent n'aura jamais le même.</p><div class="chips"><span class="chip">100% unique</span><span class="chip">Photos intégrées</span><span class="chip">Animations</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-ico">🔧</div><div class="svc-n">Maintenance Incluse</div><p class="svc-d">Menu, horaires, photos — un WhatsApp et c'est mis à jour en moins de 24h. Sans surcoût, sans ticket, jamais.</p><div class="chips"><span class="chip">WhatsApp direct</span><span class="chip">24h max</span><span class="chip">Inclus</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH OFFER -->
+<section class="sec launch-sec" id="offre">
+  <div class="wrap">
+    <div class="rv"><div class="label">Offre de lancement</div><h2 class="big-title">3 RESTAURANTS<br><em>pionniers.</em></h2><p style="font-family:var(--f-serif);font-style:italic;font-size:1rem;color:rgba(242,237,230,.5);line-height:1.8;max-width:480px;margin-top:.8rem">On cherche nos 3 premiers clients. En échange d'être nos premières références, on vous offre des conditions qu'on ne reproposera plus jamais.</p></div>
+    <div class="launch-box rv d2">
+      <div class="lb-left">
+        <div class="lb-title">Ce que vous obtenez<br>en tant que <span>pionnier.</span></div>
+        <p class="lb-body">Tout ce que nos futurs clients paieront plein tarif — vous l'obtenez gratuitement ou à prix réduit.</p>
+        <div class="lb-perks">
+          <div class="lb-perk"><div class="lb-chk">✓</div><div class="lb-txt"><strong>Frais de création offerts</strong> — valeur 499€ → 0€</div></div>
+          <div class="lb-perk"><div class="lb-chk">✓</div><div class="lb-txt"><strong>Premier mois offert</strong> — testez gratuitement</div></div>
+          <div class="lb-perk"><div class="lb-chk">✓</div><div class="lb-txt"><strong>Maquette en 24h</strong> — avant tout engagement</div></div>
+          <div class="lb-perk"><div class="lb-chk">✓</div><div class="lb-txt"><strong>Garantie +15 appels/mois</strong> — remboursement si non atteint</div></div>
+          <div class="lb-perk"><div class="lb-chk">✓</div><div class="lb-txt"><strong>Accès direct au fondateur</strong> — suivi personnalisé total</div></div>
+        </div>
+      </div>
+      <div class="lb-right">
+        <div>
+          <div class="spots-big">3</div>
+          <div class="spots-lbl">Places disponibles<br>ce mois-ci</div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Offre%20pionnier" class="lb-btn" target="_blank">💬 Je veux cette offre</a>
+        <p class="lb-note">WhatsApp · Réponse &lt; 2h</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec price-sec" id="tarifs">
+  <div class="wrap">
+    <div class="rv"><div class="label">Tarifs</div><h2 class="big-title">SIMPLE.<br><em>Transparent.</em></h2><p style="font-size:.88rem;color:var(--muted);line-height:1.85;max-width:480px;margin-top:.8rem">Abonnement mensuel tout inclus. Site, hébergement, domaine, maintenance, mises à jour. Pas de frais cachés, jamais.</p></div>
+    <div class="price-grid">
+      <div class="pc rv d1">
+        <div class="pc-tier">Starter</div>
+        <div><span class="pc-num">49</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 299€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Site 1 page optimisée</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Bouton appel + WhatsApp</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>SEO local de base</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Hébergement + domaine</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Livré en 72h</div>
+          <div class="pc-f"><span class="pc-chk" style="opacity:.3">—</span>Menu multi-sections</div>
+          <div class="pc-f"><span class="pc-chk" style="opacity:.3">—</span>Photos de plats</div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Starter" class="pc-btn outline" target="_blank">Choisir Starter</a>
+        <p class="pc-note">Parfait pour démarrer</p>
+      </div>
+      <div class="pc feat rv d2">
+        <div class="pc-badge">⭐ Le plus populaire</div>
+        <div class="pc-tier">Pro</div>
+        <div><span class="pc-num">89</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 499€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Site multi-sections complet</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Menu visuel avec photos</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>SEO local avancé (JSON-LD)</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Animations & design premium</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Hébergement + domaine</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Mises à jour illimitées</div>
+          <div class="pc-f y"><span class="pc-chk">🛡</span><strong>+15 appels/mois garantis</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Pro" class="pc-btn solid" target="_blank">Choisir Pro</a>
+        <p class="pc-note">Premier mois offert en lancement</p>
+      </div>
+      <div class="pc rv d3">
+        <div class="pc-tier">Elite</div>
+        <div><span class="pc-num">149</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 799€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Tout le plan Pro</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Galerie photos pro</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Rapport mensuel trafic</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Support prioritaire 7j/7</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>WhatsApp avancé</div>
+          <div class="pc-f y"><span class="pc-chk">🛡</span><strong>+25 appels/mois garantis</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Elite" class="pc-btn outline" target="_blank">Choisir Elite</a>
+        <p class="pc-note">Notre offre la plus complète</p>
+      </div>
+    </div>
+    <div class="guar-row rv d4">
+      <div class="gi">🛡 <strong>Garantie résultats</strong> — +15 appels ou remboursé</div>
+      <div class="gi">⚡ <strong>Livraison 72h</strong> — ou 1er mois offert</div>
+      <div class="gi">🔓 <strong>Zéro engagement</strong> — résiliation libre</div>
+      <div class="gi">🎁 <strong>Maquette gratuite</strong> — avant tout paiement</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec faq-sec" id="faq">
+  <div class="wrap">
+    <div class="rv"><div class="label">FAQ</div><h2 class="big-title">VOS<br><em>questions.</em></h2></div>
+    <div class="faq-list">
+      <div class="faq-item rv d1"><button class="faq-q" aria-expanded="false">Vous n'avez pas encore de clients — pourquoi vous faire confiance ?<span class="faq-plus">+</span></button><div class="faq-a">Bonne question, et on l'assume. Ce qu'on peut vous donner, c'est une garantie béton : maquette gratuite avant engagement, premier mois offert, et remboursement intégral si les résultats ne sont pas là dans 60 jours. On n'a aucun intérêt à vous décevoir — chaque client est notre vitrine.</div></div>
+      <div class="faq-item rv d2"><button class="faq-q" aria-expanded="false">Comment garantissez-vous +15 appels sans expérience prouvée ?<span class="faq-plus">+</span></button><div class="faq-a">On garantit par contrat, pas par historique. Les leviers sont connus : bouton appel visible en moins de 3 scrolls, SEO local JSON-LD, sticky bar mobile, optimisation Google Maps. Ces mécanismes fonctionnent — on les maîtrise. Si non atteint en 60 jours : remboursement intégral, sans condition.</div></div>
+      <div class="faq-item rv d3"><button class="faq-q" aria-expanded="false">Comment fonctionne la maquette gratuite ?<span class="faq-plus">+</span></button><div class="faq-a">Vous nous contactez sur WhatsApp. On vous pose 5 questions : type de cuisine, ambiance souhaitée, couleurs, plats phares, numéro de téléphone. En 24h, vous recevez une maquette personnalisée. Vous validez ou demandez des modifications. Aucun paiement avant que vous soyez satisfait.</div></div>
+      <div class="faq-item rv d1"><button class="faq-q" aria-expanded="false">Délai de livraison réel ?<span class="faq-plus">+</span></button><div class="faq-a">72h après validation de la maquette. On s'engage sur ce délai contractuellement — si on dépasse, votre premier mois est offert automatiquement.</div></div>
+      <div class="faq-item rv d2"><button class="faq-q" aria-expanded="false">Je peux résilier quand je veux ?<span class="faq-plus">+</span></button><div class="faq-a">Oui, sans préavis ni pénalité. On vous transfère l'intégralité des fichiers — le site reste le vôtre. On ne prend rien en otage.</div></div>
+      <div class="faq-item rv d3"><button class="faq-q" aria-expanded="false">Pour quel type de restaurant ?<span class="faq-plus">+</span></button><div class="faq-a">Kebabs, fast-foods, pizzerias, sandwicheries, sushis, tacos, restaurants traditionnels — tout établissement dont les clients cherchent sur téléphone avant de commander. C'est notre spécialité.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="fcta-bg"></div>
+  <div class="fcta-inner rv">
+    <h2 class="fcta-t">SOYEZ<br>LE <em>premier.</em></h2>
+    <p class="fcta-sub">Maquette gratuite en 24h. Premier mois offert. Garantie résultats. Zéro risque. Tout à gagner.</p>
+    <div class="fcta-btns">
+      <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite" class="btn-primary" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Maquette gratuite — WhatsApp
+      </a>
+      <a href="mailto:contact@convertweb.fr" style="display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,10,10,.6);border-bottom:1.5px solid rgba(10,10,10,.3);padding-bottom:.1rem">✉️ contact@convertweb.fr</a>
+    </div>
+    <div class="fcta-meta"><span>Réponse &lt; 2h</span><span>Maquette 24h</span><span>1er mois offert</span><span>Garantie résultats</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer><div class="ft">
+  <div class="ft-top">
+    <div>
+      <div class="ft-logo">CONVERT<span>WEB</span></div>
+      <p class="ft-tag">Sites web qui font sonner le téléphone de votre restaurant. Spécialiste kebabs, fast-foods et restaurants.</p>
+      <div class="ft-contact"><a href="https://wa.me/33XXXXXXXXX" target="_blank">💬 WhatsApp</a><a href="mailto:contact@convertweb.fr">✉️ contact@convertweb.fr</a></div>
+    </div>
+    <div>
+      <div class="ft-col-t">Navigation</div>
+      <ul class="ft-links"><li><a href="#demo">Démo interactive</a></li><li><a href="#avant-apres">Avant / Après</a></li><li><a href="#process">Notre méthode</a></li><li><a href="#services">Services</a></li><li><a href="#offre">Offre de lancement</a></li><li><a href="#tarifs">Tarifs</a></li><li><a href="#faq">FAQ</a></li></ul>
+    </div>
+    <div>
+      <div class="ft-col-t">Nos garanties</div>
+      <ul class="ft-links"><li><a href="#offre">+15 appels/mois garantis</a></li><li><a href="#offre">Livraison en 72h</a></li><li><a href="#offre">Premier mois offert</a></li><li><a href="#offre">Zéro engagement</a></li><li><a href="#offre">Maquette gratuite</a></li></ul>
+    </div>
+  </div>
+  <div class="ft-bot"><span class="ft-copy">© 2025 ConvertWeb · Tous droits réservés</span><div class="ft-leg"><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGV</a></div></div>
+</div></footer>
+
+<!-- STICKY BAR -->
+<div class="stickybar">
+  <a href="#offre" class="sb-l">⭐ Offre lancement<span class="sb-sub">3 places · Ce mois</span></a>
+  <a href="https://wa.me/33XXXXXXXXX?text=Maquette%20gratuite" class="sb-r" target="_blank">💬 Maquette gratuite<span class="sb-sub">WhatsApp · 24h</span></a>
+</div>
+
+<script>
+// CURSOR
+const dot=document.getElementById('c-dot'),ring=document.getElementById('c-ring');
+if(dot&&window.innerWidth>768){
+  let rx=0,ry=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px'},{passive:true});
+  (function a(){rx+=(cx-rx)*.1;ry+=(cy-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
+  document.querySelectorAll('a,button,.dtab,.ba-container').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('lh'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('lh'));
+  });
+}
+
+// NAV
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vi')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv,.demo-phone').forEach(el=>obs.observe(el));
+
+// DEMO TABS
+const phones={kebab:'ph-kebab',pizza:'ph-pizza',sushi:'ph-sushi'};
+document.querySelectorAll('.dtab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    const key=tab.dataset.demo;
+    Object.entries(phones).forEach(([k,id])=>{
+      const p=document.getElementById(id);
+      if(!p)return;
+      if(k===key){
+        p.style.display='';
+        p.style.opacity='0';p.style.transform='translateY(22px) scale(.97)';
+        setTimeout(()=>{p.style.transition='opacity .5s,transform .5s';p.style.opacity='1';p.style.transform='translateY(0) scale(1)'},20);
+      } else { p.style.display='none'; }
+    });
+  });
+});
+
+// BEFORE/AFTER SLIDER
+const baCon=document.getElementById('baContainer');
+const baClip=document.getElementById('baClip');
+const baDivider=document.getElementById('baDivider');
+const baHandle=document.getElementById('baHandle');
+if(baCon){
+  let dragging=false;
+  const setPos=pct=>{
+    const p=Math.max(5,Math.min(95,pct));
+    baClip.style.left=p+'%';
+    baDivider.style.left=p+'%';
+    baHandle.style.left=p+'%';
+  };
+  const getX=e=>e.touches?e.touches[0].clientX:e.clientX;
+  const onMove=e=>{
+    if(!dragging)return;
+    const r=baCon.getBoundingClientRect();
+    setPos(((getX(e)-r.left)/r.width)*100);
+  };
+  baCon.addEventListener('mousedown',e=>{dragging=true;e.preventDefault()});
+  baCon.addEventListener('touchstart',()=>dragging=true,{passive:true});
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('touchmove',onMove,{passive:true});
+  document.addEventListener('mouseup',()=>dragging=false);
+  document.addEventListener('touchend',()=>dragging=false);
+  // auto-animate
+  let p=50,dir=-1,animating=true;
+  const baObs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      const go=()=>{if(!animating)return;p+=dir*.35;setPos(p);if(p<=12)dir=1;if(p>=88)dir=-1;requestAnimationFrame(go)};
+      setTimeout(go,500);
+      baObs.disconnect();
+    }
+  },{threshold:.4});
+  baObs.observe(baCon);
+  baCon.addEventListener('mousedown',()=>animating=false);
+  baCon.addEventListener('touchstart',()=>animating=false,{passive:true});
+}
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const open=btn.getAttribute('aria-expanded')==='true';
+    document.querySelectorAll('.faq-q').forEach(b=>{b.setAttribute('aria-expanded','false');b.nextElementSibling?.classList.remove('open')});
+    if(!open){btn.setAttribute('aria-expanded','true');btn.nextElementSibling?.classList.add('open')}
+  });
+});
+
+// SPOTS PULSE
+const sp=document.querySelector('.spots-big');
+if(sp){
+  const so=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      [0,500,1000].forEach(d=>setTimeout(()=>{sp.style.transform='scale(1.06)';setTimeout(()=>sp.style.transform='scale(1)',150)},d));
+      so.disconnect();
+    }
+  },{threshold:.5});
+  so.observe(sp);
+}
+</script>
+</body>
+</html>
