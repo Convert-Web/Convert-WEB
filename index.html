@@ -1,0 +1,1860 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConvertWeb — On transforme votre restaurant en machine à clients</title>
+<meta name="description" content="ConvertWeb crée des sites web qui font sonner le téléphone de votre restaurant. Résultats garantis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #0a0a0a;
+  --paper: #f2ede6;
+  --gold: #d4a843;
+  --gold-lt: #f0c96a;
+  --rust: #c94a2a;
+  --sage: #8a9e7a;
+  --cream: #faf6f0;
+  --muted: rgba(10,10,10,0.45);
+  --border: rgba(10,10,10,0.1);
+  --f-display: 'Bebas Neue', sans-serif;
+  --f-serif: 'Instrument Serif', Georgia, serif;
+  --f-body: 'Cabinet Grotesk', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--f-body);
+  overflow-x: hidden;
+  cursor: none;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+@media (max-width: 768px) { body { cursor: auto; } }
+
+/* ── CURSOR ── */
+#c-dot {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--rust); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .15s, height .15s, background .2s;
+}
+#c-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid var(--ink); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: width .25s, height .25s, border-color .2s;
+}
+body.link-hover #c-dot { width: 14px; height: 14px; background: var(--gold); }
+body.link-hover #c-ring { width: 52px; height: 52px; border-color: var(--gold); }
+@media (max-width:768px) { #c-dot, #c-ring { display: none; } }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; inset-inline: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 2.5rem;
+  transition: background .4s, backdrop-filter .4s, padding .3s, border-color .3s;
+  border-bottom: 1px solid transparent;
+}
+nav.stuck {
+  background: rgba(242,237,230,0.94);
+  backdrop-filter: blur(18px);
+  border-color: var(--border);
+  padding: 1rem 2.5rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: .55rem;
+}
+.logo-hex {
+  width: 34px; height: 34px; position: relative; flex-shrink: 0;
+}
+.logo-hex svg { width: 100%; height: 100%; }
+.logo-name {
+  font-family: var(--f-display);
+  font-size: 1.3rem; letter-spacing: 3px;
+  color: var(--ink); line-height: 1;
+}
+.logo-name span { color: var(--gold); }
+.nav-links {
+  display: none; gap: 2.5rem; list-style: none;
+}
+.nav-links a {
+  font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: .68rem; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: .6rem 1.5rem;
+  background: var(--ink); color: var(--cream);
+  border-radius: 2px; transition: background .2s, transform .2s;
+}
+.nav-cta:hover { background: var(--rust); transform: translateY(-1px); }
+@media (min-width: 900px) {
+  .nav-links { display: flex; }
+  nav { padding: 1.6rem 5rem; }
+  nav.stuck { padding: 1.1rem 5rem; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr;
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+@media (min-width: 900px) {
+  .hero { grid-template-columns: 1fr 1fr; }
+}
+
+/* LEFT PANEL */
+.hero-left {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2.5rem 3rem;
+  position: relative; z-index: 2;
+}
+@media (min-width: 900px) {
+  .hero-left { padding: 0 5rem 0 5rem; }
+}
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .6rem; font-weight: 800; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: rise .7s .1s forwards;
+}
+.hero-eyebrow::before {
+  content: ''; width: 22px; height: 2px; background: var(--rust);
+}
+
+.hero-h1 {
+  font-family: var(--f-display);
+  font-size: clamp(4rem, 8vw, 8.5rem);
+  line-height: .93;
+  letter-spacing: 2px;
+  color: var(--ink);
+  opacity: 0; animation: rise .8s .25s forwards;
+}
+.hero-h1 .line-gold { color: var(--gold); display: block; }
+.hero-h1 .line-out {
+  display: block;
+  -webkit-text-stroke: 2px var(--ink);
+  color: transparent;
+}
+
+.hero-sub {
+  font-family: var(--f-serif);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 420px;
+  margin-top: 1.6rem;
+  opacity: 0; animation: rise .7s .45s forwards;
+}
+.hero-sub strong { color: var(--ink); font-style: normal; }
+
+.hero-actions {
+  display: flex; align-items: center; flex-wrap: wrap; gap: .9rem;
+  margin-top: 2.2rem;
+  opacity: 0; animation: rise .7s .6s forwards;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: var(--ink); color: var(--cream);
+  font-family: var(--f-body); font-size: .72rem;
+  font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 1rem 2rem; border-radius: 2px;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.btn-primary:hover {
+  background: var(--rust);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201,74,42,.25);
+}
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .72rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: .1rem;
+  transition: color .2s, border-color .2s;
+}
+.btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+.hero-trust {
+  display: flex; align-items: center; gap: .6rem;
+  margin-top: 2.5rem;
+  opacity: 0; animation: rise .6s .75s forwards;
+}
+.trust-avatars {
+  display: flex;
+}
+.trust-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--cream);
+  margin-left: -8px; background: var(--ink);
+  overflow: hidden; font-size: .7rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cream); font-weight: 800;
+}
+.trust-av:first-child { margin-left: 0; }
+.trust-txt { font-size: .72rem; color: var(--muted); }
+.trust-txt strong { color: var(--ink); }
+
+/* RIGHT PANEL — PHONE SHOWCASE */
+.hero-right {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem 1.5rem 3rem;
+  opacity: 0; animation: rise .9s .3s forwards;
+}
+@media (min-width: 900px) {
+  .hero-right {
+    padding: 2rem 4rem 2rem 2rem;
+    overflow: hidden;
+  }
+}
+
+/* background texture on right */
+.hero-right::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(10,10,10,.055) 39px,
+      rgba(10,10,10,.055) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(10,10,10,.055) 39px,
+      rgba(10,10,10,.055) 40px
+    );
+  z-index: 0;
+}
+
+.phone-scene {
+  position: relative; z-index: 1;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+
+/* MAIN PHONE */
+.phone-main {
+  width: 240px; flex-shrink: 0;
+  border-radius: 36px;
+  border: 2px solid rgba(0,0,0,.15);
+  background: #111;
+  box-shadow: 
+    0 40px 80px rgba(0,0,0,.3),
+    0 0 0 1px rgba(0,0,0,.5),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  overflow: hidden;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+.phone-secondary {
+  width: 200px; flex-shrink: 0;
+  border-radius: 30px;
+  border: 2px solid rgba(0,0,0,.12);
+  background: #111;
+  box-shadow: 0 30px 60px rgba(0,0,0,.2);
+  overflow: hidden;
+  margin-top: 3rem;
+  display: none;
+  animation: float2 7s ease-in-out infinite;
+}
+@media (min-width: 700px) { .phone-secondary { display: block; } }
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-.5deg); }
+  50% { transform: translateY(-12px) rotate(.5deg); }
+}
+@keyframes float2 {
+  0%,100% { transform: translateY(0) rotate(.5deg); }
+  50% { transform: translateY(-8px) rotate(-.5deg); }
+}
+
+.pn { /* notch */
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 80px; height: 26px; background: #111;
+  border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
+  z-index: 20;
+}
+.ps { /* screen */
+  width: 100%; overflow-y: auto; overflow-x: hidden;
+  scrollbar-width: none;
+}
+.ps::-webkit-scrollbar { display: none; }
+.ps.main-h { height: 490px; }
+.ps.sec-h { height: 420px; }
+
+/* ── PHONE SCREEN 1: KEBAB DARK ── */
+.sc-kebab {
+  background: #0c0905;
+  font-family: var(--f-body);
+  color: #f0e8dc;
+  min-height: 490px;
+}
+.sk-cover {
+  height: 160px; position: relative; overflow: hidden;
+}
+.sk-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.sk-cover-grad {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, #0c0905 0%, transparent 60%);
+}
+.sk-cover-badge {
+  position: absolute; top: 30px; right: 8px;
+  background: #27ae60; color: #fff;
+  font-size: .48rem; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: .22rem .55rem;
+  border-radius: 50px;
+  display: flex; align-items: center; gap: .3rem;
+}
+.sk-cover-badge::before {
+  content: ''; width: 5px; height: 5px;
+  border-radius: 50%; background: #fff;
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.sk-head {
+  padding: 0 10px 8px;
+}
+.sk-name {
+  font-family: var(--f-display);
+  font-size: 1.5rem; letter-spacing: 2px;
+  color: #f0e8dc; line-height: 1;
+}
+.sk-type { font-size: .55rem; color: rgba(240,232,220,.4); letter-spacing: 2px; text-transform: uppercase; margin-top: .15rem; }
+
+.sk-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  margin: 6px 0;
+}
+.sk-stat {
+  padding: 7px 4px;
+  text-align: center;
+  font-size: .58rem;
+}
+.sk-stat:not(:last-child) { border-right: 1px solid rgba(255,255,255,.06); }
+.sk-stat-val { font-weight: 800; color: #f0e8dc; display: block; }
+.sk-stat-lab { color: rgba(240,232,220,.4); font-size: .48rem; text-transform: uppercase; letter-spacing: 1px; }
+
+.sk-cta-row { padding: 6px 10px; display: flex; flex-direction: column; gap: 5px; }
+.sk-btn-call {
+  background: linear-gradient(135deg, #c8570a, #e8731a);
+  color: #fff; font-size: .62rem; font-weight: 800;
+  letter-spacing: .8px; text-transform: uppercase;
+  padding: .62rem; border-radius: 8px; text-align: center;
+  box-shadow: 0 3px 12px rgba(200,87,10,.3);
+}
+.sk-btn-wa {
+  border: 1px solid rgba(37,174,96,.3); color: #27ae60;
+  font-size: .6rem; font-weight: 700; letter-spacing: .6px;
+  text-transform: uppercase; padding: .5rem; border-radius: 8px;
+  text-align: center; background: rgba(37,174,96,.06);
+}
+
+.sk-sec { padding: 8px 10px 3px; font-size: .48rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(200,87,10,.8); }
+
+.sk-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.sk-item-img {
+  width: 46px; height: 46px; border-radius: 8px;
+  object-fit: cover; flex-shrink: 0;
+  background: #1a120a;
+}
+.sk-item-info { flex: 1; min-width: 0; }
+.sk-item-name { font-size: .75rem; font-weight: 700; color: #f0e8dc; line-height: 1.2; }
+.sk-item-desc { font-size: .53rem; color: rgba(240,232,220,.38); margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sk-item-price { font-family: var(--f-display); font-size: 1rem; color: #e07a30; flex-shrink: 0; }
+
+.sk-sticky {
+  position: sticky; bottom: 0;
+  background: rgba(12,9,5,.96);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 7px 10px;
+  display: flex; gap: 6px;
+  backdrop-filter: blur(10px);
+}
+.sk-s-call {
+  flex: 1; background: linear-gradient(135deg, #c8570a, #e8731a);
+  color: #fff; font-size: .58rem; font-weight: 800;
+  letter-spacing: .5px; text-transform: uppercase;
+  border-radius: 7px; padding: .52rem; text-align: center;
+}
+.sk-s-map {
+  width: 36px; border: 1px solid rgba(255,255,255,.1);
+  border-radius: 7px; display: flex; align-items: center;
+  justify-content: center; font-size: .85rem;
+}
+
+/* ── PHONE SCREEN 2: PIZZA LIGHT ── */
+.sc-pizza {
+  background: #fcfaf6;
+  font-family: var(--f-body);
+  color: #1a1208;
+  min-height: 420px;
+}
+.sp-cover {
+  height: 130px; position: relative; overflow: hidden;
+}
+.sp-cover img { width: 100%; height: 100%; object-fit: cover; }
+.sp-cover-grad {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, #fcfaf6, transparent 55%);
+}
+.sp-head { padding: 0 10px 6px; }
+.sp-name { font-family: var(--f-display); font-size: 1.3rem; letter-spacing: 2px; color: #1a1208; }
+.sp-rating { display: flex; align-items: center; gap: .3rem; font-size: .58rem; color: rgba(26,18,8,.5); margin-top: .1rem; }
+.sp-rating span { color: #f59e0b; }
+.sp-promo {
+  margin: 0 10px 8px;
+  background: linear-gradient(135deg, rgba(220,38,38,.08), rgba(220,38,38,.04));
+  border: 1px solid rgba(220,38,38,.15);
+  border-radius: 8px; padding: 7px 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sp-promo-ico { font-size: 1.1rem; flex-shrink: 0; }
+.sp-promo-txt { font-size: .58rem; color: rgba(26,18,8,.6); line-height: 1.4; }
+.sp-promo-txt strong { color: #dc2626; }
+.sp-cats {
+  display: flex; gap: 5px; padding: 0 10px 8px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.sp-cats::-webkit-scrollbar { display: none; }
+.sp-cat {
+  font-size: .55rem; font-weight: 700; letter-spacing: .5px;
+  padding: .25rem .65rem; border-radius: 50px; white-space: nowrap; flex-shrink: 0;
+  border: 1px solid rgba(26,18,8,.1); color: rgba(26,18,8,.45);
+}
+.sp-cat.a { background: #1a1208; color: #fcfaf6; border-color: #1a1208; }
+.sp-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-bottom: 1px solid rgba(26,18,8,.06);
+}
+.sp-item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.sp-item-info { flex: 1; min-width: 0; }
+.sp-item-name { font-size: .75rem; font-weight: 700; color: #1a1208; }
+.sp-item-desc { font-size: .53rem; color: rgba(26,18,8,.4); margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sp-item-right { flex-shrink: 0; text-align: right; }
+.sp-item-price { font-size: .82rem; font-weight: 800; color: #dc2626; }
+.sp-item-add {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: #1a1208; color: #fcfaf6;
+  font-size: .85rem; display: flex; align-items: center; justify-content: center;
+  margin-top: 3px; margin-left: auto;
+}
+.sp-sticky {
+  position: sticky; bottom: 0;
+  background: rgba(252,250,246,.96);
+  border-top: 1px solid rgba(26,18,8,.08);
+  padding: 7px 10px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5px; backdrop-filter: blur(10px);
+}
+.sp-s-call {
+  background: #1a1208; color: #fcfaf6;
+  font-size: .58rem; font-weight: 800; letter-spacing: .5px; text-transform: uppercase;
+  border-radius: 7px; padding: .5rem; text-align: center;
+}
+.sp-s-wa {
+  border: 1px solid rgba(37,174,96,.3); color: #27ae60;
+  font-size: .58rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  border-radius: 7px; padding: .5rem; text-align: center;
+}
+
+/* ── MARQUEE ── */
+.marquee {
+  background: var(--ink); color: var(--cream);
+  padding: .8rem 0; overflow: hidden;
+  border-top: 3px solid var(--gold);
+}
+.marquee-track {
+  display: flex; white-space: nowrap;
+  animation: mq 18s linear infinite;
+}
+.marquee-item {
+  font-family: var(--f-display);
+  font-size: 1.1rem; letter-spacing: 4px;
+  text-transform: uppercase; padding: 0 2rem;
+  color: rgba(242,237,230,.6);
+}
+.marquee-dot { color: var(--gold); padding: 0 1rem; }
+@keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTION BASICS ── */
+.sec { padding: 6rem 2.5rem; }
+@media (min-width: 900px) { .sec { padding: 9rem 5rem; } }
+.wrap { max-width: 1120px; margin: 0 auto; }
+
+.label {
+  font-size: .6rem; font-weight: 800; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--rust);
+  display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem;
+}
+.label::before { content: ''; width: 18px; height: 2px; background: var(--rust); flex-shrink: 0; }
+
+.big-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+  line-height: .95; letter-spacing: 2px;
+}
+.big-title em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 1.05em;
+  letter-spacing: 0;
+}
+
+/* RV */
+.rv { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
+.rv.vi { opacity: 1; transform: none; }
+.rv.d1 { transition-delay: .07s; }
+.rv.d2 { transition-delay: .15s; }
+.rv.d3 { transition-delay: .23s; }
+.rv.d4 { transition-delay: .31s; }
+@keyframes rise { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
+
+/* ── PROBLEM ── */
+.prob-sec { background: var(--ink); color: var(--cream); }
+.prob-sec .label { color: var(--gold); }
+.prob-sec .label::before { background: var(--gold); }
+.prob-sec .big-title { color: var(--cream); }
+.prob-top {
+  display: grid; grid-template-columns: 1fr;
+  gap: 2rem; margin-bottom: 4rem;
+}
+@media (min-width: 900px) { .prob-top { grid-template-columns: 1fr 1fr; align-items: end; } }
+.prob-body { font-family: var(--f-serif); font-size: 1.1rem; font-style: italic; color: rgba(242,237,230,.55); line-height: 1.75; max-width: 400px; }
+
+.prob-cards {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1px; background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 4px; overflow: hidden;
+}
+@media (min-width: 600px) { .prob-cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .prob-cards { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+.prob-card {
+  background: #0a0a0a; padding: 2rem 1.5rem;
+  transition: background .25s;
+}
+.prob-card:hover { background: #111; }
+.prob-num {
+  font-family: var(--f-display);
+  font-size: 3rem; color: rgba(255,255,255,.07);
+  line-height: 1; margin-bottom: .7rem;
+}
+.prob-ico { font-size: 1.5rem; margin-bottom: .8rem; }
+.prob-q { font-family: var(--f-body); font-size: .88rem; font-weight: 700; color: var(--cream); margin-bottom: .5rem; line-height: 1.3; }
+.prob-a { font-size: .76rem; color: rgba(242,237,230,.45); line-height: 1.75; }
+.prob-verdict {
+  margin-top: 2.5rem;
+  padding: 1.8rem 2rem;
+  background: var(--gold);
+  color: var(--ink);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.prob-verdict-txt {
+  font-family: var(--f-display);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  letter-spacing: 1px; line-height: 1.1;
+}
+.prob-verdict-txt em { font-family: var(--f-serif); font-style: italic; }
+.prob-verdict-cta {
+  font-size: .68rem; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; background: var(--ink); color: var(--cream);
+  padding: .75rem 1.6rem; border-radius: 2px;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.prob-verdict-cta:hover { background: var(--rust); }
+
+/* ── DEMO ── */
+.demo-sec { background: var(--paper); }
+.demo-intro {
+  display: grid; grid-template-columns: 1fr;
+  gap: 2rem; margin-bottom: 3.5rem; align-items: end;
+}
+@media (min-width: 900px) { .demo-intro { grid-template-columns: 1.2fr 1fr; } }
+.demo-intro-right { display: flex; flex-direction: column; gap: .8rem; align-items: flex-start; }
+.demo-intro-body { font-family: var(--f-serif); font-style: italic; font-size: .98rem; color: var(--muted); line-height: 1.8; }
+
+/* DEMO TABS */
+.demo-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.dtab {
+  font-size: .65rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  padding: .5rem 1.1rem; border-radius: 2px;
+  border: 1.5px solid var(--border); color: var(--muted);
+  background: none; cursor: pointer; transition: all .2s;
+}
+.dtab.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.dtab:not(.on):hover { border-color: var(--ink); color: var(--ink); }
+
+/* DEMO STAGE — 3 phones */
+.demo-stage {
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  flex-wrap: wrap; justify-content: center;
+}
+@media (min-width: 1000px) { .demo-stage { flex-wrap: nowrap; justify-content: flex-start; } }
+
+/* DEMO PHONE */
+.demo-phone {
+  width: 260px; flex-shrink: 0;
+  border-radius: 38px;
+  border: 2px solid rgba(0,0,0,.12);
+  background: #111;
+  box-shadow: 0 35px 70px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.4);
+  overflow: hidden;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s, transform .6s, box-shadow .25s;
+}
+.demo-phone.vi { opacity: 1; transform: translateY(0); }
+.demo-phone:nth-child(2) { transition-delay: .12s; }
+.demo-phone:nth-child(3) { transition-delay: .24s; }
+.demo-phone:hover {
+  box-shadow: 0 45px 90px rgba(0,0,0,.25), 0 0 0 1px rgba(0,0,0,.5);
+  transform: translateY(-4px) !important;
+}
+.dp-notch {
+  position: relative; z-index: 10;
+  height: 28px; background: #111;
+  display: flex; align-items: center; justify-content: center;
+}
+.dp-pill { width: 60px; height: 5px; background: #1a1a1a; border-radius: 3px; }
+.dp-screen { height: 520px; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; position: relative; }
+.dp-screen::-webkit-scrollbar { display: none; }
+
+/* PHONE LABEL */
+.phone-label {
+  text-align: center; margin-top: 1rem;
+  font-size: .62rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+}
+.phone-label span { color: var(--ink); }
+.phone-wrap { display: flex; flex-direction: column; }
+
+/* ── DEMO APP 1: ISTANBUL GRILL (dark, warm) ── */
+.app-kebab {
+  background: #0d0906; color: #f2e8d8;
+  font-family: var(--f-body); min-height: 520px;
+}
+.ik-hero { height: 175px; position: relative; overflow: hidden; }
+.ik-hero img { width:100%; height:100%; object-fit:cover; filter: brightness(.85); }
+.ik-hero-ov { position:absolute;inset:0; background: linear-gradient(180deg, rgba(13,9,6,0) 30%, #0d0906 100%); }
+.ik-live {
+  position:absolute; top:30px; left:10px;
+  display:flex; align-items:center; gap:.3rem;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(8px);
+  padding:.2rem .55rem; border-radius:50px;
+  font-size:.5rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.8);
+}
+.ik-live-dot { width:5px; height:5px; border-radius:50%; background:#4ade80; animation:blink 2s infinite; }
+.ik-rate {
+  position:absolute; top:30px; right:10px;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(8px);
+  padding:.2rem .55rem; border-radius:50px;
+  font-size:.55rem; font-weight:800; color:#fbbf24;
+  border:1px solid rgba(255,255,255,.1);
+}
+.ik-top { padding: 0 12px 8px; }
+.ik-name { font-family:var(--f-display); font-size:1.7rem; letter-spacing:3px; color:#f2e8d8; line-height:1; }
+.ik-sub { font-size:.5rem; letter-spacing:3px; text-transform:uppercase; color:rgba(242,232,216,.35); margin-top:.15rem; }
+.ik-info {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  border-block:1px solid rgba(255,255,255,.06); margin:0 0 8px;
+}
+.ik-i { padding:7px 4px; text-align:center; }
+.ik-i:not(:last-child) { border-right:1px solid rgba(255,255,255,.06); }
+.ik-iv { display:block; font-size:.7rem; font-weight:800; color:#f2e8d8; }
+.ik-il { font-size:.46rem; text-transform:uppercase; letter-spacing:1px; color:rgba(242,232,216,.35); }
+.ik-ctas { padding:0 12px 8px; display:flex; flex-direction:column; gap:5px; }
+.ik-cta-main {
+  background: linear-gradient(135deg, #bf4b0a, #e06820);
+  color:#fff; font-size:.64rem; font-weight:800; letter-spacing:.8px; text-transform:uppercase;
+  padding:.65rem; border-radius:8px; text-align:center;
+  box-shadow: 0 3px 14px rgba(191,75,10,.3);
+}
+.ik-cta-wa {
+  border:1px solid rgba(37,174,96,.3); color:#2ecc71; background:rgba(37,174,96,.07);
+  font-size:.6rem; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
+  padding:.52rem; border-radius:8px; text-align:center;
+}
+.ik-sect { padding:8px 12px 3px; font-size:.46rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:rgba(191,75,10,.8); }
+.ik-item { display:flex; align-items:center; gap:9px; padding:8px 12px; border-bottom:1px solid rgba(255,255,255,.04); }
+.ik-img { width:50px; height:50px; border-radius:9px; object-fit:cover; flex-shrink:0; }
+.ik-inf { flex:1; min-width:0; }
+.ik-n { font-size:.78rem; font-weight:700; color:#f2e8d8; line-height:1.2; }
+.ik-d { font-size:.54rem; color:rgba(242,232,216,.36); margin-top:.1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ik-r { flex-shrink:0; }
+.ik-p { font-family:var(--f-display); font-size:1rem; color:#e06820; }
+.ik-add { width:24px; height:24px; border-radius:7px; background:rgba(191,75,10,.15); border:1px solid rgba(191,75,10,.3); display:flex; align-items:center; justify-content:center; color:#e06820; font-size:.9rem; margin-top:3px; }
+.ik-sticky {
+  position:sticky; bottom:0; background:rgba(13,9,6,.96);
+  border-top:1px solid rgba(255,255,255,.06); padding:8px 12px;
+  display:flex; gap:6px; backdrop-filter:blur(12px);
+}
+.ik-s1 { flex:1; background:linear-gradient(135deg,#bf4b0a,#e06820); color:#fff; font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; border-radius:7px; padding:.52rem; text-align:center; }
+.ik-s2 { width:36px; border:1px solid rgba(255,255,255,.1); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+
+/* ── DEMO APP 2: PIZZERIA (cream & red) ── */
+.app-pizza { background:#fdf9f3; color:#1a0f08; font-family:var(--f-body); min-height:520px; }
+.pz-hero { height:170px; position:relative; overflow:hidden; }
+.pz-hero img { width:100%; height:100%; object-fit:cover; }
+.pz-ov { position:absolute; inset:0; background:linear-gradient(0deg,#fdf9f3,transparent 55%); }
+.pz-badges {
+  position:absolute; top:30px; inset-inline:0;
+  display:flex; justify-content:space-between; align-items:center; padding:0 10px;
+}
+.pz-badge-open { background:rgba(255,255,255,.88); backdrop-filter:blur(6px); color:#dc2626; font-size:.5rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:.22rem .6rem; border-radius:50px; }
+.pz-badge-time { background:rgba(0,0,0,.55); backdrop-filter:blur(6px); color:rgba(255,255,255,.8); font-size:.5rem; font-weight:700; padding:.22rem .6rem; border-radius:50px; }
+.pz-head { padding:0 12px 6px; }
+.pz-name { font-family:var(--f-display); font-size:1.55rem; letter-spacing:2px; color:#1a0f08; }
+.pz-stars { display:flex; align-items:center; gap:.25rem; font-size:.56rem; color:rgba(26,15,8,.45); margin-top:.1rem; }
+.pz-stars span { color:#f59e0b; }
+.pz-promo { margin:4px 12px 8px; background:linear-gradient(135deg,rgba(220,38,38,.08),rgba(220,38,38,.04)); border:1px solid rgba(220,38,38,.14); border-radius:9px; padding:7px 9px; display:flex; align-items:center; gap:7px; }
+.pz-pi { font-size:1.1rem; flex-shrink:0; }
+.pz-pt { font-size:.58rem; color:rgba(26,15,8,.55); line-height:1.45; }
+.pz-pt strong { color:#dc2626; }
+.pz-cats { display:flex; gap:5px; padding:0 12px 8px; overflow-x:auto; scrollbar-width:none; }
+.pz-cats::-webkit-scrollbar { display:none; }
+.pz-cat { font-size:.54rem; font-weight:700; letter-spacing:.5px; padding:.24rem .65rem; border-radius:50px; border:1px solid rgba(26,15,8,.1); color:rgba(26,15,8,.4); white-space:nowrap; flex-shrink:0; }
+.pz-cat.a { background:#1a0f08; color:#fdf9f3; border-color:#1a0f08; }
+.pz-sect { padding:6px 12px 3px; font-size:.46rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:rgba(220,38,38,.7); }
+.pz-item { display:flex; align-items:center; gap:9px; padding:8px 12px; border-bottom:1px solid rgba(26,15,8,.06); }
+.pz-img { width:54px; height:54px; border-radius:9px; object-fit:cover; flex-shrink:0; }
+.pz-inf { flex:1; min-width:0; }
+.pz-n { font-size:.78rem; font-weight:700; color:#1a0f08; }
+.pz-d { font-size:.54rem; color:rgba(26,15,8,.38); margin-top:.1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pz-sz { display:flex; gap:3px; margin-top:3px; }
+.pz-s { font-size:.48rem; font-weight:700; padding:.15rem .38rem; border-radius:4px; border:1px solid rgba(26,15,8,.1); color:rgba(26,15,8,.4); }
+.pz-s.a { background:#1a0f08; color:#fdf9f3; border-color:#1a0f08; }
+.pz-r { flex-shrink:0; text-align:right; }
+.pz-p { font-size:.85rem; font-weight:800; color:#dc2626; }
+.pz-add { width:24px; height:24px; border-radius:7px; background:#1a0f08; color:#fdf9f3; font-size:.9rem; display:flex; align-items:center; justify-content:center; margin-top:3px; margin-left:auto; }
+.pz-sticky { position:sticky; bottom:0; background:rgba(253,249,243,.96); border-top:1px solid rgba(26,15,8,.07); padding:8px 12px; display:grid; grid-template-columns:1fr 1fr; gap:5px; backdrop-filter:blur(12px); }
+.pz-s1 { background:#1a0f08; color:#fdf9f3; font-size:.58rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; border-radius:7px; padding:.52rem; text-align:center; }
+.pz-s2 { border:1px solid rgba(37,174,96,.3); color:#27ae60; font-size:.58rem; font-weight:700; text-transform:uppercase; border-radius:7px; padding:.52rem; text-align:center; }
+
+/* ── DEMO APP 3: SUSHI (dark teal) ── */
+.app-sushi { background:#030d10; color:#dff0f4; font-family:var(--f-body); min-height:520px; }
+.su-hero { height:175px; position:relative; overflow:hidden; }
+.su-hero img { width:100%; height:100%; object-fit:cover; filter:brightness(.75) saturate(.9); }
+.su-ov { position:absolute; inset:0; background:linear-gradient(0deg,#030d10,rgba(3,13,16,.4) 55%); }
+.su-top { position:absolute; top:30px; inset-inline:0; display:flex; justify-content:space-between; align-items:center; padding:0 10px; }
+.su-live { display:flex; align-items:center; gap:.3rem; background:rgba(0,0,0,.6); backdrop-filter:blur(8px); padding:.2rem .55rem; border-radius:50px; font-size:.5rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; border:1px solid rgba(0,188,212,.15); color:rgba(255,255,255,.7); }
+.su-dot { width:5px; height:5px; border-radius:50%; background:#00bcd4; box-shadow:0 0 6px #00bcd4; animation:blink 2s infinite; }
+.su-rat { background:rgba(0,0,0,.6); backdrop-filter:blur(6px); padding:.2rem .55rem; border-radius:50px; font-size:.58rem; font-weight:800; color:#fbbf24; border:1px solid rgba(255,255,255,.1); }
+.su-head { padding:0 12px 6px; }
+.su-name { font-family:var(--f-serif); font-size:1.5rem; font-style:italic; color:#dff0f4; letter-spacing:2px; line-height:1; }
+.su-sub { font-size:.48rem; letter-spacing:4px; text-transform:uppercase; color:rgba(223,240,244,.3); margin-top:.1rem; }
+.su-cta { padding:0 12px 6px; }
+.su-cta-main { border:1px solid rgba(0,188,212,.35); color:#00bcd4; font-size:.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:.6rem; border-radius:8px; text-align:center; background:rgba(0,188,212,.06); }
+.su-cats { display:flex; gap:5px; padding:4px 12px 8px; overflow-x:auto; scrollbar-width:none; }
+.su-cats::-webkit-scrollbar { display:none; }
+.su-cat { font-size:.54rem; font-weight:700; letter-spacing:.5px; padding:.24rem .65rem; border-radius:50px; border:1px solid rgba(0,188,212,.12); color:rgba(223,240,244,.38); white-space:nowrap; flex-shrink:0; }
+.su-cat.a { background:rgba(0,188,212,.12); border-color:rgba(0,188,212,.35); color:#00bcd4; }
+.su-divider { display:flex; align-items:center; gap:8px; padding:6px 12px 3px; }
+.su-dl { flex:1; height:1px; background:rgba(0,188,212,.1); }
+.su-dt { font-size:.46rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(0,188,212,.5); white-space:nowrap; }
+.su-item { display:grid; grid-template-columns:54px 1fr auto; align-items:center; gap:9px; padding:8px 12px; border-bottom:1px solid rgba(255,255,255,.04); }
+.su-img { width:54px; height:54px; border-radius:9px; object-fit:cover; }
+.su-n { font-size:.76rem; color:#dff0f4; font-weight:500; line-height:1.2; }
+.su-d { font-size:.52rem; color:rgba(223,240,244,.32); margin-top:.1rem; }
+.su-r { text-align:right; }
+.su-p { font-family:var(--f-serif); font-size:1rem; color:#00a8c0; }
+.su-add { font-size:.52rem; font-weight:700; color:#00bcd4; background:rgba(0,188,212,.08); border:1px solid rgba(0,188,212,.2); padding:.18rem .4rem; border-radius:5px; margin-top:3px; white-space:nowrap; text-align:center; }
+.su-sticky { position:sticky; bottom:0; background:rgba(3,13,16,.96); border-top:1px solid rgba(0,188,212,.1); padding:8px 12px; display:flex; gap:6px; backdrop-filter:blur(12px); }
+.su-s1 { flex:1; background:linear-gradient(135deg,#006e80,#00bcd4); color:#fff; font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; border-radius:7px; padding:.52rem; text-align:center; }
+.su-s2 { width:36px; border:1px solid rgba(0,188,212,.2); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+
+/* ── HOW ── */
+.how-sec { background: var(--cream); }
+.how-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; margin-top: 3.5rem;
+}
+@media (min-width: 600px) { .how-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .how-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+.how-step { background: var(--cream); padding: 2rem 1.6rem; transition: background .25s; position: relative; }
+.how-step:hover { background: #fff; }
+.step-num {
+  font-family: var(--f-display);
+  font-size: 4rem; color: rgba(10,10,10,.06);
+  line-height: 1; margin-bottom: .6rem;
+}
+.step-ico { font-size: 1.5rem; margin-bottom: .7rem; }
+.step-title { font-size: .88rem; font-weight: 800; color: var(--ink); margin-bottom: .4rem; line-height: 1.2; }
+.step-desc { font-size: .76rem; color: var(--muted); line-height: 1.75; }
+.step-time {
+  margin-top: .8rem; display: inline-flex;
+  align-items: center; gap: .3rem;
+  font-size: .58rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--rust);
+}
+.step-time::before { content: ''; width: 12px; height: 2px; background: var(--rust); }
+
+/* ── SERVICES ── */
+.svc-sec { background: var(--paper); }
+.svc-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 4px;
+  overflow: hidden; margin-top: 3.5rem;
+}
+@media (min-width: 600px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .svc-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.svc-card { background: var(--paper); padding: 2rem 1.6rem; transition: background .25s; }
+.svc-card:hover { background: var(--cream); }
+.svc-ico-wrap {
+  width: 44px; height: 44px; border-radius: 4px;
+  background: var(--ink); display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-bottom: 1.1rem;
+  transition: background .25s;
+}
+.svc-card:hover .svc-ico-wrap { background: var(--rust); }
+.svc-n { font-size: .8rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink); margin-bottom: .45rem; }
+.svc-d { font-size: .78rem; color: var(--muted); line-height: 1.75; }
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+.chip {
+  font-size: .54rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: .18rem .6rem; border-radius: 2px;
+  background: rgba(10,10,10,.06); color: var(--ink);
+}
+
+/* ── LAUNCH ── */
+.launch-sec { background: var(--ink); color: var(--cream); }
+.launch-sec .label { color: var(--gold); }
+.launch-sec .label::before { background: var(--gold); }
+.launch-box {
+  margin-top: 3.5rem;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px; overflow: hidden;
+  display: grid; grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .launch-box { grid-template-columns: 1.4fr 1fr; } }
+.lb-left-panel { padding: 3rem 2.5rem; background: rgba(255,255,255,.025); }
+.lb-title { font-family: var(--f-display); font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: .95; letter-spacing: 2px; color: var(--cream); margin-bottom: 1rem; }
+.lb-title span { color: var(--gold); }
+.lb-body { font-family: var(--f-serif); font-style: italic; font-size: .98rem; color: rgba(242,237,230,.5); line-height: 1.8; margin-bottom: 1.8rem; }
+.lb-perks { display: flex; flex-direction: column; gap: .7rem; }
+.lb-perk { display: flex; align-items: flex-start; gap: .85rem; }
+.lb-perk-chk {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(212,168,67,.15); border: 1.5px solid rgba(212,168,67,.3);
+  color: var(--gold); font-size: .65rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: .1rem;
+}
+.lb-perk-txt { font-size: .8rem; color: rgba(242,237,230,.65); line-height: 1.5; }
+.lb-perk-txt strong { color: var(--cream); }
+.lb-right-panel {
+  padding: 3rem 2.5rem;
+  background: rgba(212,168,67,.06);
+  border-left: 1px solid rgba(212,168,67,.15);
+  display: flex; flex-direction: column; gap: 1.2rem; justify-content: center;
+}
+.spots-display {
+  background: rgba(212,168,67,.08); border: 1px solid rgba(212,168,67,.2);
+  border-radius: 4px; padding: 1.5rem; text-align: center;
+}
+.spots-big { font-family: var(--f-display); font-size: 5rem; line-height: 1; color: var(--gold); }
+.spots-lbl { font-size: .6rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(242,237,230,.4); margin-top: .2rem; }
+.lb-btn {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: 100%; padding: 1rem; border-radius: 2px;
+  background: var(--gold); color: var(--ink);
+  font-size: .72rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  transition: background .2s, transform .2s;
+}
+.lb-btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.lb-note { font-size: .63rem; color: rgba(242,237,230,.3); text-align: center; }
+
+/* ── PRICING ── */
+.price-sec { background: var(--cream); }
+.price-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1.2rem; margin-top: 3.5rem;
+}
+@media (min-width: 850px) { .price-grid { grid-template-columns: 1fr 1fr 1fr; align-items: start; } }
+.pc {
+  background: var(--paper); border: 1.5px solid var(--border);
+  border-radius: 4px; padding: 2rem;
+  position: relative; transition: border-color .25s, transform .25s;
+}
+.pc:hover { transform: translateY(-4px); }
+.pc.feat {
+  background: var(--ink); color: var(--cream);
+  border-color: var(--ink);
+}
+.pc-badge {
+  position: absolute; top: -11px; left: 1.5rem;
+  background: var(--gold); color: var(--ink);
+  font-size: .55rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  padding: .22rem .85rem; border-radius: 2px;
+}
+.pc-tier { font-size: .6rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: var(--rust); margin-bottom: .7rem; }
+.pc.feat .pc-tier { color: var(--gold); }
+.pc-num { font-family: var(--f-display); font-size: 3.5rem; line-height: 1; color: var(--ink); }
+.pc.feat .pc-num { color: var(--cream); }
+.pc-per { font-size: .76rem; color: var(--muted); margin-left: .3rem; }
+.pc.feat .pc-per { color: rgba(242,237,230,.5); }
+.pc-setup { font-size: .68rem; color: var(--muted); margin: .3rem 0 1.2rem; font-style: italic; }
+.pc.feat .pc-setup { color: rgba(242,237,230,.45); }
+.pc-setup strong { color: var(--rust); }
+.pc.feat .pc-setup strong { color: var(--gold); }
+.pc-line { height: 1px; background: var(--border); margin-bottom: 1.1rem; }
+.pc.feat .pc-line { background: rgba(255,255,255,.1); }
+.pc-feats { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
+.pc-f { display: flex; align-items: flex-start; gap: .55rem; font-size: .76rem; color: var(--muted); line-height: 1.45; }
+.pc.feat .pc-f { color: rgba(242,237,230,.55); }
+.pc-f.y { color: var(--ink); }
+.pc.feat .pc-f.y { color: var(--cream); }
+.pc-chk { flex-shrink: 0; margin-top: .08rem; font-size: .68rem; }
+.pc-btn {
+  display: flex; align-items: center; justify-content: center; width: 100%;
+  padding: .9rem; border-radius: 2px;
+  font-size: .7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  transition: all .2s;
+}
+.pc-btn.solid { background: var(--gold); color: var(--ink); }
+.pc-btn.solid:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.pc-btn.outline { border: 1.5px solid var(--ink); color: var(--ink); }
+.pc-btn.outline:hover { background: var(--ink); color: var(--cream); }
+.pc-note { font-size: .62rem; color: var(--muted); text-align: center; margin-top: .5rem; font-style: italic; }
+.pc.feat .pc-note { color: rgba(242,237,230,.35); }
+.guar-row {
+  margin-top: 2.2rem; padding: 1.5rem 2rem;
+  background: var(--paper); border: 1px solid var(--border); border-radius: 4px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem 3rem;
+}
+.gi { display: flex; align-items: center; gap: .5rem; font-size: .76rem; color: var(--muted); }
+.gi strong { color: var(--ink); }
+
+/* ── FAQ ── */
+.faq-sec { background: var(--paper); }
+.faq-list { max-width: 720px; margin: 3.5rem auto 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 0; font-size: .84rem; font-weight: 700; color: var(--ink);
+  text-align: left; gap: 1rem; background: none; cursor: pointer;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--rust); }
+.faq-plus {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: .7rem; color: var(--ink);
+  transition: transform .3s, border-color .2s;
+}
+.faq-q[aria-expanded=true] .faq-plus { transform: rotate(45deg); border-color: var(--rust); color: var(--rust); }
+.faq-a {
+  display: none; padding: .1rem 0 1rem;
+  font-family: var(--f-serif); font-size: .95rem; font-style: italic;
+  color: var(--muted); line-height: 1.8;
+}
+.faq-a.open { display: block; }
+
+/* ── CTA FINAL ── */
+.final-cta { background: var(--gold); position: relative; overflow: hidden; }
+.fcta-bg {
+  position: absolute; inset: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(10,10,10,.04) 35px, rgba(10,10,10,.04) 36px),
+    repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(10,10,10,.04) 35px, rgba(10,10,10,.04) 36px);
+}
+.fcta-inner {
+  position: relative; z-index: 1;
+  text-align: center; max-width: 700px; margin: 0 auto;
+}
+.fcta-t {
+  font-family: var(--f-display);
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: .9; letter-spacing: 3px; color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+.fcta-t em { font-family: var(--f-serif); font-style: italic; color: rgba(10,10,10,.55); }
+.fcta-sub { font-family: var(--f-serif); font-style: italic; font-size: 1.05rem; color: rgba(10,10,10,.6); line-height: 1.75; margin-bottom: 2.2rem; }
+.fcta-btns { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+.fcta-meta { margin-top: 1.4rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.2rem; font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(10,10,10,.5); }
+
+/* ── FOOTER ── */
+footer { background: var(--ink); color: rgba(242,237,230,.5); padding: 4rem 2.5rem 2rem; }
+@media (min-width: 900px) { footer { padding: 4rem 5rem 2rem; } }
+.ft { max-width: 1120px; margin: 0 auto; }
+.ft-top { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+@media (min-width: 700px) { .ft-top { grid-template-columns: 1.5fr 1fr 1fr; } }
+.ft-logo { font-family: var(--f-display); font-size: 1.4rem; letter-spacing: 3px; color: var(--cream); margin-bottom: .6rem; }
+.ft-logo span { color: var(--gold); }
+.ft-tag { font-family: var(--f-serif); font-style: italic; font-size: .92rem; color: rgba(242,237,230,.4); line-height: 1.7; max-width: 260px; margin-bottom: 1rem; }
+.ft-contact a { display: block; font-size: .76rem; color: var(--gold); font-weight: 700; margin-bottom: .35rem; transition: color .2s; }
+.ft-contact a:hover { color: var(--gold-lt); }
+.ft-col-t { font-size: .56rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: rgba(242,237,230,.25); margin-bottom: .9rem; }
+.ft-links { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+.ft-links a { font-size: .78rem; color: rgba(242,237,230,.45); transition: color .2s; }
+.ft-links a:hover { color: var(--cream); }
+.ft-bot { border-top: 1px solid rgba(255,255,255,.07); padding-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem; }
+.ft-copy { font-size: .62rem; color: rgba(242,237,230,.2); }
+.ft-leg { display: flex; gap: 1.2rem; }
+.ft-leg a { font-size: .62rem; color: rgba(242,237,230,.2); transition: color .2s; }
+.ft-leg a:hover { color: var(--gold); }
+
+/* ── STICKY ── */
+.stickybar {
+  position: fixed; bottom: 0; inset-inline: 0; z-index: 600;
+  background: rgba(10,10,10,.96); backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex; padding-bottom: env(safe-area-inset-bottom);
+}
+.sb-left {
+  flex: .45; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .15rem; padding: .75rem .5rem;
+  font-size: .56rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--gold); border-right: 1px solid rgba(255,255,255,.07);
+  transition: background .2s;
+}
+.sb-left:hover { background: rgba(212,168,67,.06); }
+.sb-right {
+  flex: .55; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .15rem; padding: .75rem .5rem;
+  font-size: .56rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  background: var(--gold); color: var(--ink);
+  animation: spulse 3s ease-in-out infinite;
+}
+@keyframes spulse { 0%,100%{opacity:1} 50%{opacity:.9} }
+.sb-sub { font-size: .5rem; font-weight: 500; opacity: .6; }
+</style>
+</head>
+<body>
+
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="logo-hex">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="20,3 37,12.5 37,27.5 20,37 3,27.5 3,12.5" stroke="#d4a843" stroke-width="1.5" fill="rgba(212,168,67,.08)"/>
+        <polygon points="20,10 30,16 30,24 20,30 10,24 10,16" stroke="#d4a843" stroke-width=".8" fill="rgba(212,168,67,.06)"/>
+        <circle cx="20" cy="20" r="3.5" fill="#d4a843"/>
+      </svg>
+    </div>
+    <span class="logo-name">CONVERT<span>WEB</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demo">Démo</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20je%20veux%20une%20maquette%20gratuite" class="nav-cta" target="_blank">Maquette gratuite</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Agence web · Spécialiste restauration</div>
+    <h1 class="hero-h1">
+      <span>ON FAIT</span>
+      <span class="line-gold">SONNER</span>
+      <span class="line-out">VOTRE</span>
+      <span>RESTAU.</span>
+    </h1>
+    <p class="hero-sub">
+      ConvertWeb construit des sites d'exception pour kebabs, fast-foods et restaurants.
+      <strong>+15 appels par mois garantis</strong> — ou vous ne payez pas un centime.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20maquette%20gratuite" class="btn-primary" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Maquette gratuite — 24h
+      </a>
+      <a href="#demo" class="btn-ghost">Voir la démo ↓</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <div class="trust-av" style="background:#8a9e7a">K</div>
+        <div class="trust-av" style="background:#c94a2a">P</div>
+        <div class="trust-av" style="background:#d4a843">S</div>
+      </div>
+      <div class="trust-txt"><strong>3 restaurants</strong> nous font confiance en lancement</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="phone-scene">
+      <!-- MAIN: KEBAB -->
+      <div class="phone-main">
+        <div class="pn"></div>
+        <div class="ps main-h">
+          <div class="sc-kebab">
+            <div class="sk-cover">
+              <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80&auto=format&fit=crop" alt="Kebab">
+              <div class="sk-cover-grad"></div>
+              <div class="sk-cover-badge">Ouvert</div>
+            </div>
+            <div class="sk-head">
+              <div class="sk-name">Istanbul Grill</div>
+              <div class="sk-type">Kebab · Tacos · Halal</div>
+            </div>
+            <div class="sk-stats">
+              <div class="sk-stat"><span class="sk-stat-val">20 min</span><span class="sk-stat-lab">Livraison</span></div>
+              <div class="sk-stat"><span class="sk-stat-val">⭐ 4,9</span><span class="sk-stat-lab">Google</span></div>
+              <div class="sk-stat"><span class="sk-stat-val">0€</span><span class="sk-stat-lab">Frais</span></div>
+            </div>
+            <div class="sk-cta-row">
+              <div class="sk-btn-call">📞 Commander — 01 XX XX XX XX</div>
+              <div class="sk-btn-wa">💬 WhatsApp</div>
+            </div>
+            <div class="sk-sec">⭐ Kebabs</div>
+            <div class="sk-item">
+              <img class="sk-item-img" src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sk-item-info"><div class="sk-item-name">Kebab Classique</div><div class="sk-item-desc">Veau, sauce maison, salade</div></div>
+              <div class="sk-item-price">6,50€</div>
+            </div>
+            <div class="sk-item">
+              <img class="sk-item-img" src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sk-item-info"><div class="sk-item-name">Kebab Spécial</div><div class="sk-item-desc">Mixte, double sauce, fromage</div></div>
+              <div class="sk-item-price">7,90€</div>
+            </div>
+            <div class="sk-item">
+              <img class="sk-item-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sk-item-info"><div class="sk-item-name">Assiette Mixte</div><div class="sk-item-desc">Frites, salade, sauce</div></div>
+              <div class="sk-item-price">12,50€</div>
+            </div>
+            <div class="sk-sect">🌯 Tacos</div>
+            <div class="sk-item">
+              <img class="sk-item-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sk-item-info"><div class="sk-item-name">Tacos L Poulet</div><div class="sk-item-desc">Fromage, sauce algérienne</div></div>
+              <div class="sk-item-price">8,50€</div>
+            </div>
+            <div style="height:52px"></div>
+            <div class="sk-sticky">
+              <div class="sk-s-call">📞 Appeler</div>
+              <div class="sk-s-map">📍</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SECONDARY: PIZZA -->
+      <div class="phone-secondary">
+        <div class="pn"></div>
+        <div class="ps sec-h">
+          <div class="sc-pizza">
+            <div class="sp-cover">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=75&auto=format&fit=crop" alt="Pizza">
+              <div class="sp-cover-grad"></div>
+            </div>
+            <div class="sp-head">
+              <div class="sp-name">Napoli Express</div>
+              <div class="sp-rating"><span>★★★★★</span> 4,7 · 312 avis</div>
+            </div>
+            <div class="sp-promo">
+              <div class="sp-promo-ico">🎉</div>
+              <div class="sp-promo-txt"><strong>-15% aujourd'hui</strong> · Pizza + Boisson avec code NAPOLI</div>
+            </div>
+            <div class="sp-cats">
+              <div class="sp-cat a">🍕 Pizzas</div>
+              <div class="sp-cat">🍔 Burgers</div>
+              <div class="sp-cat">🥗 Salades</div>
+              <div class="sp-cat">🍦 Desserts</div>
+            </div>
+            <div class="sp-item">
+              <img class="sp-item-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sp-item-info"><div class="sp-n">Margherita</div><div class="sp-d">Tomate, mozzarella, basilic</div></div>
+              <div class="sp-item-right"><div class="sp-item-price">9€</div><div class="sp-item-add">+</div></div>
+            </div>
+            <div class="sp-item">
+              <img class="sp-item-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150&q=75&auto=format&fit=crop" alt="">
+              <div class="sp-item-info"><div class="sp-n">4 Fromages</div><div class="sp-d">Mozza, gorgonzola, chèvre</div></div>
+              <div class="sp-item-right"><div class="sp-item-price">11€</div><div class="sp-item-add">+</div></div>
+            </div>
+            <div style="height:48px"></div>
+            <div class="sp-sticky">
+              <div class="sp-s-call">📞 Commander</div>
+              <div class="sp-s-wa">💬 WhatsApp</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Sites Premium</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Mobile First</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">SEO Local</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">+15 Appels Garantis</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Livraison 72h</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Kebabs · Fast-Foods · Restaurants</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Zéro Commission</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Sites Premium</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Mobile First</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">SEO Local</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">+15 Appels Garantis</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Livraison 72h</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Kebabs · Fast-Foods · Restaurants</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Zéro Commission</span><span class="marquee-dot">◆</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="sec prob-sec">
+  <div class="wrap">
+    <div class="prob-top">
+      <div class="rv">
+        <div class="label">Le problème</div>
+        <h2 class="big-title">VOTRE RESTO<br>PERD DES<br><em>clients</em><br>EN CE MOMENT.</h2>
+      </div>
+      <p class="prob-body rv d2">Chaque heure sans site optimisé, c'est des clients qui tapent "kebab [votre ville]" sur Google — et qui choisissent votre concurrent qui a un beau site avec un bouton d'appel visible.</p>
+    </div>
+    <div class="prob-cards">
+      <div class="prob-card rv d1">
+        <div class="prob-num">01</div>
+        <div class="prob-ico">📵</div>
+        <div class="prob-q">Site inexistant ou mal adapté mobile</div>
+        <p class="prob-a">80% de vos clients cherchent sur téléphone. Un site non-responsive = des clients perdus en 3 secondes.</p>
+      </div>
+      <div class="prob-card rv d2">
+        <div class="prob-num">02</div>
+        <div class="prob-ico">🙈</div>
+        <div class="prob-q">Invisible sur Google Maps local</div>
+        <p class="prob-a">Sans SEO local, vous n'existez pas pour les nouveaux clients. Ils ne savent pas que vous êtes là.</p>
+      </div>
+      <div class="prob-card rv d3">
+        <div class="prob-num">03</div>
+        <div class="prob-ico">😤</div>
+        <div class="prob-q">Pas de bouton d'appel visible</div>
+        <p class="prob-a">Un client qui cherche 5 secondes passe au suivant. L'effort doit être zéro pour lui.</p>
+      </div>
+      <div class="prob-card rv d4">
+        <div class="prob-num">04</div>
+        <div class="prob-ico">💸</div>
+        <div class="prob-q">30% de commission Uber Eats</div>
+        <p class="prob-a">Sur chaque commande. Un appel direct vous coûte 0€. Sur un an, la différence est massive.</p>
+      </div>
+    </div>
+    <div class="prob-verdict rv">
+      <div class="prob-verdict-txt">On règle tout ça. <em>En 72 heures.</em></div>
+      <a href="https://wa.me/33XXXXXXXXX?text=Bonjour" class="prob-verdict-cta" target="_blank">Commencer →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="sec demo-sec" id="demo">
+  <div class="wrap">
+    <div class="demo-intro">
+      <div class="rv">
+        <div class="label">Démo interactive</div>
+        <h2 class="big-title">CE QU'ON<br><em>construit</em><br>POUR VOUS.</h2>
+      </div>
+      <div class="demo-intro-right rv d2">
+        <p class="demo-intro-body">Trois types de restaurants, trois interfaces uniques. Scrollez dans chaque téléphone — c'est exactement ce que verront les clients de votre restaurant.</p>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20maquette%20gratuite" class="btn-primary" target="_blank">Maquette de mon resto →</a>
+      </div>
+    </div>
+    <div class="demo-tabs rv d2">
+      <button class="dtab on" data-demo="kebab">🥙 Kebab</button>
+      <button class="dtab" data-demo="pizza">🍕 Pizzeria</button>
+      <button class="dtab" data-demo="sushi">🍱 Sushi</button>
+    </div>
+    <div class="demo-stage">
+
+      <!-- PHONE 1 -->
+      <div class="phone-wrap">
+        <div class="demo-phone" id="dp1">
+          <div class="dp-notch"><div class="dp-pill"></div></div>
+          <div class="dp-screen">
+
+            <!-- KEBAB SCREEN -->
+            <div class="app-kebab dscreen on" id="dkebab">
+              <div class="ik-hero">
+                <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500&q=80&auto=format&fit=crop" alt="Istanbul Grill">
+                <div class="ik-ov" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,9,6,0) 30%,#0d0906 100%)"></div>
+                <div class="ik-live"><div class="ik-dot" style="width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite"></div>Ouvert · 23h</div>
+                <div class="ik-rate" style="position:absolute;top:30px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:.2rem .55rem;border-radius:50px;font-size:.55rem;font-weight:800;color:#fbbf24;border:1px solid rgba(255,255,255,.1)">⭐ 4,9</div>
+              </div>
+              <div class="ik-top">
+                <div class="ik-name">Istanbul Grill</div>
+                <div class="ik-sub">Kebab · Tacos · Paninis · Halal</div>
+              </div>
+              <div class="ik-info">
+                <div class="ik-i"><span class="ik-iv">20 min</span><span class="ik-il">Livraison</span></div>
+                <div class="ik-i"><span class="ik-iv">⭐ 4,9</span><span class="ik-il">Google</span></div>
+                <div class="ik-i"><span class="ik-iv">0€</span><span class="ik-il">Frais</span></div>
+              </div>
+              <div class="ik-ctas">
+                <div class="ik-cta-main">📞 Commander — 01 XX XX XX XX</div>
+                <div class="ik-cta-wa">💬 Commande WhatsApp</div>
+              </div>
+              <div class="ik-sect">⭐ Nos Kebabs</div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Kebab Classique</div><div class="ik-d">Veau, sauce maison, salade, tomates</div></div>
+                <div class="ik-r"><div class="ik-p">6,50€</div><div class="ik-add">+</div></div>
+              </div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Kebab Spécial</div><div class="ik-d">Mixte veau + poulet, double sauce</div></div>
+                <div class="ik-r"><div class="ik-p">7,90€</div><div class="ik-add">+</div></div>
+              </div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Assiette Mixte</div><div class="ik-d">Veau + poulet · Frites · Salade</div></div>
+                <div class="ik-r"><div class="ik-p">12,50€</div><div class="ik-add">+</div></div>
+              </div>
+              <div class="ik-sect">🌯 Tacos</div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Tacos L Poulet</div><div class="ik-d">Fromage, sauce algérienne</div></div>
+                <div class="ik-r"><div class="ik-p">8,50€</div><div class="ik-add">+</div></div>
+              </div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Tacos XL Double</div><div class="ik-d">Double viande, sauce au choix</div></div>
+                <div class="ik-r"><div class="ik-p">11,00€</div><div class="ik-add">+</div></div>
+              </div>
+              <div class="ik-sect">🧃 Boissons</div>
+              <div class="ik-item">
+                <img class="ik-img" src="https://images.unsplash.com/photo-1625772452859-1c03d884dcd7?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="ik-inf"><div class="ik-n">Coca-Cola 33cl</div><div class="ik-d">Canette fraîche</div></div>
+                <div class="ik-r"><div class="ik-p">2,00€</div><div class="ik-add">+</div></div>
+              </div>
+              <div style="height:52px"></div>
+              <div class="ik-sticky">
+                <div class="ik-s1">📞 Appeler</div>
+                <div class="ik-s2">📍</div>
+              </div>
+            </div>
+
+            <!-- PIZZA SCREEN -->
+            <div class="app-pizza dscreen" id="dpizza">
+              <div class="pz-hero">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&q=80&auto=format&fit=crop" alt="Napoli">
+                <div class="pz-ov"></div>
+                <div class="pz-badges">
+                  <div class="pz-badge-open">🔴 Livraison ouverte</div>
+                  <div class="pz-badge-time">⏱ 25–35 min</div>
+                </div>
+              </div>
+              <div class="pz-head">
+                <div class="pz-name">Napoli Express</div>
+                <div class="pz-stars"><span>★★★★★</span> 4,7 · 312 avis Google</div>
+              </div>
+              <div class="pz-promo">
+                <div class="pz-pi">🎉</div>
+                <div class="pz-pt"><strong>-15% aujourd'hui</strong> · Pizza + Boisson avec code NAPOLI</div>
+              </div>
+              <div class="pz-cats">
+                <div class="pz-cat a">🍕 Pizzas</div>
+                <div class="pz-cat">🍔 Burgers</div>
+                <div class="pz-cat">🥗 Salades</div>
+                <div class="pz-cat">🍦 Desserts</div>
+                <div class="pz-cat">🧃 Boissons</div>
+              </div>
+              <div class="pz-sect">🍕 Pizzas Classiques</div>
+              <div class="pz-item">
+                <img class="pz-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="pz-inf"><div class="pz-n">Margherita</div><div class="pz-d">Tomate, mozzarella, basilic</div><div class="pz-sz"><div class="pz-s a">30cm</div><div class="pz-s">40cm</div></div></div>
+                <div class="pz-r"><div class="pz-p">9€</div><div class="pz-add">+</div></div>
+              </div>
+              <div class="pz-item">
+                <img class="pz-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="pz-inf"><div class="pz-n">4 Fromages</div><div class="pz-d">Mozza, gorgonzola, chèvre</div><div class="pz-sz"><div class="pz-s a">30cm</div><div class="pz-s">40cm</div></div></div>
+                <div class="pz-r"><div class="pz-p">11€</div><div class="pz-add">+</div></div>
+              </div>
+              <div class="pz-item">
+                <img class="pz-img" src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="pz-inf"><div class="pz-n">La Reine</div><div class="pz-d">Jambon, champignons, olives</div><div class="pz-sz"><div class="pz-s a">30cm</div><div class="pz-s">40cm</div></div></div>
+                <div class="pz-r"><div class="pz-p">12€</div><div class="pz-add">+</div></div>
+              </div>
+              <div class="pz-sect">🍔 Burgers</div>
+              <div class="pz-item">
+                <img class="pz-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=75&auto=format&fit=crop" alt="">
+                <div class="pz-inf"><div class="pz-n">Smash Burger</div><div class="pz-d">Double steak, cheddar, sauce</div></div>
+                <div class="pz-r"><div class="pz-p">10€</div><div class="pz-add">+</div></div>
+              </div>
+              <div style="height:52px"></div>
+              <div class="pz-sticky">
+                <div class="pz-s1">📞 Commander</div>
+                <div class="pz-s2">💬 WhatsApp</div>
+              </div>
+            </div>
+
+            <!-- SUSHI SCREEN -->
+            <div class="app-sushi dscreen" id="dsushi">
+              <div class="su-hero">
+                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&q=80&auto=format&fit=crop" alt="Yume Sushi">
+                <div class="su-ov"></div>
+                <div class="su-top">
+                  <div class="su-live"><div class="su-dot"></div>Ouvert · 22h30</div>
+                  <div class="su-rat">★ 4,9</div>
+                </div>
+              </div>
+              <div class="su-head">
+                <div class="su-name">Yume Sushi</div>
+                <div class="su-sub">Sushi · Pokés · Yakitori</div>
+              </div>
+              <div class="su-cta">
+                <div class="su-cta-main">📞 Commander — 01 XX XX XX XX</div>
+              </div>
+              <div class="su-cats">
+                <div class="su-cat a">🍣 Makis</div>
+                <div class="su-cat">🐟 Sashimis</div>
+                <div class="su-cat">🥗 Pokés</div>
+                <div class="su-cat">🍱 Plateaux</div>
+              </div>
+              <div class="su-divider"><div class="su-dl"></div><div class="su-dt">Makis & Rolls</div><div class="su-dl"></div></div>
+              <div class="su-item">
+                <img class="su-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=200&q=75&auto=format&fit=crop" alt="">
+                <div><div class="su-n">California Roll</div><div class="su-d">8 pcs · Avocat, concombre, surimi</div></div>
+                <div class="su-r"><div class="su-p">8,90€</div><div class="su-add">+ Ajouter</div></div>
+              </div>
+              <div class="su-item">
+                <img class="su-img" src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=200&q=75&auto=format&fit=crop" alt="">
+                <div><div class="su-n">Spicy Tuna Roll</div><div class="su-d">8 pcs · Thon épicé, sésame</div></div>
+                <div class="su-r"><div class="su-p">11,50€</div><div class="su-add">+ Ajouter</div></div>
+              </div>
+              <div class="su-item">
+                <img class="su-img" src="https://images.unsplash.com/photo-1640716372386-6b4e2bbcb5e3?w=200&q=75&auto=format&fit=crop" alt="">
+                <div><div class="su-n">Dragon Roll</div><div class="su-d">8 pcs · Crevette tempura, avocat</div></div>
+                <div class="su-r"><div class="su-p">13,00€</div><div class="su-add">+ Ajouter</div></div>
+              </div>
+              <div class="su-divider"><div class="su-dl"></div><div class="su-dt">Pokés Bowl</div><div class="su-dl"></div></div>
+              <div class="su-item">
+                <img class="su-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&q=75&auto=format&fit=crop" alt="">
+                <div><div class="su-n">Poké Saumon</div><div class="su-d">Riz · Saumon · Edamame · Avocat</div></div>
+                <div class="su-r"><div class="su-p">12,00€</div><div class="su-add">+ Ajouter</div></div>
+              </div>
+              <div class="su-item">
+                <img class="su-img" src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=200&q=75&auto=format&fit=crop" alt="">
+                <div><div class="su-n">Poké Thon Mangue</div><div class="su-d">Quinoa · Thon · Mangue · Sésame</div></div>
+                <div class="su-r"><div class="su-p">13,50€</div><div class="su-add">+ Ajouter</div></div>
+              </div>
+              <div style="height:52px"></div>
+              <div class="su-sticky">
+                <div class="su-s1">📞 Commander</div>
+                <div class="su-s2">📍</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="phone-label" id="phoneLabel"><span>Istanbul Grill</span> · Kebab / Halal</div>
+      </div>
+
+      <!-- PANEL -->
+      <div style="flex:1;min-width:260px;max-width:400px;display:flex;flex-direction:column;gap:1rem;padding-top:.5rem">
+        <div class="rv d3">
+          <div style="font-family:var(--f-display);font-size:1.8rem;line-height:1;letter-spacing:1px;margin-bottom:.7rem">CE QUE LE SITE<br><span style="font-family:var(--f-serif);font-style:italic;color:var(--rust)">fait pour vous</span></div>
+          <p style="font-size:.84rem;color:var(--muted);line-height:1.8;margin-bottom:1.2rem">Chaque pixel est pensé pour une seule chose : convertir le visiteur en client qui appelle.</p>
+        </div>
+        <div class="rv d3" style="display:flex;flex-direction:column;gap:.65rem">
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:var(--paper);border:1px solid var(--border);border-radius:4px">
+            <span style="font-size:1.1rem;flex-shrink:0">📸</span>
+            <div>
+              <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:.2rem">Vraies photos de vos plats</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.65">Un client qui voit votre nourriture a 3× plus de chances de commander immédiatement.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:var(--paper);border:1px solid var(--border);border-radius:4px">
+            <span style="font-size:1.1rem;flex-shrink:0">📞</span>
+            <div>
+              <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:.2rem">Bouton appel permanent</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.65">Sticky en bas d'écran à tout moment. Effort zéro pour le client — il appuie, ça sonne.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:var(--paper);border:1px solid var(--border);border-radius:4px">
+            <span style="font-size:1.1rem;flex-shrink:0">📍</span>
+            <div>
+              <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:.2rem">SEO local intégré</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.65">JSON-LD, balises géo, Google Maps. Vous remontez sur "kebab [votre ville]".</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:var(--paper);border:1px solid var(--border);border-radius:4px">
+            <span style="font-size:1.1rem;flex-shrink:0">⚡</span>
+            <div>
+              <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:.2rem">Design 100% unique</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.65">Pas de template. Chaque site est créé spécifiquement pour votre restaurant.</div>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20maquette%20gratuite" class="btn-primary rv d4" style="justify-content:center;margin-top:.3rem" target="_blank">
+          💬 Maquette gratuite pour mon restaurant
+        </a>
+        <p class="rv d4" style="font-size:.63rem;color:var(--muted);text-align:center">En 24h · Sans engagement · Sur mesure</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec how-sec" id="process">
+  <div class="wrap">
+    <div class="rv"><div class="label">Notre méthode</div>
+    <h2 class="big-title">DE ZÉRO À<br><em>en ligne</em><br>EN 72H.</h2></div>
+    <div class="how-grid">
+      <div class="how-step rv d1">
+        <div class="step-num">01</div>
+        <div class="step-ico">💬</div>
+        <div class="step-title">Appel WhatsApp de 15 min</div>
+        <p class="step-desc">On comprend votre restaurant, votre ambiance, vos plats phares. On vous envoie des exemples de styles.</p>
+        <div class="step-time">Jour 1</div>
+      </div>
+      <div class="how-step rv d2">
+        <div class="step-num">02</div>
+        <div class="step-ico">🎨</div>
+        <div class="step-title">Maquette personnalisée gratuite</div>
+        <p class="step-desc">Vous voyez exactement à quoi ressemblera le site avant de vous engager. Zéro surprise.</p>
+        <div class="step-time">Jour 1 — 24h</div>
+      </div>
+      <div class="how-step rv d3">
+        <div class="step-num">03</div>
+        <div class="step-ico">⚡</div>
+        <div class="step-title">Développement & mise en ligne</div>
+        <p class="step-desc">Une fois validée, on développe et on met en ligne. Photos de vos plats intégrées, SEO configuré.</p>
+        <div class="step-time">Jour 2–3 — 48h</div>
+      </div>
+      <div class="how-step rv d4">
+        <div class="step-num">04</div>
+        <div class="step-ico">📞</div>
+        <div class="step-title">Les appels arrivent</div>
+        <p class="step-desc">Votre téléphone commence à sonner. On surveille et on optimise chaque mois pour améliorer les résultats.</p>
+        <div class="step-time">Dès la semaine 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec svc-sec" id="services">
+  <div class="wrap">
+    <div class="rv"><div class="label">Services</div>
+    <h2 class="big-title">TOUT CE QU'IL<br>FAUT POUR<br><em>convertir.</em></h2></div>
+    <div class="svc-grid">
+      <div class="svc-card rv d1"><div class="svc-ico-wrap">📱</div><div class="svc-n">Mobile-First</div><p class="svc-d">Conçu pour le pouce avant la souris. Sticky bar, bouton appel en évidence, navigation fluide. 90% de vos clients sont sur téléphone.</p><div class="chips"><span class="chip">Touch-friendly</span><span class="chip">Sticky bar</span><span class="chip">Click-to-call</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-ico-wrap">📍</div><div class="svc-n">SEO Local</div><p class="svc-d">JSON-LD, balises géographiques, Google Maps intégré. Vous apparaissez quand on cherche "kebab [votre ville]" — avant vos concurrents.</p><div class="chips"><span class="chip">JSON-LD</span><span class="chip">Google Maps</span><span class="chip">Fiches locales</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-ico-wrap">⚡</div><div class="svc-n">Performance 95+</div><p class="svc-d">Score Lighthouse 95+. Chargement en moins de 2 secondes en 4G. Google favorise les sites rapides. Vos concurrents ne sont pas à ce niveau.</p><div class="chips"><span class="chip">Score 95+</span><span class="chip">Lazy loading</span><span class="chip">Code optimisé</span></div></div>
+      <div class="svc-card rv d1"><div class="svc-ico-wrap">🎨</div><div class="svc-n">Design Unique</div><p class="svc-d">Pas de template. Vos couleurs, votre ambiance, vos photos de plats. Chaque site est créé de zéro pour votre établissement.</p><div class="chips"><span class="chip">Sur-mesure</span><span class="chip">Animations</span><span class="chip">Photos réelles</span></div></div>
+      <div class="svc-card rv d2"><div class="svc-ico-wrap">🔧</div><div class="svc-n">Maintenance</div><p class="svc-d">Un message WhatsApp et c'est mis à jour. Prix, horaires, nouveaux plats — on gère tout en moins de 24h.</p><div class="chips"><span class="chip">Mises à jour</span><span class="chip">Support direct</span><span class="chip">Hébergement</span></div></div>
+      <div class="svc-card rv d3"><div class="svc-ico-wrap">📞</div><div class="svc-n">Conversion Max</div><p class="svc-d">Numéro visible en moins de 3 scrolls, CTA sous chaque section, WhatsApp intégré. Une obsession : que vous décrochiez.</p><div class="chips"><span class="chip">CTA stratégiques</span><span class="chip">WhatsApp</span><span class="chip">Menu visuel</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH -->
+<section class="sec launch-sec" id="offre">
+  <div class="wrap">
+    <div class="rv"><div class="label">Offre de lancement</div>
+    <h2 class="big-title">3 RESTAURANTS<br><em>pionniers.</em></h2>
+    <p style="font-family:var(--f-serif);font-style:italic;font-size:1rem;color:rgba(242,237,230,.5);line-height:1.8;max-width:480px;margin-top:.8rem">ConvertWeb est en phase de lancement. On cherche 3 établissements pour nos premières références — en échange de conditions qu'on ne proposera plus jamais.</p>
+    </div>
+    <div class="launch-box rv d2">
+      <div class="lb-left-panel">
+        <div class="lb-title">Ce que vous<br>obtenez en tant<br><span>que pionnier.</span></div>
+        <p class="lb-body">Tout ce que nos futurs clients paieront plein tarif — vous l'obtenez gratuitement ou à prix réduit.</p>
+        <div class="lb-perks">
+          <div class="lb-perk"><div class="lb-perk-chk">✓</div><div class="lb-perk-txt"><strong>Frais de création offerts</strong> — valeur 499€ → 0€</div></div>
+          <div class="lb-perk"><div class="lb-perk-chk">✓</div><div class="lb-perk-txt"><strong>Premier mois offert</strong> — testez sans payer</div></div>
+          <div class="lb-perk"><div class="lb-perk-chk">✓</div><div class="lb-perk-txt"><strong>Maquette en 24h</strong> — avant tout engagement</div></div>
+          <div class="lb-perk"><div class="lb-perk-chk">✓</div><div class="lb-perk-txt"><strong>Garantie +15 appels/mois</strong> ou remboursé intégralement</div></div>
+          <div class="lb-perk"><div class="lb-perk-chk">✓</div><div class="lb-perk-txt"><strong>Suivi personnalisé</strong> — accès direct au fondateur</div></div>
+        </div>
+      </div>
+      <div class="lb-right-panel">
+        <div class="spots-display">
+          <div class="spots-big">3</div>
+          <div class="spots-lbl">Places disponibles<br>ce mois-ci</div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20offre%20pionnier" class="lb-btn" target="_blank">
+          💬 Je veux cette offre
+        </a>
+        <p class="lb-note">WhatsApp · Réponse en moins de 2h</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec price-sec" id="tarifs">
+  <div class="wrap">
+    <div class="rv"><div class="label">Tarifs</div>
+    <h2 class="big-title">SIMPLE.<br><em>Transparent.</em></h2>
+    <p style="font-size:.88rem;color:var(--muted);line-height:1.85;max-width:480px;margin-top:.8rem">Abonnement mensuel tout inclus — site, hébergement, domaine, maintenance et mises à jour. Pas de frais cachés.</p></div>
+    <div class="price-grid">
+      <div class="pc rv d1">
+        <div class="pc-tier">Starter</div>
+        <div><span class="pc-num">49</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 299€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Site 1 page optimisée</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Bouton appel + WhatsApp</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>SEO local de base</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Hébergement + domaine</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Livré en 72h</div>
+          <div class="pc-f"><span class="pc-chk" style="opacity:.3">—</span>Menu multi-sections</div>
+          <div class="pc-f"><span class="pc-chk" style="opacity:.3">—</span>Photos de plats</div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Starter" class="pc-btn outline" target="_blank">Choisir Starter</a>
+        <p class="pc-note">Parfait pour démarrer</p>
+      </div>
+      <div class="pc feat rv d2">
+        <div class="pc-badge">⭐ Le plus populaire</div>
+        <div class="pc-tier">Pro</div>
+        <div><span class="pc-num">89</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 499€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Site multi-sections complet</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Menu visuel avec photos</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>SEO local avancé (JSON-LD)</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Animations & design premium</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Hébergement + domaine</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Mises à jour illimitées</div>
+          <div class="pc-f y"><span class="pc-chk">🛡</span><strong>+15 appels/mois garantis</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Pro" class="pc-btn solid" target="_blank">Choisir Pro</a>
+        <p class="pc-note">Premier mois offert en lancement</p>
+      </div>
+      <div class="pc rv d3">
+        <div class="pc-tier">Elite</div>
+        <div><span class="pc-num">149</span><span class="pc-per">€ / mois</span></div>
+        <p class="pc-setup">+ 799€ création <strong>(offerts en lancement)</strong></p>
+        <div class="pc-line"></div>
+        <div class="pc-feats">
+          <div class="pc-f y"><span class="pc-chk">✓</span>Tout le plan Pro</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Galerie photos pro</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Avis Google automatisés</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Rapport mensuel trafic</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>Support prioritaire 7j/7</div>
+          <div class="pc-f y"><span class="pc-chk">✓</span>WhatsApp avancé</div>
+          <div class="pc-f y"><span class="pc-chk">🛡</span><strong>+25 appels/mois garantis</strong></div>
+        </div>
+        <a href="https://wa.me/33XXXXXXXXX?text=Plan%20Elite" class="pc-btn outline" target="_blank">Choisir Elite</a>
+        <p class="pc-note">Notre offre la plus complète</p>
+      </div>
+    </div>
+    <div class="guar-row rv d4">
+      <div class="gi">🛡 <strong>Garantie résultats</strong> — +15 appels ou remboursé</div>
+      <div class="gi">⚡ <strong>Livraison 72h</strong> — ou 1er mois offert</div>
+      <div class="gi">🔓 <strong>Zéro engagement</strong> — résiliation libre</div>
+      <div class="gi">🎁 <strong>Maquette gratuite</strong> — avant tout paiement</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec faq-sec" id="faq">
+  <div class="wrap">
+    <div class="rv"><div class="label">FAQ</div>
+    <h2 class="big-title">VOS<br><em>questions.</em></h2></div>
+    <div class="faq-list">
+      <div class="faq-item rv d1"><button class="faq-q" aria-expanded="false">Comment fonctionne la maquette gratuite ?<span class="faq-plus">+</span></button><div class="faq-a">On vous contacte sur WhatsApp, 5 questions sur votre restaurant, et on vous envoie une maquette personnalisée en 24h avec l'ambiance, les couleurs et le style de votre établissement. Vous voyez le résultat final avant de vous engager sur quoi que ce soit.</div></div>
+      <div class="faq-item rv d2"><button class="faq-q" aria-expanded="false">Comment garantissez-vous +15 appels par mois ?<span class="faq-plus">+</span></button><div class="faq-a">Quatre leviers concrets : bouton appel visible en moins de 3 scrolls, numéro en header et footer, sticky bar mobile permanente, SEO local intégré dès le départ. Si ces résultats ne sont pas atteints dans les 60 jours, on vous rembourse intégralement — sans condition.</div></div>
+      <div class="faq-item rv d3"><button class="faq-q" aria-expanded="false">Délai de livraison réel ?<span class="faq-plus">+</span></button><div class="faq-a">72h après validation de la maquette. Si on dépasse, votre premier mois est offert automatiquement. En pratique, la plupart des sites sont livrés en 48h.</div></div>
+      <div class="faq-item rv d1"><button class="faq-q" aria-expanded="false">Je peux résilier quand je veux ?<span class="faq-plus">+</span></button><div class="faq-a">Oui, sans préavis et sans pénalité. On vous transfère l'intégralité des fichiers — le site reste le vôtre. On ne prend rien en otage.</div></div>
+      <div class="faq-item rv d2"><button class="faq-q" aria-expanded="false">Les mises à jour sont incluses ?<span class="faq-plus">+</span></button><div class="faq-a">Oui dans tous les plans. Vous nous envoyez un message WhatsApp, on met à jour en moins de 24h. Horaires, prix, plats, photos — tout.</div></div>
+      <div class="faq-item rv d3"><button class="faq-q" aria-expanded="false">Pour quel type de restaurant travaillez-vous ?<span class="faq-plus">+</span></button><div class="faq-a">Kebabs, fast-foods, pizzerias, sandwicheries, sushis, tacos, restaurants traditionnels — tout établissement dont les clients cherchent sur téléphone avant de commander ou de se déplacer. C'est notre seule spécialité.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="sec final-cta" id="contact">
+  <div class="fcta-bg"></div>
+  <div class="fcta-inner rv">
+    <h2 class="fcta-t">VOTRE RESTAU<br>MÉRITE <em>mieux.</em></h2>
+    <p class="fcta-sub">Maquette gratuite en 24h. Premier mois offert. Garantie résultats. Il n'y a aucune raison de ne pas essayer.</p>
+    <div class="fcta-btns">
+      <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20maquette%20gratuite" class="btn-primary" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Maquette gratuite — WhatsApp
+      </a>
+      <a href="mailto:contact@convertweb.fr" style="display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,10,10,.6);border-bottom:1.5px solid rgba(10,10,10,.3);padding-bottom:.1rem">✉️ Email</a>
+    </div>
+    <div class="fcta-meta">
+      <span>Réponse &lt; 2h</span>
+      <span>Maquette 24h</span>
+      <span>1er mois offert</span>
+      <span>Garantie résultats</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo">CONVERT<span>WEB</span></div>
+        <p class="ft-tag">Sites web qui font sonner le téléphone de votre restaurant. Spécialiste kebabs, fast-foods et restaurants.</p>
+        <div class="ft-contact">
+          <a href="https://wa.me/33XXXXXXXXX" target="_blank">💬 WhatsApp</a>
+          <a href="mailto:contact@convertweb.fr">✉️ contact@convertweb.fr</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-t">Navigation</div>
+        <ul class="ft-links">
+          <li><a href="#demo">Démo interactive</a></li>
+          <li><a href="#process">Notre méthode</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#offre">Offre de lancement</a></li>
+          <li><a href="#tarifs">Tarifs</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-t">Nos garanties</div>
+        <ul class="ft-links">
+          <li><a href="#offre">+15 appels/mois garantis</a></li>
+          <li><a href="#offre">Livraison en 72h</a></li>
+          <li><a href="#offre">Premier mois offert</a></li>
+          <li><a href="#offre">Zéro engagement</a></li>
+          <li><a href="#offre">Maquette gratuite</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy">© 2025 ConvertWeb · Tous droits réservés</span>
+      <div class="ft-leg"><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGV</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="stickybar">
+  <a href="#offre" class="sb-left">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Offre lancement
+    <span class="sb-sub">3 places · Ce mois</span>
+  </a>
+  <a href="https://wa.me/33XXXXXXXXX?text=Bonjour%2C%20maquette%20gratuite" class="sb-right" target="_blank">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    💬 Maquette gratuite
+    <span class="sb-sub">WhatsApp · 24h</span>
+  </a>
+</div>
+
+<script>
+// CURSOR
+const dot = document.getElementById('c-dot');
+const ring = document.getElementById('c-ring');
+if (dot && window.innerWidth > 768) {
+  let rx=0,ry=0,cx=0,cy=0;
+  document.addEventListener('mousemove', e => {
+    cx = e.clientX; cy = e.clientY;
+    dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
+  }, {passive:true});
+  (function anim() {
+    rx += (cx-rx)*.1; ry += (cy-ry)*.1;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(anim);
+  })();
+  document.querySelectorAll('a, button, .dtab').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('link-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('link-hover'));
+  });
+}
+
+// NAV
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), {passive:true});
+
+// SCROLL REVEAL
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vi'); });
+}, {threshold:.1, rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv, .demo-phone').forEach(el => obs.observe(el));
+
+// DEMO TABS
+const screens = {kebab:'dkebab', pizza:'dpizza', sushi:'dsushi'};
+const labels = {
+  kebab:'<span>Istanbul Grill</span> · Kebab / Halal',
+  pizza:'<span>Napoli Express</span> · Pizzeria',
+  sushi:'<span>Yume Sushi</span> · Sushi & Pokés'
+};
+document.querySelectorAll('.dtab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.dtab').forEach(t => t.classList.remove('on'));
+    document.querySelectorAll('.dscreen').forEach(s => s.style.display = 'none');
+    tab.classList.add('on');
+    const key = tab.dataset.demo;
+    const scr = document.getElementById(screens[key]);
+    if(scr) scr.style.display = 'block';
+    const dp = document.querySelector('.dp-screen');
+    if(dp) dp.scrollTop = 0;
+    const lbl = document.getElementById('phoneLabel');
+    if(lbl) lbl.innerHTML = labels[key];
+  });
+});
+// init screens
+document.querySelectorAll('.dscreen').forEach(s => {
+  s.style.display = s.classList.contains('on') ? 'block' : 'none';
+});
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-q').forEach(b => {
+      b.setAttribute('aria-expanded','false');
+      b.nextElementSibling?.classList.remove('open');
+    });
+    if(!open) {
+      btn.setAttribute('aria-expanded','true');
+      btn.nextElementSibling?.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
+HTMLEOF
+echo "✅ Done — $(wc -c < /mnt/user-data/outputs/index.html) bytes"
