@@ -3,19 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Convert Web — Des sites web qui remplissent les restaurants</title>
-  <meta name="description" content="Convert Web : agence web artisanale pour restaurateurs. Création dès 390€, 0% commission, accompagnement humain. Offre fondateur limitée.">
+  <title>Convert Web — Création de sites web pour restaurateurs</title>
+  <meta name="description" content="Convert Web : des sites sur mesure pour restaurateurs. Création dès 390€, 0% commission. Découvrez notre univers artisanale et vidéo immersive.">
   <!-- Préconnexion et polices -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <style>
-    /* ---------- RESET & VARIABLES ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg:           #FDF9F2;
@@ -52,6 +47,26 @@
       line-height: 1.55;
       background-image: radial-gradient(circle at 20% 30%, rgba(200,180,150,0.08) 1.5px, transparent 1px);
       background-size: 28px 28px;
+      cursor: default;
+    }
+
+    /* Curseur personnalisé (wow) */
+    .custom-cursor {
+      width: 32px;
+      height: 32px;
+      background: rgba(193,92,43,0.2);
+      border: 2px solid var(--orange);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s, width 0.2s, height 0.2s;
+      transform: translate(-50%, -50%);
+      backdrop-filter: blur(2px);
+    }
+    a:hover ~ .custom-cursor, button:hover ~ .custom-cursor {
+      transform: translate(-50%, -50%) scale(1.5);
+      background: rgba(193,92,43,0.4);
     }
 
     a { color: inherit; text-decoration: none; }
@@ -67,19 +82,13 @@
       height: 100%;
       pointer-events: none;
       z-index: 9998;
-      opacity: 0.18;
+      opacity: 0.15;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
       background-repeat: repeat;
     }
 
-    .wrap {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    @media (min-width: 768px) {
-      .wrap { padding: 0 40px; }
-    }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+    @media (min-width: 768px) { .wrap { padding: 0 40px; } }
 
     /* Progress bar */
     #prog {
@@ -94,37 +103,20 @@
       pointer-events: none;
     }
 
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes floatSoft {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    @keyframes blinkCursor {
-      0%,100% { border-right-color: var(--orange); }
-      50% { border-right-color: transparent; }
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.7; }
-      100% { transform: scale(1.05); opacity: 1; }
-    }
+    /* Animations générales */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @keyframes floatSoft { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes blinkCursor { 0%,100% { border-right-color: var(--orange); } 50% { border-right-color: transparent; } }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.05); opacity: 1; } }
+    @keyframes glowPulse { 0% { box-shadow: 0 0 0 0 rgba(193,92,43,0.3); } 70% { box-shadow: 0 0 0 12px rgba(193,92,43,0); } }
 
-    /* Reveal on scroll */
+    /* Reveal amélioré (effet cascade) */
     .rev {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
     .rev.in {
       opacity: 1;
@@ -134,8 +126,9 @@
     .d2 { transition-delay: 0.12s; }
     .d3 { transition-delay: 0.2s; }
     .d4 { transition-delay: 0.28s; }
+    .d5 { transition-delay: 0.36s; }
 
-    /* Boutons */
+    /* Boutons avec effet 3D */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -146,36 +139,59 @@
       font-size: 0.8rem;
       font-weight: 600;
       border-radius: 60px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       background: transparent;
       border: 1px solid transparent;
       text-align: center;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-orange {
-      background: var(--orange);
-      color: white;
-      box-shadow: var(--shadow-sm);
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
     }
-    .btn-orange:hover {
-      background: var(--orange-deep);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
     }
-    .btn-ghost {
-      border: 1px solid var(--border-dark);
-      background: rgba(255,255,255,0.7);
-      color: var(--text);
-      backdrop-filter: blur(2px);
+    .btn-orange { background: var(--orange); color: white; box-shadow: var(--shadow-sm); }
+    .btn-orange:hover { background: var(--orange-deep); transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-lg); }
+    .btn-ghost { border: 1px solid var(--border-dark); background: rgba(255,255,255,0.7); color: var(--text); backdrop-filter: blur(2px); }
+    .btn-ghost:hover { border-color: var(--orange); background: var(--orange-light); transform: translateY(-3px); }
+
+    /* ========== VIDEO HERO ========== */
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      opacity: 0.3;
+      filter: blur(2px) brightness(0.7);
     }
-    .btn-ghost:hover {
-      border-color: var(--orange);
-      background: var(--orange-light);
-      transform: translateY(-2px);
+    #hero {
+      position: relative;
+      overflow: hidden;
     }
-    .btn-small {
-      padding: 8px 20px;
-      font-size: 0.7rem;
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(253,249,242,0.85), rgba(253,249,242,0.95));
+      z-index: -1;
     }
 
     /* ========== NAVIGATION ========== */
@@ -189,12 +205,9 @@
       background: rgba(253,249,242,0.96);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      transition: all 0.2s;
+      transition: all 0.3s;
     }
-    #nav.scrolled {
-      background: rgba(253,249,242,0.98);
-      box-shadow: var(--shadow-md);
-    }
+    #nav.scrolled { background: rgba(253,249,242,0.98); box-shadow: var(--shadow-md); }
     .nav-in {
       height: 100%;
       display: flex;
@@ -203,936 +216,214 @@
       gap: 12px;
       padding: 0 20px;
     }
-    @media (min-width: 768px) {
-      .nav-in { padding: 0 40px; }
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
+    @media (min-width: 768px) { .nav-in { padding: 0 40px; } }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .logo-mark {
-      width: 38px;
-      height: 38px;
-      background: var(--orange);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: white;
-      border-radius: 50%;
-      transition: transform 0.2s;
+      width: 38px; height: 38px; background: var(--orange); display: flex; align-items: center; justify-content: center;
+      font-family: var(--display); font-weight: 700; font-size: 0.9rem; color: white; border-radius: 50%;
+      transition: transform 0.3s;
     }
-    .nav-logo:hover .logo-mark {
-      transform: scale(0.94);
-      background: var(--orange-deep);
-    }
-    .logo-name {
-      font-family: var(--display);
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-    }
-    .logo-sub {
-      font-size: 0.5rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      color: var(--text-light);
-      display: block;
-      margin-top: 2px;
-    }
-    .nav-links {
-      display: none;
-      align-items: center;
-      gap: 28px;
-    }
-    .nav-links a {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: var(--orange);
-    }
-    .nav-links .nav-cta {
-      background: var(--orange-light);
-      padding: 8px 20px;
-      border-radius: 60px;
-      color: var(--orange);
-      font-weight: 600;
-    }
-    .nav-links .nav-cta:hover {
-      background: var(--orange);
-      color: white;
-    }
-    .nav-burger {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      padding: 8px;
-    }
-    .nav-burger span {
-      width: 24px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: 0.2s;
-    }
+    .nav-logo:hover .logo-mark { transform: scale(0.94) rotate(-5deg); background: var(--orange-deep); }
+    .logo-name { font-family: var(--display); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
+    .logo-sub { font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; color: var(--text-light); display: block; margin-top: 2px; }
+    .nav-links { display: none; align-items: center; gap: 28px; }
+    .nav-links a { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); transition: 0.2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-links .nav-cta { background: var(--orange-light); padding: 8px 20px; border-radius: 60px; color: var(--orange); font-weight: 600; }
+    .nav-links .nav-cta:hover { background: var(--orange); color: white; }
+    .nav-burger { display: flex; flex-direction: column; gap: 6px; cursor: pointer; padding: 8px; }
+    .nav-burger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.2s; }
     #mobile-nav {
-      display: none;
-      position: fixed;
-      inset: 0;
-      top: var(--nav-h);
-      background: var(--bg);
-      z-index: 998;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-      border-top: 1px solid var(--border);
+      display: none; position: fixed; inset: 0; top: var(--nav-h); background: var(--bg); z-index: 998;
+      flex-direction: column; align-items: center; justify-content: center; gap: 32px; border-top: 1px solid var(--border);
       padding: 40px 20px;
     }
-    #mobile-nav.open {
-      display: flex;
-    }
-    #mobile-nav a {
-      font-family: var(--display);
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: var(--text);
-      text-align: center;
-    }
-    @media (min-width: 768px) {
-      .nav-links { display: flex; }
-      .nav-burger { display: none; }
-    }
+    #mobile-nav.open { display: flex; }
+    #mobile-nav a { font-family: var(--display); font-size: 1.3rem; font-weight: 500; color: var(--text); text-align: center; }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-burger { display: none; } }
 
     /* ========== HERO ========== */
-    #hero {
-      min-height: 100vh;
-      padding-top: var(--nav-h);
-      display: flex;
-      align-items: center;
-    }
+    #hero { min-height: 100vh; padding-top: var(--nav-h); display: flex; align-items: center; }
     .hero-grid {
       display: flex;
       flex-direction: column;
       gap: 48px;
       padding: 40px 0 60px;
-    }
-    @media (min-width: 768px) {
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
-      }
-    }
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--orange-light);
-      padding: 6px 18px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      border-radius: 60px;
-      color: var(--orange);
-      margin-bottom: 24px;
-    }
-    .hero-label .dot {
-      width: 6px;
-      height: 6px;
-      background: var(--orange);
-      border-radius: 50%;
-      animation: pulse 1.2s infinite alternate;
-    }
-    .hero-h1 {
-      font-family: var(--display);
-      font-size: clamp(2rem, 6vw, 4rem);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-    .hero-h1 em {
-      color: var(--orange);
-      font-style: normal;
-    }
-    .typing-wrapper {
-      display: inline-block;
-      border-right: 3px solid var(--orange);
-      animation: blinkCursor 0.75s step-end infinite;
-    }
-    .typed-text {
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      vertical-align: bottom;
-    }
-    @media (max-width: 480px) {
-      .typed-text { white-space: normal; }
-      .typing-wrapper { border-right: none; animation: none; }
-    }
-    .hero-p {
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-bottom: 36px;
-      line-height: 1.6;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 48px;
-    }
-    .hero-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-    }
-    .hero-stat-val {
-      font-family: var(--display);
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-    .hero-stat-val em {
-      color: var(--orange);
-    }
-    .hero-stat-lbl {
-      font-size: 0.65rem;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .hero-visual {
-      display: none;
-    }
-    @media (min-width: 768px) {
-      .hero-visual {
-        display: flex;
-        justify-content: center;
-      }
-    }
-    .hero-mockup-wrap {
       position: relative;
-      max-width: 480px;
-      animation: floatSoft 5s ease-in-out infinite;
+      z-index: 2;
     }
-    .hero-mockup {
-      background: var(--paper);
-      border-radius: 32px;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid var(--border);
-      overflow: hidden;
+    @media (min-width: 768px) { .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; } }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 10px; background: var(--orange-light); padding: 6px 18px;
+      font-size: 0.7rem; font-weight: 500; border-radius: 60px; color: var(--orange); margin-bottom: 24px;
+      animation: glowPulse 2s infinite;
     }
-    .mockup-bar {
-      padding: 12px 16px;
-      background: var(--dark-paper);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      gap: 6px;
-    }
-    .mockup-url-bar {
-      background: white;
-      border-radius: 40px;
-      padding: 5px 14px;
-      font-size: 0.6rem;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .mockup-body {
-      padding: 20px;
-    }
-    .m-img {
-      height: 130px;
-      background: linear-gradient(135deg, #F5EADE, #EDE3D7);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-    }
-    .mockup-badge, .mockup-seo {
-      position: absolute;
-      background: white;
-      border-radius: 100px;
-      padding: 6px 14px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      box-shadow: var(--shadow-md);
-    }
-    .mockup-badge {
-      top: -12px;
-      right: -12px;
-      background: var(--teal);
-      color: white;
-      border: none;
-    }
-    .mockup-seo {
-      bottom: -12px;
-      left: -12px;
-      background: white;
-      display: flex;
-      gap: 8px;
-    }
+    .hero-label .dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: pulse 1.2s infinite alternate; }
+    .hero-h1 { font-family: var(--display); font-size: clamp(2rem, 6vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+    .hero-h1 em { color: var(--orange); font-style: normal; }
+    .typing-wrapper { display: inline-block; border-right: 3px solid var(--orange); animation: blinkCursor 0.75s step-end infinite; }
+    .typed-text { display: inline-block; white-space: nowrap; overflow: hidden; vertical-align: bottom; }
+    @media (max-width: 480px) { .typed-text { white-space: normal; } .typing-wrapper { border-right: none; animation: none; } }
+    .hero-p { font-size: 1rem; color: var(--text-muted); margin-bottom: 36px; line-height: 1.6; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 48px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 32px; border-top: 1px solid var(--border); padding-top: 32px; }
+    .hero-stat-val { font-family: var(--display); font-size: 1.8rem; font-weight: 700; }
+    .hero-stat-val em { color: var(--orange); }
+    .hero-stat-lbl { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-visual { display: none; }
+    @media (min-width: 768px) { .hero-visual { display: flex; justify-content: center; } }
+    .hero-mockup-wrap { position: relative; max-width: 480px; animation: floatSoft 6s ease-in-out infinite; }
+    .hero-mockup { background: var(--paper); border-radius: 32px; box-shadow: var(--shadow-xl); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s; }
+    .hero-mockup:hover { transform: translateY(-8px); }
+    .mockup-bar { padding: 12px 16px; background: var(--dark-paper); border-bottom: 1px solid var(--border); display: flex; gap: 6px; }
+    .mockup-url-bar { background: white; border-radius: 40px; padding: 5px 14px; font-size: 0.6rem; display: flex; gap: 6px; align-items: center; }
+    .mockup-body { padding: 20px; }
+    .m-img { height: 130px; background: linear-gradient(135deg, #F5EADE, #EDE3D7); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 16px; }
+    .mockup-badge, .mockup-seo { position: absolute; background: white; border-radius: 100px; padding: 6px 14px; font-size: 0.7rem; font-weight: 500; box-shadow: var(--shadow-md); }
+    .mockup-badge { top: -12px; right: -12px; background: var(--teal); color: white; border: none; }
+    .mockup-seo { bottom: -12px; left: -12px; background: white; display: flex; gap: 8px; }
 
     /* Ticker */
-    #ticker {
-      background: var(--dark-paper);
-      padding: 12px 0;
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      animation: ticker 28s linear infinite;
-    }
-    .ticker-item {
-      white-space: nowrap;
-      padding: 0 32px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+    #ticker { background: var(--dark-paper); padding: 12px 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .ticker-track { display: flex; width: max-content; animation: ticker 28s linear infinite; }
+    .ticker-item { white-space: nowrap; padding: 0 32px; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; color: var(--text-muted); display: flex; gap: 12px; align-items: center; }
 
     /* Sections communes */
-    section {
-      padding: var(--pad) 0;
-    }
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--orange);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .section-label::before {
-      content: '';
-      width: 28px;
-      height: 2px;
-      background: var(--orange);
-      border-radius: 2px;
-    }
-    .section-h2 {
-      font-family: var(--display);
-      font-size: clamp(1.6rem, 5vw, 2.8rem);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .section-h2 em {
-      color: var(--orange);
-      font-style: normal;
-    }
-    .section-lead {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 560px;
-    }
+    section { padding: var(--pad) 0; }
+    .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--orange); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-label::before { content: ''; width: 28px; height: 2px; background: var(--orange); border-radius: 2px; }
+    .section-h2 { font-family: var(--display); font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .section-h2 em { color: var(--orange); font-style: normal; }
+    .section-lead { font-size: 0.95rem; color: var(--text-muted); max-width: 560px; }
 
-    /* Problem */
-    #problem {
-      background: var(--dark-paper);
-    }
-    .problem-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-    @media (min-width: 768px) {
-      .problem-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 70px;
-        align-items: center;
-      }
-    }
-    .problem-item {
-      display: flex;
-      gap: 18px;
-      margin-bottom: 28px;
-      transition: transform 0.2s;
-    }
-    .problem-item:hover {
-      transform: translateX(6px);
-    }
-    .p-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--orange-light);
-      border-radius: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .stat-card {
-      background: white;
-      border-radius: 28px;
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .stat-card:hover {
-      border-color: var(--orange);
-      transform: translateX(6px);
-      box-shadow: var(--shadow-md);
-    }
+    /* Problem avec espacement augmenté */
+    #problem { background: var(--dark-paper); }
+    .problem-grid { display: flex; flex-direction: column; gap: 48px; }
+    @media (min-width: 768px) { .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; } }
+    #problem .section-lead { margin-bottom: 40px; }
+    .problem-item { display: flex; gap: 18px; margin-bottom: 38px; transition: transform 0.3s, box-shadow 0.3s; }
+    .problem-item:hover { transform: translateX(8px); }
+    .p-icon { width: 48px; height: 48px; background: var(--orange-light); border-radius: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; transition: transform 0.2s; }
+    .problem-item:hover .p-icon { transform: scale(1.05); }
+    .stat-card { background: white; border-radius: 28px; padding: 24px; display: flex; align-items: center; gap: 20px; margin-bottom: 16px; border: 1px solid var(--border); transition: all 0.3s; }
+    .stat-card:hover { border-color: var(--orange); transform: translateX(8px) scale(1.02); box-shadow: var(--shadow-lg); }
 
-    /* Features */
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 56px;
-    }
-    @media (min-width: 640px) {
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (min-width: 1024px) {
-      .features-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 28px;
-      }
-    }
+    /* Features avec effet 3D */
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 56px; }
+    @media (min-width: 640px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .features-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
     .feature-card {
-      background: white;
-      border-radius: 28px;
-      padding: 28px;
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--orange-light);
-    }
-    .feature-num {
-      font-family: var(--display);
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--orange-light);
-      margin-bottom: 16px;
-    }
-    .feature-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin: 8px 0;
-    }
-    .feature-tag {
-      display: inline-block;
-      margin-top: 20px;
-      font-size: 0.6rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 40px;
-      background: var(--teal-light);
-      color: var(--teal);
-    }
-
-    /* Promise card */
-    .promise-card {
-      background: white;
-      border-radius: 48px;
-      padding: 40px 24px;
-      text-align: center;
-      margin: 40px 0;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      transition: transform 0.3s;
-    }
-    .promise-card:hover {
-      transform: scale(1.01);
-    }
-    .team-row {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      background: var(--orange-light);
-      border-radius: 60px;
-      padding: 20px;
-      margin-top: 32px;
-    }
-    @media (min-width: 480px) {
-      .team-row {
-        flex-direction: row;
-        justify-content: center;
-        padding: 12px 28px;
-        width: fit-content;
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-    .team-avatar {
-      width: 56px;
-      height: 56px;
-      background: var(--orange);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: white;
-    }
-
-    /* Comparator */
-    .comparator {
-      background: var(--dark-paper);
-      border-radius: 48px;
-      padding: 40px 24px;
-      margin: 48px 0;
-    }
-    .comp-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      margin-top: 32px;
-    }
-    @media (min-width: 768px) {
-      .comp-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-      }
-    }
-    .comp-col {
-      background: white;
-      border-radius: 32px;
-      padding: 28px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .comp-col:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .comp-feature {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .comp-good {
-      color: var(--teal);
-      font-weight: 600;
-    }
-    .comp-bad {
-      color: #A00;
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    /* Offre fondateur */
-    .founder-card {
-      background: linear-gradient(145deg, var(--orange-light), #FDF3E8);
-      border-radius: 48px;
-      padding: 48px 24px;
-      text-align: center;
-      margin-top: 60px;
-      border: 1px solid var(--orange);
-      position: relative;
-      overflow: hidden;
-    }
-    .founder-card::before {
-      content: '';
-      position: absolute;
-      top: -30%;
-      left: -30%;
-      width: 160%;
-      height: 160%;
-      background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
-      pointer-events: none;
-    }
-    .founder-badge {
-      background: var(--orange);
-      color: white;
-      display: inline-block;
-      padding: 6px 24px;
-      border-radius: 60px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-    }
-    .places-gauge {
-      width: 220px;
-      margin: 24px auto;
-      background: var(--border);
-      border-radius: 60px;
-      height: 8px;
-      overflow: hidden;
-    }
-    .gauge-fill {
-      width: 0%;
-      height: 100%;
-      background: var(--orange);
-      border-radius: 60px;
-      transition: width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-
-    /* Process */
-    #process {
-      background: var(--bg);
-    }
-    .process-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      margin-top: 60px;
-    }
-    @media (min-width: 768px) {
-      .process-steps {
-        flex-direction: row;
-        gap: 48px;
-      }
-    }
-    .process-step {
-      text-align: center;
-      transition: transform 0.3s;
-    }
-    .process-step:hover {
-      transform: translateY(-5px);
-    }
-    .pstep-num {
-      width: 70px;
-      height: 70px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 0 auto 20px;
-      transition: all 0.3s;
-    }
-    .process-step:hover .pstep-num {
-      border-color: var(--orange);
-      color: var(--orange);
-      box-shadow: 0 0 0 6px var(--orange-light);
-    }
-
-    /* Pricing */
-    .pricing-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      margin-top: 56px;
-    }
-    @media (min-width: 640px) {
-      .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (min-width: 1024px) {
-      .pricing-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .pricing-card {
-      background: white;
-      border-radius: 32px;
-      padding: 32px 24px;
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-      position: relative;
-    }
-    .pricing-card.featured {
-      border-color: var(--orange);
-      background: linear-gradient(145deg, #FFFBF5, #FEF7F0);
-      transform: scale(1.02);
-    }
-    .pricing-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-    .pricing-badge {
-      position: absolute;
-      top: -12px;
-      right: 20px;
-      background: var(--orange);
-      color: white;
-      padding: 4px 16px;
-      border-radius: 60px;
-      font-size: 0.65rem;
-      font-weight: 700;
-    }
-    .pricing-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    .pricing-creation-val {
-      font-size: 2.2rem;
-      font-weight: 700;
-    }
-    .pricing-monthly {
-      background: var(--orange-light);
-      border-radius: 24px;
-      padding: 16px;
-      margin: 24px 0;
-    }
-    .pricing-feature {
-      display: flex;
-      gap: 10px;
-      font-size: 0.8rem;
-      margin-bottom: 12px;
-    }
-
-    /* Lead magnet */
-    .lead-magnet {
-      background: var(--teal-light);
-      border-radius: 32px;
-      padding: 40px 24px;
-      text-align: center;
-      margin: 48px 0;
-      transition: transform 0.2s;
-    }
-    .lead-magnet:hover {
-      transform: scale(1.01);
-    }
-    .lead-magnet form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: stretch;
-      margin-top: 24px;
-    }
-    @media (min-width: 480px) {
-      .lead-magnet form {
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-    .lead-magnet input {
-      padding: 12px 20px;
-      border-radius: 60px;
-      border: 1px solid var(--border);
-      font-family: var(--body);
-      min-width: 240px;
-      background: white;
-    }
-
-    /* Trust empty (coming soon) */
-    .trust-empty {
-      background: white;
-      border-radius: 48px;
-      padding: 48px 24px;
-      text-align: center;
-      border: 2px dashed var(--border);
-      margin: 48px 0;
-      transition: all 0.2s;
-    }
-    .trust-empty:hover {
-      border-color: var(--orange);
-      background: var(--orange-light);
-    }
-
-    /* Contact form */
-    .contact-form-section {
-      background: var(--dark-paper);
-    }
-    .form-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-    @media (min-width: 768px) {
-      .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 56px;
-        align-items: center;
-      }
-    }
-    .contact-form {
-      background: white;
-      border-radius: 48px;
-      padding: 40px 28px;
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    .contact-form:hover {
-      box-shadow: var(--shadow-lg);
-    }
-    .input-group input,
-    .input-group textarea {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 14px 20px;
-      font-family: var(--body);
-      margin-bottom: 16px;
-      transition: all 0.2s;
-    }
-    .input-group input:focus,
-    .input-group textarea:focus {
-      outline: none;
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px var(--orange-light);
-    }
-    .response-time {
-      font-size: 0.7rem;
-      color: var(--teal);
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    /* FAQ */
-    #faq {
-      background: white;
-    }
-    .faq-list {
-      max-width: 780px;
-      margin-top: 48px;
-    }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-    }
-    .faq-q {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 0;
-      font-weight: 600;
-      font-family: var(--display);
-      cursor: pointer;
-      transition: color 0.2s, padding-left 0.2s;
-    }
-    .faq-q:hover {
-      color: var(--orange);
-      padding-left: 4px;
-    }
-    .faq-icon {
-      font-size: 1.4rem;
-      transition: transform 0.2s;
-    }
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-      color: var(--orange);
-    }
-    .faq-a {
-      display: none;
-      padding-bottom: 24px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-    .faq-item.open .faq-a {
-      display: block;
-      animation: fadeUp 0.3s;
-    }
-
-    /* CTA final */
-    #cta-final {
-      text-align: center;
-      background: var(--dark-paper);
-    }
-    .cta-h2 {
-      font-size: clamp(1.8rem, 5vw, 3.2rem);
-      font-weight: 700;
-      font-family: var(--display);
-    }
-    .trust-badge {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 32px;
-      font-size: 0.7rem;
-      color: var(--text-light);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 56px 0 32px;
-    }
-    .footer-in {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      margin-bottom: 48px;
-    }
-    @media (min-width: 768px) {
-      .footer-in {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 48px;
-      }
-    }
-    .footer-bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 0.7rem;
-    }
-    @media (min-width: 768px) {
-      .footer-bottom {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-
-    /* Toast notification */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--teal);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 60px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      z-index: 10002;
-      box-shadow: var(--shadow-lg);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
-    }
-    .toast.show {
-      opacity: 1;
+      background: white; border-radius: 28px; padding: 28px; border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       transform: translateY(0);
     }
+    .feature-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--orange-light);
+    }
+    .feature-num { font-family: var(--display); font-size: 2rem; font-weight: 600; color: var(--orange-light); margin-bottom: 16px; transition: color 0.3s; }
+    .feature-card:hover .feature-num { color: var(--orange); }
+
+    /* Promise card */
+    .promise-card { background: white; border-radius: 48px; padding: 40px 24px; text-align: center; margin: 40px 0; border: 1px solid var(--border); box-shadow: var(--shadow-md); transition: transform 0.3s, box-shadow 0.3s; }
+    .promise-card:hover { transform: scale(1.01); box-shadow: var(--shadow-xl); }
+    .team-row { display: flex; flex-direction: column; align-items: center; gap: 16px; background: var(--orange-light); border-radius: 60px; padding: 20px; margin-top: 32px; transition: all 0.2s; }
+    @media (min-width: 480px) { .team-row { flex-direction: row; justify-content: center; padding: 12px 28px; width: fit-content; margin-left: auto; margin-right: auto; } }
+    .team-avatar { width: 56px; height: 56px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+    /* Vidéo section */
+    .video-section {
+      background: var(--dark-paper);
+      border-radius: 48px;
+      padding: 40px 24px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      margin-top: 32px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Comparateur */
+    .comparator { background: var(--dark-paper); border-radius: 48px; padding: 40px 24px; margin: 48px 0; }
+    .comp-grid { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; }
+    @media (min-width: 768px) { .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; } }
+    .comp-col { background: white; border-radius: 32px; padding: 28px; border: 1px solid var(--border); transition: all 0.3s; }
+    .comp-col:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+    /* Offre fondateur */
+    .founder-card { background: linear-gradient(145deg, var(--orange-light), #FDF3E8); border-radius: 48px; padding: 48px 24px; text-align: center; margin-top: 60px; border: 1px solid var(--orange); position: relative; overflow: hidden; transition: transform 0.3s; }
+    .founder-card:hover { transform: scale(1.01); }
+    .places-gauge { width: 220px; margin: 24px auto; background: var(--border); border-radius: 60px; height: 8px; overflow: hidden; }
+    .gauge-fill { width: 0%; height: 100%; background: var(--orange); border-radius: 60px; transition: width 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+
+    /* Process */
+    #process { background: var(--bg); }
+    .process-steps { display: flex; flex-direction: column; gap: 40px; margin-top: 60px; }
+    @media (min-width: 768px) { .process-steps { flex-direction: row; gap: 48px; } }
+    .process-step { text-align: center; transition: transform 0.3s; }
+    .process-step:hover { transform: translateY(-8px); }
+    .pstep-num { width: 70px; height: 70px; background: white; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; margin: 0 auto 20px; transition: all 0.3s; }
+    .process-step:hover .pstep-num { border-color: var(--orange); color: var(--orange); box-shadow: 0 0 0 8px var(--orange-light); transform: scale(1.05); }
+
+    /* Pricing */
+    .pricing-grid { display: flex; flex-direction: column; gap: 28px; margin-top: 56px; }
+    @media (min-width: 640px) { .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+    .pricing-card { background: white; border-radius: 32px; padding: 32px 24px; border: 1px solid var(--border); transition: all 0.4s; position: relative; }
+    .pricing-card.featured { border-color: var(--orange); background: linear-gradient(145deg, #FFFBF5, #FEF7F0); transform: scale(1.02); }
+    .pricing-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow-xl); }
+    .pricing-badge { position: absolute; top: -12px; right: 20px; background: var(--orange); color: white; padding: 4px 16px; border-radius: 60px; font-size: 0.65rem; font-weight: 700; animation: glowPulse 1.5s infinite; }
+
+    /* Lead magnet */
+    .lead-magnet { background: var(--teal-light); border-radius: 32px; padding: 40px 24px; text-align: center; margin: 48px 0; transition: transform 0.2s; }
+    .lead-magnet:hover { transform: scale(1.01); }
+
+    /* Contact form */
+    .contact-form-section { background: var(--dark-paper); }
+    .form-grid { display: flex; flex-direction: column; gap: 48px; }
+    @media (min-width: 768px) { .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; } }
+    .contact-form { background: white; border-radius: 48px; padding: 40px 28px; border: 1px solid var(--border); transition: all 0.3s; }
+    .contact-form:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+
+    /* FAQ */
+    .faq-list { max-width: 780px; margin-top: 48px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; font-weight: 600; font-family: var(--display); cursor: pointer; transition: all 0.2s; }
+    .faq-q:hover { color: var(--orange); padding-left: 8px; }
+    .faq-icon { font-size: 1.4rem; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--orange); }
+    .faq-a { display: none; padding-bottom: 24px; color: var(--text-muted); line-height: 1.7; animation: fadeUp 0.3s; }
+
+    /* Footer */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 56px 0 32px; }
+    .footer-in { display: flex; flex-direction: column; gap: 40px; margin-bottom: 48px; }
+    @media (min-width: 768px) { .footer-in { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; } }
+    .footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.7rem; }
+    @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 30px; right: 30px; background: var(--teal); color: white; padding: 12px 24px; border-radius: 60px; font-size: 0.85rem; font-weight: 500; z-index: 10002; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 <div class="grain-overlay"></div>
+<div class="custom-cursor" id="customCursor"></div>
 <div id="prog"></div>
 <div id="toast" class="toast">✨ Message envoyé ! Nous vous répondons sous 4h.</div>
 
@@ -1140,34 +431,27 @@
   <div class="nav-in">
     <a href="#" class="nav-logo">
       <div class="logo-mark">CW</div>
-      <div class="logo-text-wrap">
-        <div class="logo-name">Convert Web</div>
-        <small class="logo-sub">artisans du web pour restaurants</small>
-      </div>
+      <div class="logo-text-wrap"><div class="logo-name">Convert Web</div><small class="logo-sub">artisans du web pour restaurants</small></div>
     </a>
     <div class="nav-links">
-      <a href="#programme">Programme</a>
-      <a href="#offre">Offre</a>
-      <a href="#pricing">Tarifs</a>
-      <a href="#faq">FAQ</a>
+      <a href="#programme">Programme</a><a href="#offre">Offre</a><a href="#pricing">Tarifs</a><a href="#faq">FAQ</a>
       <a href="#contact" class="nav-cta">Devis gratuit</a>
     </div>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div id="mobile-nav">
-  <a href="#programme">Programme</a>
-  <a href="#offre">Offre</a>
-  <a href="#pricing">Tarifs</a>
-  <a href="#faq">FAQ</a>
+  <a href="#programme">Programme</a><a href="#offre">Offre</a><a href="#pricing">Tarifs</a><a href="#faq">FAQ</a>
   <a href="#contact" class="btn btn-orange btn-small">Devis gratuit</a>
 </div>
 
 <main>
-  <!-- HERO -->
+  <!-- HERO AVEC VIDEO DE FOND -->
   <section id="hero">
+    <video autoplay muted loop playsinline class="hero-video-bg" poster="https://placehold.co/1920x1080/2B2B28/FFF?text=Convert+Web">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-wooden-table-with-restaurant-cutlery-32884-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
     <div class="wrap">
       <div class="hero-grid">
         <div>
@@ -1176,10 +460,7 @@
             Votre restaurant mérite <em class="typing-wrapper"><span class="typed-text" id="typedTitle">un site qui convertit</span></em>
           </h1>
           <p class="hero-p rev d2">Chez Convert Web, nous sommes une nouvelle agence dédiée aux restaurateurs. Création dès 390€, 0% commission, accompagnement humain. Nous cherchons nos 3 premiers partenaires.</p>
-          <div class="hero-actions rev d3">
-            <a href="#offre" class="btn btn-orange">Profiter de l'offre →</a>
-            <a href="#contact" class="btn btn-ghost">Discuter sans engagement</a>
-          </div>
+          <div class="hero-actions rev d3"><a href="#offre" class="btn btn-orange">Profiter de l'offre →</a><a href="#contact" class="btn btn-ghost">Discuter sans engagement</a></div>
           <div class="hero-stats rev d4">
             <div><div class="hero-stat-val">3 <em>places</em></div><div class="hero-stat-lbl">Offre fondateur</div></div>
             <div><div class="hero-stat-val">0 <em>€ commission</em></div><div class="hero-stat-lbl">sur vos commandes</div></div>
@@ -1190,7 +471,7 @@
           <div class="hero-mockup-wrap">
             <div class="hero-mockup">
               <div class="mockup-bar"><div class="mockup-url-bar">🔒 votrerestaurant.fr</div></div>
-              <div class="mockup-body"><div class="m-img">🍽️</div><div style="font-weight:600; margin-bottom:4px">Le Bistrot des Amis</div><div style="font-size:0.75rem; color:var(--text-muted)">Cuisine française · Réservation en ligne · Menu interactif</div></div>
+              <div class="mockup-body"><div class="m-img">🍽️</div><div style="font-weight:600;">Le Bistrot des Amis</div><div style="font-size:0.75rem;">Cuisine française · Réservation en ligne</div></div>
             </div>
             <div class="mockup-badge">✨ 1er client ?</div>
             <div class="mockup-seo"><span>📍</span> #1 Google Maps visé</div>
@@ -1201,45 +482,43 @@
   </section>
 
   <!-- TICKER -->
-  <div id="ticker">
-    <div class="ticker-track">
-      <div class="ticker-item">Sites artisanaux</div><div class="ticker-item">Réservation directe</div><div class="ticker-item">0% commission</div><div class="ticker-item">SEO local</div><div class="ticker-item">Dès 390€</div><div class="ticker-item">1 mois offert</div><div class="ticker-item">Satisfait ou recréation</div><div class="ticker-item">🇫🇷 100% artisanal français</div>
-      <div class="ticker-item">Sites artisanaux</div><div class="ticker-item">Réservation directe</div><div class="ticker-item">0% commission</div><div class="ticker-item">SEO local</div><div class="ticker-item">Dès 390€</div><div class="ticker-item">1 mois offert</div><div class="ticker-item">Satisfait ou recréation</div><div class="ticker-item">🇫🇷 100% artisanal français</div>
-    </div>
-  </div>
+  <div id="ticker"><div class="ticker-track"><div class="ticker-item">Sites artisanaux</div><div class="ticker-item">Réservation directe</div><div class="ticker-item">0% commission</div><div class="ticker-item">SEO local</div><div class="ticker-item">Dès 390€</div><div class="ticker-item">1 mois offert</div><div class="ticker-item">Satisfait ou recréation</div><div class="ticker-item">🇫🇷 100% artisanal français</div><div class="ticker-item">Sites artisanaux</div><div class="ticker-item">Réservation directe</div></div></div>
 
-  <!-- PROMESSE -->
-  <section><div class="wrap"><div class="rev promise-card"><div class="promise-icon">🍽️✨</div><h2 class="section-h2">Notre promesse : <em>l’honnêteté et l’artisanat</em></h2><div class="promise-text">Nous refusons les sites qui ne convertissent pas, les commissions cachées et le jargon technique. Nous construisons des sites sur mesure, simples à vivre, et nous nous engageons sur vos résultats. Pas de formule magique, juste du travail bien fait et une vraie relation humaine.</div><div class="team-row"><div class="team-avatar">👥</div><div class="team-text">Nous, c’est Convert Web — une petite équipe passionnée qui met son énergie à remplir vos salles.</div></div></div></div></section>
+  <!-- PROMESSE AVEC LOGO -->
+  <section><div class="wrap"><div class="rev promise-card"><div class="promise-icon">🍽️✨</div><h2 class="section-h2">Notre promesse : <em>l’honnêteté et l’artisanat</em></h2><div class="promise-text">Nous refusons les sites qui ne convertissent pas, les commissions cachées et le jargon technique. Nous construisons des sites sur mesure, simples à vivre, et nous nous engageons sur vos résultats. Pas de formule magique, juste du travail bien fait et une vraie relation humaine.</div><div class="team-row"><div class="team-avatar"><img src="IMG_0834.png" alt="Logo Convert Web" style="width:100%;height:100%;object-fit:cover;"></div><div class="team-text">Nous, c’est Convert Web — une petite équipe passionnée qui met son énergie à remplir vos salles.</div></div></div></div></section>
+
+  <!-- SECTION VIDÉO EXPLICATIVE (WOW) -->
+  <section><div class="wrap"><div class="rev video-section"><div class="section-label">Voir c’est croire</div><h2 class="section-h2">Découvrez <em>notre univers</em> en 90 secondes</h2><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=abc123&autoplay=0&rel=0" title="Présentation Convert Web" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p style="margin-top:24px; font-size:0.8rem;">Un site qui convertit, expliqué simplement.</p></div></div></section>
 
   <!-- COMPARATEUR -->
-  <section><div class="wrap"><div class="rev comparator"><div class="section-label">Comparaison</div><h2 class="section-h2">Pourquoi <em>Convert Web change la donne</em></h2><div class="comp-grid"><div class="comp-col"><h3>❌ Site classique (ou plateforme)</h3><div class="comp-feature"><span>Commission par commande</span><span class="comp-bad">25 à 30%</span></div><div class="comp-feature"><span>Template générique</span><span class="comp-bad">Souvent oui</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-bad">Inexistant</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-bad">Payantes ou complexes</span></div><div class="comp-feature"><span>Support</span><span class="comp-bad">Bot ou externe</span></div></div><div class="comp-col"><h3>✅ Convert Web</h3><div class="comp-feature"><span>Commission</span><span class="comp-good">0%</span></div><div class="comp-feature"><span>Design sur mesure</span><span class="comp-good">Unique à votre image</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-good">Optimisé Google Maps</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-good">Incluses (sous 24h)</span></div><div class="comp-feature"><span>Support</span><span class="comp-good">Humain, français</span></div></div></div><p style="text-align:center; margin-top:24px; font-size:0.8rem;">Création dès 390€ + mensualité tout compris.</p></div></div></section>
+  <section><div class="wrap"><div class="rev comparator"><div class="section-label">Comparaison</div><h2 class="section-h2">Pourquoi <em>Convert Web change la donne</em></h2><div class="comp-grid"><div class="comp-col"><h3>❌ Site classique (ou plateforme)</h3><div class="comp-feature"><span>Commission par commande</span><span class="comp-bad">25 à 30%</span></div><div class="comp-feature"><span>Template générique</span><span class="comp-bad">Souvent oui</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-bad">Inexistant</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-bad">Payantes</span></div><div class="comp-feature"><span>Support</span><span class="comp-bad">Bot ou externe</span></div></div><div class="comp-col"><h3>✅ Convert Web</h3><div class="comp-feature"><span>Commission</span><span class="comp-good">0%</span></div><div class="comp-feature"><span>Design sur mesure</span><span class="comp-good">Unique</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-good">Optimisé Google Maps</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-good">Incluses (sous 24h)</span></div><div class="comp-feature"><span>Support</span><span class="comp-good">Humain, français</span></div></div></div><p style="text-align:center; margin-top:24px;">Création dès 390€ + mensualité tout compris.</p></div></div></section>
 
-  <!-- PROBLEME -->
-  <section id="problem"><div class="wrap"><div class="problem-grid"><div><div class="section-label rev">Le vrai problème</div><h2 class="section-h2 rev d1">Beaucoup de sites de restaurants <em>ne convertissent pas</em></h2><p class="section-lead rev d2">Photos floues, pas de réservation en ligne, invisibles sur Google… et des plateformes qui prennent jusqu’à 30% de commission.</p><div class="problem-items"><div class="problem-item rev"><div class="p-icon">🔍</div><div><div class="p-item-title">Invisible sur Google</div><div class="p-item-text">Sans SEO local, votre restaurant n’apparaît pas quand un client cherche “restaurant + votre ville”.</div></div></div><div class="problem-item rev d1"><div class="p-icon">📵</div><div><div class="p-item-title">Pas de réservation en ligne</div><div class="p-item-text">Des tables vides parce que vos clients ne peuvent pas réserver à 23h.</div></div></div><div class="problem-item rev d2"><div class="p-icon">💸</div><div><div class="p-item-title">Commissions des plateformes</div><div class="p-item-text">25 à 30% de commission par commande. Avec Convert Web, vous gardez 100%.</div></div></div></div></div><div class="rev d2"><div class="stat-card"><div>📊</div><div><div class="sc-val">80%</div><div class="sc-lbl">des sites restos ne sont pas optimisés</div></div></div><div class="stat-card"><div>🎯</div><div><div class="sc-val">Objectif</div><div class="sc-lbl">+50% de réservations pour vous</div></div></div></div></div></div></section>
+  <!-- PROBLEME (ESPACES AUGMENTÉS) -->
+  <section id="problem"><div class="wrap"><div class="problem-grid"><div><div class="section-label rev">Le vrai problème</div><h2 class="section-h2 rev d1">Beaucoup de sites de restaurants <em>ne convertissent pas</em></h2><p class="section-lead rev d2">Photos floues, pas de réservation en ligne, invisibles sur Google… et des plateformes qui prennent jusqu’à 30% de commission.</p><div class="problem-items"><div class="problem-item rev"><div class="p-icon">🔍</div><div><div class="p-item-title">Invisible sur Google</div><div class="p-item-text">Sans SEO local, votre restaurant n’apparaît pas quand un client cherche “restaurant + votre ville”.</div></div></div><div class="problem-item rev d1"><div class="p-icon">📵</div><div><div class="p-item-title">Pas de réservation en ligne</div><div class="p-item-text">Des tables vides parce que vos clients ne peuvent pas réserver à 23h.</div></div></div><div class="problem-item rev d2"><div class="p-icon">💸</div><div><div class="p-item-title">Commissions des plateformes</div><div class="p-item-text">25 à 30% de commission par commande. Avec Convert Web, vous gardez 100%.</div></div></div></div></div><div class="rev d2"><div class="stat-card"><div>📊</div><div><div class="sc-val">80%</div><div class="sc-lbl">des sites restos ne sont pas optimisés</div><div class="stat-link"><a href="https://convert-web.github.io" target="_blank">convert-web.github.io</a></div></div></div><div class="stat-card"><div>🎯</div><div><div class="sc-val">Objectif</div><div class="sc-lbl">+50% de réservations pour vous</div></div></div></div></div></div></section>
 
-  <!-- PROGRAMME -->
-  <section id="programme"><div class="wrap"><div class="rev"><div class="section-label">Notre méthode</div><h2 class="section-h2">Tout ce qu’il faut pour <em>remplir vos salles</em></h2></div><div class="features-grid"><div class="feature-card rev"><div class="feature-num">01</div><div class="feature-title">Design à votre image</div><div class="feature-text">Chaque site est unique, comme votre restaurant. Nous capturons votre âme.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d1"><div class="feature-num">02</div><div class="feature-title">SEO local puissant</div><div class="feature-text">Nous vous aidons à devenir visible sur Google Maps et les recherches locales.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d2"><div class="feature-num">03</div><div class="feature-title">Réservation 24/7</div><div class="feature-text">Système simple pour vos clients, zéro commission.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev"><div class="feature-num">04</div><div class="feature-title">Menu digital élégant</div><div class="feature-text">Photos, prix, allergènes — nous mettons à jour pour vous à chaque changement.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d1"><div class="feature-num">05</div><div class="feature-title">Commande sans commission</div><div class="feature-text">Gardez 100% de vos ventes. Fini les 30% reversés aux plateformes.</div><span class="feature-tag">Option Pro</span></div><div class="feature-card rev d2"><div class="feature-num">06</div><div class="feature-title">Suivi humain</div><div class="feature-text">Un vrai contact, pas de chatbot. Nous répondons sous 24h.</div><span class="feature-tag">Mensuel</span></div></div></div></section>
+  <!-- PROGRAMME (FEATURES) -->
+  <section id="programme"><div class="wrap"><div class="rev"><div class="section-label">Notre méthode</div><h2 class="section-h2">Tout ce qu’il faut pour <em>remplir vos salles</em></h2></div><div class="features-grid"><div class="feature-card rev"><div class="feature-num">01</div><div class="feature-title">Design à votre image</div><div class="feature-text">Chaque site est unique, comme votre restaurant.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d1"><div class="feature-num">02</div><div class="feature-title">SEO local puissant</div><div class="feature-text">Visibilité sur Google Maps.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d2"><div class="feature-num">03</div><div class="feature-title">Réservation 24/7</div><div class="feature-text">Sans commission, pour vos clients.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev"><div class="feature-num">04</div><div class="feature-title">Menu digital</div><div class="feature-text">Mise à jour offerte à chaque changement.</div><span class="feature-tag">Inclus</span></div><div class="feature-card rev d1"><div class="feature-num">05</div><div class="feature-title">Commande 0%</div><div class="feature-text">Gardez 100% de vos ventes.</div><span class="feature-tag">Option Pro</span></div><div class="feature-card rev d2"><div class="feature-num">06</div><div class="feature-title">Suivi humain</div><div class="feature-text">Un vrai contact, pas de chatbot.</div><span class="feature-tag">Mensuel</span></div></div></div></section>
 
-  <!-- CONFIANCE (VIDE HONNÊTE) -->
-  <section><div class="wrap"><div class="rev trust-empty"><div class="emoji">🤝✨</div><h2 class="section-h2" style="margin-bottom:12px">Ils nous font confiance</h2><p class="section-lead" style="margin:0 auto">Nous n’avons pas encore de clients, et c’est une chance pour vous : vous pouvez être parmi les premiers à bénéficier de nos conditions de lancement et d’une attention absolue. <strong>Envie d’apparaître ici ?</strong> Réservez l’une des trois places fondatrices.</p><a href="#offre" class="btn btn-orange" style="margin-top:24px">Je veux être le premier →</a></div></div></section>
+  <!-- CONFIANCE (HONNÊTE) -->
+  <section><div class="wrap"><div class="rev trust-empty"><div class="emoji">🤝✨</div><h2 class="section-h2">Ils nous font confiance</h2><p class="section-lead">Nous n’avons pas encore de clients, et c’est une chance pour vous : soyez parmi les premiers à bénéficier de nos conditions de lancement et d’une attention absolue. <strong>Envie d’apparaître ici ?</strong> Réservez l’une des trois places fondatrices.</p><a href="#offre" class="btn btn-orange" style="margin-top:24px;">Je veux être le premier →</a></div></div></section>
 
   <!-- LEAD MAGNET -->
-  <section><div class="wrap"><div class="rev lead-magnet"><h3>📘 Obtenez notre checklist gratuite</h3><p>« 5 erreurs qui tuent votre site restaurant (et comment les éviter) »</p><form id="checklistForm"><input type="email" placeholder="Votre email" required><button type="submit" class="btn" style="background: var(--teal); color: white;">Envoyer →</button></form><p style="font-size: 0.65rem; margin-top: 12px;">Sans spam, désinscription facile. Nous détestons les emails inutiles.</p></div></div></section>
+  <section><div class="wrap"><div class="rev lead-magnet"><h3>📘 Obtenez notre checklist gratuite</h3><p>« 5 erreurs qui tuent votre site restaurant (et comment les éviter) »</p><form id="checklistForm"><input type="email" placeholder="Votre email" required><button type="submit" class="btn" style="background: var(--teal); color: white;">Envoyer →</button></form><p style="font-size:0.65rem; margin-top:12px;">Sans spam.</p></div></div></section>
 
   <!-- OFFRE FONDATEUR -->
-  <section id="offre"><div class="wrap"><div class="founder-card rev"><div class="founder-badge">🔥 Offre fondateur – 3 restaurants seulement</div><h2 class="section-h2" style="margin-bottom:12px">Soyez <em>nos premiers clients</em></h2><p class="section-lead" style="margin:0 auto 24px; max-width:600px">Pour nos 3 premiers partenaires, nous proposons des conditions exceptionnelles :</p><div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap; margin-bottom:32px"><div><span style="font-size:2rem; font-weight:700">-100€</span><br/>sur la création</div><div><span style="font-size:2rem; font-weight:700">1 mois</span><br/>de mensualité offert</div><div><span style="font-size:2rem; font-weight:700">Satisfait ou</span><br/>recréation gratuite</div></div><div class="places-gauge"><div class="gauge-fill" id="gaugeFill"></div></div><div class="places-text">✨ 3 places disponibles</div><a href="#contact" class="btn btn-orange" style="background:var(--orange); color:white; margin-top:16px">Je veux être parmi les premiers →</a><p style="margin-top:24px; font-size:0.7rem; color:var(--text-muted)">Aucun engagement caché. Une relation de confiance.</p></div></div></section>
+  <section id="offre"><div class="wrap"><div class="founder-card rev"><div class="founder-badge">🔥 Offre fondateur – 3 restaurants seulement</div><h2 class="section-h2">Soyez <em>nos premiers clients</em></h2><p class="section-lead" style="margin:0 auto 24px;">Pour nos 3 premiers partenaires : -100€ sur la création, 1 mois offert, satisfaction garantie.</p><div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap; margin-bottom:32px;"><div><span style="font-size:2rem; font-weight:700;">-100€</span><br/>création</div><div><span style="font-size:2rem; font-weight:700;">1 mois</span><br/>offert</div><div><span style="font-size:2rem; font-weight:700;">Satisfait ou</span><br/>recréation</div></div><div class="places-gauge"><div class="gauge-fill" id="gaugeFill"></div></div><div class="places-text">✨ 3 places disponibles</div><a href="#contact" class="btn btn-orange" style="margin-top:16px;">Je veux être parmi les premiers →</a></div></div></section>
 
   <!-- TARIFS -->
-  <section id="pricing"><div class="wrap"><div class="rev"><div class="section-label">Tarifs transparents</div><h2 class="section-h2">Des prix <em>abordables</em> pour démarrer</h2></div><div class="pricing-grid"><div class="pricing-card rev"><div class="pricing-name">Essentiel</div><div class="pricing-creation-val">390€</div><div class="pricing-monthly"><span class="pricing-monthly-val">39€/mois</span> · hébergement + maintenance</div><div class="pricing-feature">✓ Design sur mesure</div><div class="pricing-feature">✓ Menu digital</div><div class="pricing-feature">✗ Réservation en ligne</div><a href="#contact" class="btn btn-ghost" style="margin-top:24px">Choisir</a></div><div class="pricing-card featured rev"><div class="pricing-badge">⭐ Offre fondateur</div><div class="pricing-name">Pro</div><div class="pricing-creation-val"><span style="text-decoration:line-through; font-size:1.2rem">690€</span> 590€</div><div class="pricing-monthly"><span class="pricing-monthly-val">69€/mois</span> · 1er mois offert *</div><div class="pricing-feature">✓ Design premium</div><div class="pricing-feature">✓ SEO local avancé</div><div class="pricing-feature">✓ Réservation + Google Business</div><a href="#contact" class="btn btn-orange" style="margin-top:24px">Réserver ma place</a></div><div class="pricing-card rev"><div class="pricing-name">Premium</div><div class="pricing-creation-val">990€</div><div class="pricing-monthly"><span class="pricing-monthly-val">99€/mois</span> · tout compris</div><div class="pricing-feature">✓ Tout le plan Pro</div><div class="pricing-feature">✓ Commande 0% commission</div><div class="pricing-feature">✓ Paiement en ligne intégré</div><a href="#contact" class="btn btn-ghost" style="margin-top:24px">Choisir</a></div></div><p style="text-align:center; font-size:0.7rem; margin-top:24px; color:var(--text-light)">* Offre réservée aux 3 premiers clients : création Pro à 590€ au lieu de 690€ + 1 mois offert.</p></div></section>
+  <section id="pricing"><div class="wrap"><div class="rev"><div class="section-label">Tarifs transparents</div><h2 class="section-h2">Des prix <em>abordables</em></h2></div><div class="pricing-grid"><div class="pricing-card rev"><div class="pricing-name">Essentiel</div><div class="pricing-creation-val">390€</div><div class="pricing-monthly">39€/mois · hébergement + maintenance</div><div class="pricing-feature">✓ Design sur mesure</div><div class="pricing-feature">✓ Menu digital</div><div class="pricing-feature">✗ Réservation en ligne</div><a href="#contact" class="btn btn-ghost" style="margin-top:24px">Choisir</a></div><div class="pricing-card featured rev"><div class="pricing-badge">⭐ Offre fondateur</div><div class="pricing-name">Pro</div><div class="pricing-creation-val"><span style="text-decoration:line-through;">690€</span> 590€</div><div class="pricing-monthly">69€/mois · 1er mois offert *</div><div class="pricing-feature">✓ Design premium</div><div class="pricing-feature">✓ SEO local avancé</div><div class="pricing-feature">✓ Réservation + Google Business</div><a href="#contact" class="btn btn-orange" style="margin-top:24px">Réserver ma place</a></div><div class="pricing-card rev"><div class="pricing-name">Premium</div><div class="pricing-creation-val">990€</div><div class="pricing-monthly">99€/mois · tout compris</div><div class="pricing-feature">✓ Tout le plan Pro</div><div class="pricing-feature">✓ Commande 0% commission</div><div class="pricing-feature">✓ Paiement en ligne</div><a href="#contact" class="btn btn-ghost" style="margin-top:24px">Choisir</a></div></div><p style="text-align:center; font-size:0.7rem; margin-top:24px;">* Offre réservée aux 3 premiers clients : création Pro à 590€ + 1 mois offert.</p></div></section>
 
   <!-- CONTACT -->
-  <section id="contact" class="contact-form-section"><div class="wrap"><div class="form-grid"><div class="rev"><div class="section-label">On se parle ?</div><h2 class="section-h2">Prêt à <em>remplir vos salles</em> ?</h2><p class="section-lead">Un échange gratuit, sans blabla technique. Nous analysons votre restaurant et vous proposons la meilleure solution.</p><div class="trust-badge" style="justify-content:flex-start; margin-top:16px;"><span>📞 Réponse sous 4h (même le week-end)</span><span>🍽️ Audit offert</span><span>🔒 100% confidentiel</span></div><div style="margin-top: 24px;"><a href="https://calendly.com/votre-lien" target="_blank" class="btn btn-ghost" style="display: inline-flex;">📅 Prendre rendez-vous directement →</a></div></div><div class="contact-form rev"><form id="leadForm"><div class="input-group"><input type="text" placeholder="Nom du restaurant *" required></div><div class="input-group"><input type="email" placeholder="Votre email *" required></div><div class="input-group"><textarea rows="3" placeholder="Parlez-nous de votre projet..."></textarea></div><button type="submit" class="btn btn-orange" style="width:100%">Envoyer ma demande →</button><div class="response-time">⚡ Nous vous répondons sous 4h, même le dimanche.</div></form></div></div></div></section>
+  <section id="contact" class="contact-form-section"><div class="wrap"><div class="form-grid"><div class="rev"><div class="section-label">On se parle ?</div><h2 class="section-h2">Prêt à <em>remplir vos salles</em> ?</h2><p class="section-lead">Échange gratuit, sans blabla. Nous analysons votre restaurant et vous proposons la meilleure solution.</p><div class="trust-badge" style="justify-content:flex-start;"><span>📞 Réponse sous 4h</span><span>🍽️ Audit offert</span><span>🔒 100% confidentiel</span></div><div style="margin-top:24px;"><a href="https://calendly.com/votre-lien" target="_blank" class="btn btn-ghost">📅 Prendre rendez-vous directement →</a></div></div><div class="contact-form rev"><form id="leadForm"><div class="input-group"><input type="text" placeholder="Nom du restaurant *" required></div><div class="input-group"><input type="email" placeholder="Votre email *" required></div><div class="input-group"><textarea rows="3" placeholder="Parlez-nous de votre projet..."></textarea></div><button type="submit" class="btn btn-orange" style="width:100%">Envoyer ma demande →</button><div class="response-time">⚡ Nous vous répondons sous 4h, même le dimanche.</div></form></div></div></div></section>
 
   <!-- FAQ -->
-  <section id="faq"><div class="wrap"><div class="rev"><div class="section-label">FAQ</div><h2 class="section-h2">Vos questions, <em>nos réponses honnêtes</em></h2></div><div class="faq-list"><div class="faq-item"><div class="faq-q">Pourquoi vos prix sont-ils plus bas que la moyenne ?<span class="faq-icon">+</span></div><div class="faq-a">Nous lançons Convert Web, donc nous ne facturons pas encore notre vraie valeur. Nous cherchons des premiers clients pour construire notre portfolio. C’est gagnant-gagnant : vous avez un site de qualité à prix doux, et nous gagnons en expérience.</div></div><div class="faq-item"><div class="faq-q">Combien de temps pour avoir notre site en ligne ?<span class="faq-icon">+</span></div><div class="faq-a">Entre 24h et 72h après notre premier échange. Vous fournissez vos informations, nous construisons le site.</div></div><div class="faq-item"><div class="faq-q">Pouvons-nous modifier le menu nous‑mêmes ?<span class="faq-icon">+</span></div><div class="faq-a">Vous nous envoyez les changements par message, nous les appliquons dans la journée. C’est inclus dans la mensualité.</div></div><div class="faq-item"><div class="faq-q">Que se passe-t-il si nous ne sommes pas satisfaits ?<span class="faq-icon">+</span></div><div class="faq-a">Pour les premiers clients : si le site ne vous plaît pas, nous le reprenons entièrement gratuitement. Votre satisfaction est notre priorité absolue.</div></div></div></div></section>
+  <section id="faq"><div class="wrap"><div class="rev"><div class="section-label">FAQ</div><h2 class="section-h2">Vos questions, <em>nos réponses honnêtes</em></h2></div><div class="faq-list"><div class="faq-item"><div class="faq-q">Pourquoi vos prix sont-ils plus bas ?<span class="faq-icon">+</span></div><div class="faq-a">Nous lançons Convert Web, donc nous ne facturons pas encore notre vraie valeur. Nous cherchons des premiers clients pour construire notre portfolio. C’est gagnant-gagnant.</div></div><div class="faq-item"><div class="faq-q">Délai de mise en ligne ?<span class="faq-icon">+</span></div><div class="faq-a">Entre 24h et 72h après notre premier échange.</div></div><div class="faq-item"><div class="faq-q">Puis-je modifier mon menu ?<span class="faq-icon">+</span></div><div class="faq-a">Vous nous envoyez les changements, nous les appliquons dans la journée. Inclus.</div></div><div class="faq-item"><div class="faq-q">Satisfait ou remboursé ?<span class="faq-icon">+</span></div><div class="faq-a">Pour les premiers clients : si le site ne vous plaît pas, nous le reprenons gratuitement.</div></div></div></div></section>
 
-  <!-- CTA FINAL -->
-  <section id="cta-final"><div class="wrap"><h2 class="cta-h2 rev">Un site qui vous ressemble, <em>des clients au rendez‑vous</em></h2><div class="rev d1" style="margin-top:24px"><a href="#contact" class="btn btn-orange">Demander un devis gratuit →</a></div><div class="trust-badge"><span>✧ sans engagement</span><span>✧ 24h de mise en ligne</span><span>✧ accompagnement humain</span><span>✧ 0% commission</span><span>✧ Garantie 30 jours</span></div></div></section>
+  <!-- CTA FINALE -->
+  <section id="cta-final"><div class="wrap"><h2 class="cta-h2 rev">Un site qui vous ressemble, <em>des clients au rendez‑vous</em></h2><div class="rev d1" style="margin-top:24px;"><a href="#contact" class="btn btn-orange">Demander un devis gratuit →</a></div><div class="trust-badge"><span>✧ sans engagement</span><span>✧ 24h de mise en ligne</span><span>✧ accompagnement humain</span><span>✧ 0% commission</span><span>✧ Garantie 30 jours</span></div></div></section>
 </main>
 
 <footer><div class="wrap"><div class="footer-in"><div class="footer-brand"><a href="#" class="nav-logo"><div class="logo-mark">CW</div><div class="logo-name">Convert Web</div></a><p>Agence web en lancement, dédiée aux restaurateurs. Transparence, prix doux, artisans du web.<br>🇫🇷 100% artisanal & fait en France</p></div><div class="footer-col"><h4>Liens</h4><ul><li><a href="#programme">Programme</a></li><li><a href="#offre">Offre fondateur</a></li><li><a href="#pricing">Tarifs</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:contact@convertweb.fr">contact@convertweb.fr</a></li><li><a href="#">Mentions légales</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 Convert Web — Des sites accessibles pour remplir vos salles</p><p>Fait avec 🧡 pour les restaurateurs</p></div></div></footer>
@@ -1253,15 +532,15 @@
       document.getElementById('prog').style.width = (top / h) * 100 + '%';
     });
 
-    // Nav background on scroll
+    // Nav background
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
 
-    // Reveal animations
+    // Reveal
     const revObs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.rev').forEach(el => revObs.observe(el));
 
-    // FAQ accordion
+    // FAQ
     document.querySelectorAll('.faq-q').forEach(q => {
       q.addEventListener('click', () => {
         const item = q.parentElement;
@@ -1271,7 +550,7 @@
       });
     });
 
-    // Mobile burger
+    // Mobile menu
     const burger = document.getElementById('burger');
     const mobileNav = document.getElementById('mobile-nav');
     burger.addEventListener('click', () => {
@@ -1296,25 +575,23 @@
       });
     });
 
-    // Toast notification instead of alert
+    // Toast
     const toast = document.getElementById('toast');
-    function showToast(message) {
-      toast.textContent = message || '✨ Message envoyé ! Nous vous répondons sous 4h.';
+    function showToast(msg) {
+      toast.textContent = msg || '✨ Message envoyé ! Nous vous répondons sous 4h.';
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
-    // Main form
+    // Forms
     document.getElementById('leadForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
-      showToast('✅ Message reçu ! Nous vous répondrons personnellement sous 4h (même le week-end).');
+      showToast('✅ Message reçu ! Réponse sous 4h.');
       e.target.reset();
     });
-
-    // Checklist form
     document.getElementById('checklistForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
-      showToast('📘 Merci ! Votre checklist arrive dans votre boîte mail sous quelques minutes.');
+      showToast('📘 Merci ! Votre checklist arrive sous quelques minutes.');
       e.target.reset();
     });
 
@@ -1332,7 +609,7 @@
       gaugeObserver.observe(gaugeFill);
     }
 
-    // Typing effect on title (desktop only)
+    // Typing effect
     const typedSpan = document.getElementById('typedTitle');
     if (typedSpan && window.innerWidth > 480) {
       const originalText = typedSpan.innerText;
@@ -1352,6 +629,17 @@
         }
       }, { threshold: 0.5 });
       heroObs.observe(document.getElementById('hero'));
+    }
+
+    // Custom cursor
+    const cursor = document.getElementById('customCursor');
+    if (cursor) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+      document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
     }
   })();
 </script>
