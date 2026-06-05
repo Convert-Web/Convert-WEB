@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Convert Web — Un site qui convertit | Agence web pour restaurateurs</title>
+  <meta name="description" content="Convert Web crée des sites web haute performance pour les restaurateurs. Transformez vos visiteurs en clients. Réservation, SEO local, menu digital."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:          #06060E;
+      --dark:        #0B0B19;
+      --card:        #0F0F1E;
+      --border:      #1A1A32;
+      --border-lt:   #242440;
+      --orange:      #FF5500;
+      --orange-dk:   #CC4400;
+      --orange-lt:   rgba(255,85,0,.12);
+      --orange-glow: rgba(255,85,0,.3);
+      --gold:        #F0A500;
+      --teal:        #00D4A8;
+      --teal-lt:     rgba(0,212,168,.12);
+      --red-err:     #FF4444;
+      --white:       #FFFFFF;
+      --off:         #F0EFFF;
+      --muted:       #7070A0;
+      --muted-dk:    #333355;
+      --display:     'Syne', sans-serif;
+      --body:        'Epilogue', sans-serif;
+      --nav-h:       68px;
+      --wrap:        1300px;
+      --pad:         clamp(72px,10vw,128px);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:15px}
+    body{background:var(--bg);color:var(--white);font-family:var(--body);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none}
+    button{font-family:var(--body);cursor:pointer;border:none;background:none}
+    ::selection{background:var(--orange);color:#fff}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+    /* --- SCROLL BAR --- */
+    #prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--gold));z-index:10001;width:0%;transition:width .06s linear;pointer-events:none}
+
+    /* --- WRAP --- */
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,5vw,60px)}
+
+    /* --- ANIMATIONS --- */
+    @keyframes floatY    {0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+    @keyframes orbA      {0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(70px,-50px) scale(1.12)}70%{transform:translate(-40px,35px) scale(.9)}}
+    @keyframes orbB      {0%,100%{transform:translate(0,0) scale(1)}35%{transform:translate(-60px,70px) scale(1.08)}65%{transform:translate(60px,-25px) scale(.95)}}
+    @keyframes ticker    {from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes blink     {0%,100%{opacity:1}50%{opacity:.25}}
+    @keyframes slideUp   {from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes grain     {0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,-3%)}40%{transform:translate(-4%,2%)}60%{transform:translate(1%,-4%)}80%{transform:translate(3%,2%)}}
+    @keyframes spinRing  {to{transform:rotate(360deg)}}
+    @keyframes countUp   {}
+
+    /* --- REVEAL --- */
+    .rev{opacity:0;transform:translateY(38px);transition:opacity .75s ease,transform .75s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+    .rev.d1{transition-delay:.1s}.rev.d2{transition-delay:.2s}.rev.d3{transition-delay:.3s}.rev.d4{transition-delay:.42s}
+
+    /* --- BUTTONS --- */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;font-family:var(--display);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:all .28s ease;position:relative;overflow:hidden}
+    .btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.09);transform:translateX(-101%);transition:transform .36s ease}
+    .btn:hover::after{transform:translateX(0)}
+    .btn-orange{background:var(--orange);color:#fff}
+    .btn-orange:hover{background:var(--orange-dk);box-shadow:0 8px 32px var(--orange-glow)}
+    .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.22)}
+    .btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.05)}
+    .btn-sm{padding:11px 22px;font-size:.72rem}
+
+    /* ==============================
+       NAV
+    ============================== */
+    #nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;background:rgba(6,6,14,.55);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.04);transition:background .3s,box-shadow .3s}
+    #nav.scrolled{background:rgba(6,6,14,.96);box-shadow:0 4px 32px rgba(0,0,0,.6)}
+    .nav-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .logo-mark{width:38px;height:38px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.85rem;font-weight:800;color:#fff;border-radius:9px;transform:rotate(-4deg);transition:transform .3s,box-shadow .3s;letter-spacing:-.02em;flex-shrink:0}
+    .nav-logo:hover .logo-mark{transform:rotate(0);box-shadow:0 0 24px var(--orange-glow)}
+    .logo-text-wrap .logo-name{font-family:var(--display);font-size:.98rem;font-weight:800;letter-spacing:.04em;line-height:1.1}
+    .logo-text-wrap .logo-sub{font-family:var(--body);font-size:.48rem;font-weight:400;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;display:block;margin-top:2px}
+    .nav-links{display:flex;align-items:center;gap:26px}
+    .nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--white)}
+    .nav-links .nav-cta{color:var(--orange);border:1.5px solid var(--orange);padding:7px 16px;border-radius:6px;transition:all .25s!important}
+    .nav-links .nav-cta:hover{background:var(--orange);color:#fff!important}
+    .nav-burger{display:none;flex-direction:column;gap:5px;padding:6px;cursor:pointer}
+    .nav-burger span{width:22px;height:2px;background:var(--white);transition:all .3s;display:block}
+
+    /* ==============================
+       HERO
+    ============================== */
+    #hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:var(--nav-h)}
+    .hero-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .orb{position:absolute;border-radius:50%;filter:blur(90px)}
+    .orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(255,85,0,.45) 0%,transparent 70%);top:-220px;right:-120px;animation:orbA 16s ease-in-out infinite;opacity:.3}
+    .orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(240,165,0,.4) 0%,transparent 70%);bottom:-120px;left:-80px;animation:orbB 20s ease-in-out infinite;opacity:.25}
+    .orb-3{width:350px;height:350px;background:radial-gradient(circle,rgba(0,212,168,.5) 0%,transparent 70%);top:38%;left:35%;animation:orbA 26s ease-in-out infinite reverse;opacity:.14}
+    .hero-grain{position:absolute;inset:0;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");opacity:.45;animation:grain 8s steps(2) infinite}
+    .hero-content-wrap{position:relative;z-index:2;width:100%}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:var(--pad) 0}
+    .hero-label{display:inline-flex;align-items:center;gap:9px;background:var(--orange-lt);border:1px solid rgba(255,85,0,.28);color:var(--orange);padding:6px 14px;font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:100px;margin-bottom:22px}
+    .hero-label .dot{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:blink 1.4s ease infinite;flex-shrink:0}
+    .hero-h1{font-family:var(--display);font-size:clamp(2.5rem,5.5vw,4.4rem);font-weight:800;line-height:1.04;letter-spacing:-.025em;margin-bottom:22px}
+    .hero-h1 em{font-style:normal;color:var(--orange)}
+    .hero-p{font-size:clamp(.82rem,1.4vw,.97rem);color:var(--muted);max-width:450px;margin-bottom:36px;line-height:1.78;font-weight:300}
+    .hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:50px}
+    .hero-stats{display:flex;gap:32px;padding-top:30px;border-top:1px solid var(--border)}
+    .hero-stat-val{font-family:var(--display);font-size:1.9rem;font-weight:800;line-height:1;color:var(--white)}
+    .hero-stat-val em{font-style:normal;color:var(--orange)}
+    .hero-stat-lbl{font-size:.65rem;color:var(--muted);font-weight:400;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;line-height:1.4}
+
+    /* --- MOCKUP --- */
+    .hero-visual{display:flex;align-items:center;justify-content:center;position:relative}
+    .hero-mockup-wrap{position:relative;width:100%;max-width:500px}
+    .hero-mockup{background:var(--card);border:1px solid var(--border-lt);border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:floatY 7s ease-in-out infinite}
+    .mockup-bar{background:#141428;padding:13px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+    .mdot{width:10px;height:10px;border-radius:50%}
+    .mockup-url-bar{flex:1;background:#0D0D1C;border-radius:20px;padding:5px 14px;font-size:.62rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .mockup-body{padding:18px}
+    .m-img{width:100%;height:150px;background:linear-gradient(135deg,#1A0800,#2E1000);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;margin-bottom:14px;position:relative;overflow:hidden}
+    .m-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+    .m-rating{display:flex;align-items:center;gap:5px;margin-bottom:8px}
+    .m-stars{color:var(--gold);font-size:.7rem;letter-spacing:2px}
+    .m-rev{font-size:.58rem;color:var(--muted)}
+    .m-name{font-family:var(--display);font-size:1.05rem;font-weight:800;margin-bottom:4px}
+    .m-desc{font-size:.6rem;color:var(--muted);line-height:1.5;margin-bottom:14px}
+    .m-actions{display:flex;gap:8px}
+    .m-btn{padding:7px 14px;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:5px}
+    .m-btn-primary{background:var(--orange);color:#fff}
+    .m-btn-ghost{background:transparent;border:1px solid var(--border-lt);color:var(--muted)}
+    .mockup-badge{position:absolute;top:-8px;right:-12px;background:var(--teal);color:#000;font-family:var(--display);font-size:.58rem;font-weight:800;padding:6px 11px;border-radius:8px;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,212,168,.35);white-space:nowrap}
+    .mockup-seo{position:absolute;bottom:-12px;left:-12px;background:var(--card);border:1px solid var(--border-lt);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .mockup-seo-icon{font-size:1.2rem}
+    .mockup-seo-text .seo-val{font-family:var(--display);font-size:.85rem;font-weight:800;color:var(--teal)}
+    .mockup-seo-text .seo-lbl{font-size:.55rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+    /* ==============================
+       TICKER
+    ============================== */
+    #ticker{background:var(--orange);padding:13px 0;overflow:hidden}
+    .ticker-track{display:flex;width:max-content;animation:ticker 28s linear infinite}
+    .ticker-item{white-space:nowrap;padding:0 36px;font-family:var(--display);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:14px}
+    .ticker-item::after{content:'✦';opacity:.55}
+
+    /* ==============================
+       SECTION COMMONS
+    ============================== */
+    section{padding:var(--pad) 0}
+    .section-label{display:inline-flex;align-items:center;gap:10px;color:var(--orange);font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+    .section-label::before{content:'';width:22px;height:2px;background:var(--orange);border-radius:1px}
+    .section-h2{font-family:var(--display);font-size:clamp(1.9rem,4vw,3.1rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:14px}
+    .section-h2 em{font-style:normal;color:var(--orange)}
+    .section-lead{font-size:clamp(.8rem,1.4vw,.93rem);color:var(--muted);line-height:1.78;font-weight:300}
+
+    /* ==============================
+       PROBLEM
+    ============================== */
+    #problem{background:var(--dark)}
+    .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .problem-items{display:flex;flex-direction:column;gap:22px;margin-top:36px}
+    .problem-item{display:flex;gap:16px;align-items:flex-start}
+    .p-icon{width:44px;height:44px;background:var(--orange-lt);border:1px solid rgba(255,85,0,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;margin-top:2px}
+    .p-item-title{font-family:var(--display);font-size:.92rem;font-weight:700;margin-bottom:5px}
+    .p-item-text{font-size:.78rem;color:var(--muted);line-height:1.7}
+    .stat-cards{display:flex;flex-direction:column;gap:14px}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;display:flex;align-items:center;gap:20px;transition:border-color .3s,transform .3s}
+    .stat-card:hover{border-color:rgba(255,85,0,.3);transform:translateX(6px)}
+    .sc-icon{font-size:1.8rem;flex-shrink:0}
+    .sc-val{font-family:var(--display);font-size:1.6rem;font-weight:800}
+    .sc-val.bad{color:var(--red-err)}.sc-val.warn{color:var(--gold)}.sc-val.good{color:var(--teal)}
+    .sc-lbl{font-size:.7rem;color:var(--muted);margin-top:2px;line-height:1.45}
+
+    /* ==============================
+       PROGRAMME
+    ============================== */
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+    .feature-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .35s ease;position:relative;overflow:hidden}
+    .feature-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--orange-lt),transparent 55%);opacity:0;transition:opacity .35s}
+    .feature-card:hover{border-color:rgba(255,85,0,.35);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+    .feature-card:hover::before{opacity:1}
+    .feature-num{font-family:var(--display);font-size:2.8rem;font-weight:800;color:rgba(255,85,0,.12);line-height:1;margin-bottom:14px;transition:color .35s}
+    .feature-card:hover .feature-num{color:rgba(255,85,0,.22)}
+    .feature-icon{font-size:1.6rem;margin-bottom:14px}
+    .feature-title{font-family:var(--display);font-size:.98rem;font-weight:700;margin-bottom:8px}
+    .feature-text{font-size:.77rem;color:var(--muted);line-height:1.72}
+    .feature-tag{display:inline-block;margin-top:16px;padding:3px 9px;font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:3px}
+    .tag-incl{background:var(--teal-lt);border:1px solid rgba(0,212,168,.25);color:var(--teal)}
+    .tag-opt{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.25);color:var(--gold)}
+    .tag-mensuel{background:var(--orange-lt);border:1px solid rgba(255,85,0,.25);color:var(--orange)}
+
+    /* ==============================
+       COUNTER
+    ============================== */
+    #counter{background:var(--dark);position:relative;overflow:hidden}
+    #counter::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 50%,rgba(255,85,0,.08),transparent 70%);pointer-events:none}
+    .counter-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .big-counter{text-align:center;padding:40px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(145deg,var(--card),var(--bg));position:relative}
+    .big-counter::before{content:'';position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(255,85,0,.3),transparent 50%,rgba(0,212,168,.2));z-index:-1;opacity:.5}
+    .big-num{font-family:var(--display);font-size:clamp(5rem,12vw,9rem);font-weight:800;line-height:.9;letter-spacing:-.04em;color:var(--white)}
+    .big-num em{font-style:normal;color:var(--orange)}
+    .big-lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:14px;font-weight:400}
+    .live-dot{display:inline-block;width:8px;height:8px;background:var(--teal);border-radius:50%;animation:blink 1.2s ease infinite;margin-right:6px;vertical-align:middle}
+    .counter-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .c-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .3s}
+    .c-stat:hover{border-color:rgba(255,85,0,.3)}
+    .c-stat-val{font-family:var(--display);font-size:1.9rem;font-weight:800;color:var(--orange)}
+    .c-stat-lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:5px;line-height:1.45}
+
+    /* ==============================
+       PROCESS
+    ============================== */
+    #process .hd{margin-bottom:60px}
+    .process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+    .process-connector{position:absolute;top:36px;left:calc(16.5% + 36px);right:calc(16.5% + 36px);height:1px;background:linear-gradient(90deg,var(--orange),var(--border) 50%,var(--orange));z-index:0;opacity:.4}
+    .process-step{text-align:center;padding:0 24px;position:relative;z-index:1}
+    .pstep-num{width:72px;height:72px;background:var(--card);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.5rem;font-weight:800;color:var(--muted);margin:0 auto 24px;transition:all .4s}
+    .process-step:hover .pstep-num{border-color:var(--orange);color:var(--orange);box-shadow:0 0 28px var(--orange-glow)}
+    .pstep-title{font-family:var(--display);font-size:1rem;font-weight:700;margin-bottom:10px}
+    .pstep-text{font-size:.77rem;color:var(--muted);line-height:1.75}
+
+    /* ==============================
+       PRICING
+    ============================== */
+    #pricing .hd{text-align:center;margin-bottom:56px}
+    #pricing .hd .section-lead{max-width:520px;margin:0 auto}
+    #pricing .hd .section-label{justify-content:center}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+    .pricing-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:34px;position:relative;transition:all .3s}
+    .pricing-card:hover{border-color:rgba(255,85,0,.35);transform:translateY(-5px)}
+    .pricing-card.featured{background:linear-gradient(145deg,#130D00,#1D1200);border-color:rgba(255,85,0,.55);box-shadow:0 0 60px rgba(255,85,0,.14),inset 0 0 0 1px rgba(255,85,0,.12);transform:scale(1.03)}
+    .pricing-card.featured:hover{transform:scale(1.03) translateY(-5px)}
+    .pricing-badge{position:absolute;top:-13px;right:22px;background:var(--orange);color:#fff;font-family:var(--display);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 13px;border-radius:100px}
+    .pricing-name{font-family:var(--display);font-size:1.1rem;font-weight:800;letter-spacing:.06em;margin-bottom:22px}
+    .pricing-creation-val{font-family:var(--display);font-size:2.4rem;font-weight:800;line-height:1}
+    .pricing-creation-val sub{font-size:.9rem;font-weight:400;color:var(--muted);vertical-align:middle}
+    .pricing-creation-lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;margin-bottom:16px}
+    .pricing-monthly{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;margin-bottom:26px}
+    .pricing-monthly-val{font-family:var(--display);font-size:1.35rem;font-weight:800;color:var(--orange);white-space:nowrap}
+    .pricing-monthly-lbl{font-size:.67rem;color:var(--muted);line-height:1.4}
+    .pricing-divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+    .pricing-features{display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+    .pricing-feature{display:flex;align-items:flex-start;gap:10px;font-size:.78rem}
+    .pricing-feature.on{color:var(--off)}
+    .pricing-feature.off{color:var(--muted-dk)}
+    .pf-check{color:var(--teal);flex-shrink:0;font-size:.85rem;margin-top:.1em}
+    .pf-cross{color:var(--muted-dk);flex-shrink:0}
+
+    /* ==============================
+       FAQ
+    ============================== */
+    #faq{background:var(--dark)}
+    #faq .hd{margin-bottom:48px}
+    .faq-list{max-width:820px}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;cursor:pointer;font-family:var(--display);font-size:.92rem;font-weight:600;transition:color .25s;user-select:none}
+    .faq-q:hover{color:var(--orange)}
+    .faq-icon{font-size:1.4rem;font-weight:300;color:var(--muted);transition:transform .3s,color .3s;flex-shrink:0}
+    .faq-item.open .faq-icon{transform:rotate(45deg);color:var(--orange)}
+    .faq-a{display:none;padding-bottom:22px;font-size:.8rem;color:var(--muted);line-height:1.82;font-weight:300}
+    .faq-item.open .faq-a{display:block;animation:slideUp .25s ease}
+
+    /* ==============================
+       CTA FINAL
+    ============================== */
+    #cta-final{text-align:center;padding:calc(var(--pad)*1.5) 0;position:relative;overflow:hidden}
+    .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,85,0,.1),transparent 70%);pointer-events:none}
+    .cta-bg2{position:absolute;inset:0;background:radial-gradient(ellipse 40% 40% at 30% 70%,rgba(0,212,168,.06),transparent 60%);pointer-events:none}
+    .cta-h2{font-family:var(--display);font-size:clamp(2.1rem,5vw,4rem);font-weight:800;line-height:1.08;letter-spacing:-.025em;margin-bottom:18px}
+    .cta-h2 em{font-style:normal;color:var(--orange)}
+    .cta-p{font-size:clamp(.8rem,1.4vw,.93rem);color:var(--muted);margin-bottom:38px;max-width:490px;margin-left:auto;margin-right:auto;line-height:1.78;font-weight:300}
+    .cta-trust{font-size:.68rem;color:var(--muted-dk);margin-top:18px;letter-spacing:.07em;text-transform:uppercase}
+    .cta-trust span{color:var(--muted)}
+
+    /* ==============================
+       FOOTER
+    ============================== */
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:52px 0 30px}
+    .footer-in{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px;margin-bottom:44px}
+    .footer-brand p{font-size:.77rem;color:var(--muted);max-width:280px;margin-top:14px;line-height:1.78;font-weight:300}
+    .footer-col h4{font-family:var(--display);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-dk);margin-bottom:18px}
+    .footer-col ul{display:flex;flex-direction:column;gap:10px}
+    .footer-col ul li a{font-size:.77rem;color:var(--muted);transition:color .2s}
+    .footer-col ul li a:hover{color:var(--white)}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid var(--border)}
+    .footer-bottom p{font-size:.7rem;color:var(--muted-dk)}
+    .footer-bottom a{color:var(--orange)}
+
+    /* ==============================
+       MOBILE NAV MENU
+    ============================== */
+    #mobile-nav{display:none;position:fixed;inset:0;top:var(--nav-h);background:rgba(6,6,14,.97);z-index:999;backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:32px}
+    #mobile-nav.open{display:flex}
+    #mobile-nav a{font-family:var(--display);font-size:1.4rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);transition:color .2s}
+    #mobile-nav a:hover{color:var(--orange)}
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media(max-width:1024px){
+      .features-grid{grid-template-columns:repeat(2,1fr)}
+      .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+      .pricing-card.featured{transform:scale(1)}
+      .pricing-card.featured:hover{transform:translateY(-5px)}
+    }
+    @media(max-width:768px){
+      :root{--pad:clamp(56px,8vw,80px)}
+      .hero-grid{grid-template-columns:1fr}
+      .hero-visual{display:none}
+      .hero-stats{gap:20px;flex-wrap:wrap}
+      .problem-grid{grid-template-columns:1fr}
+      .features-grid{grid-template-columns:1fr}
+      .counter-inner{grid-template-columns:1fr}
+      .process-steps{grid-template-columns:1fr;gap:36px}
+      .process-connector{display:none}
+      .footer-in{grid-template-columns:1fr;gap:36px}
+      .footer-bottom{flex-direction:column;text-align:center}
+      .nav-links{display:none}
+      .nav-burger{display:flex}
+    }
+    @media(max-width:480px){
+      .hero-stats{flex-direction:column;gap:16px}
+      .counter-stats{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- PROGRESS BAR -->
+  <div id="prog" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav id="nav" role="navigation" aria-label="Navigation principale">
+    <div class="wrap">
+      <div class="nav-in">
+        <a href="#" class="nav-logo" aria-label="Convert Web — Accueil">
+          <div class="logo-mark" aria-hidden="true">CW</div>
+          <div class="logo-text-wrap">
+            <div class="logo-name">Convert Web</div>
+            <small class="logo-sub">Un site qui convertit</small>
+          </div>
+        </a>
+        <div class="nav-links">
+          <a href="#programme">Programme</a>
+          <a href="#counter">Résultats</a>
+          <a href="#pricing">Tarifs</a>
+          <a href="#faq">FAQ</a>
+          <a href="#cta-final" class="nav-cta">Prendre contact</a>
+        </div>
+        <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div id="mobile-nav" role="dialog" aria-label="Menu mobile">
+    <a href="#programme" class="mobile-link">Programme</a>
+    <a href="#counter"   class="mobile-link">Résultats</a>
+    <a href="#pricing"   class="mobile-link">Tarifs</a>
+    <a href="#faq"       class="mobile-link">FAQ</a>
+    <a href="#cta-final" class="btn btn-orange btn-sm" style="border-radius:6px">Prendre contact</a>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" aria-labelledby="hero-h1">
+    <div class="hero-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-content-wrap">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-label rev">
+              <div class="dot" aria-hidden="true"></div>
+              Agence web pour restaurateurs
+            </div>
+            <h1 class="hero-h1 rev d1" id="hero-h1">
+              Votre restaurant<br/>
+              mérite un site<br/>
+              <em>qui convertit</em>
+            </h1>
+            <p class="hero-p rev d2">
+              Convert Web crée des sites web haute performance pensés pour les restaurateurs. Transformez chaque visiteur en réservation, commande ou client fidèle.
+            </p>
+            <div class="hero-actions rev d3">
+              <a href="#pricing" class="btn btn-orange">Voir les tarifs →</a>
+              <a href="#programme" class="btn btn-ghost">Notre programme</a>
+            </div>
+            <div class="hero-stats rev d4">
+              <div>
+                <div class="hero-stat-val"><span id="hero-count">0</span><em>+</em></div>
+                <div class="hero-stat-lbl">Restaurants<br/>clients</div>
+              </div>
+              <div>
+                <div class="hero-stat-val"><em>×</em><span id="hero-mult">0</span></div>
+                <div class="hero-stat-lbl">Plus de<br/>réservations</div>
+              </div>
+              <div>
+                <div class="hero-stat-val"><em>24</em>h</div>
+                <div class="hero-stat-lbl">Délai de<br/>mise en ligne</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual rev d2" aria-hidden="true">
+            <div class="hero-mockup-wrap">
+              <div class="hero-mockup">
+                <div class="mockup-bar">
+                  <div class="mdot" style="background:#FF5F56"></div>
+                  <div class="mdot" style="background:#FFBD2E"></div>
+                  <div class="mdot" style="background:#27C93F"></div>
+                  <div class="mockup-url-bar">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#7070A0" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    monrestaurant.fr
+                  </div>
+                </div>
+                <div class="mockup-body">
+                  <div class="m-img">🍽️</div>
+                  <div class="m-rating">
+                    <span class="m-stars">★★★★★</span>
+                    <span class="m-rev">4.8 · 340 avis Google</span>
+                  </div>
+                  <div class="m-name">Le Comptoir Parisien</div>
+                  <div class="m-desc">Cuisine française contemporaine · Ouvert 7j/7 de 12h à 23h · Terrasse disponible</div>
+                  <div class="m-actions">
+                    <div class="m-btn m-btn-primary">Réserver 🗓️</div>
+                    <div class="m-btn m-btn-ghost">Notre menu</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-badge">✓ Site Convert Web</div>
+              <div class="mockup-seo">
+                <div class="mockup-seo-icon">🔍</div>
+                <div class="mockup-seo-text">
+                  <div class="seo-val">#1 Google</div>
+                  <div class="seo-lbl">Restaurant local</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div id="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-item">Sites qui convertissent</div>
+      <div class="ticker-item">SEO local optimisé</div>
+      <div class="ticker-item">Réservation intégrée</div>
+      <div class="ticker-item">Menu digital</div>
+      <div class="ticker-item">Commande en ligne</div>
+      <div class="ticker-item">Maintenance incluse</div>
+      <div class="ticker-item">Support réactif</div>
+      <div class="ticker-item">Sites qui convertissent</div>
+      <div class="ticker-item">SEO local optimisé</div>
+      <div class="ticker-item">Réservation intégrée</div>
+      <div class="ticker-item">Menu digital</div>
+      <div class="ticker-item">Commande en ligne</div>
+      <div class="ticker-item">Maintenance incluse</div>
+      <div class="ticker-item">Support réactif</div>
+    </div>
+  </div>
+
+  <!-- ===================== PROBLEM ===================== -->
+  <section id="problem" aria-labelledby="problem-h2">
+    <div class="wrap">
+      <div class="problem-grid">
+        <div>
+          <div class="section-label rev">Le problème #1</div>
+          <h2 class="section-h2 rev d1" id="problem-h2">
+            Votre site actuel<br/><em>coûte des clients</em>
+          </h2>
+          <p class="section-lead rev d2">
+            La majorité des sites de restaurants informent sans convertir. Pendant ce temps, vos visiteurs partent chez le concurrent.
+          </p>
+          <div class="problem-items">
+            <div class="problem-item rev d1">
+              <div class="p-icon">🔍</div>
+              <div>
+                <div class="p-item-title">Invisible sur Google</div>
+                <div class="p-item-text">Sans SEO local, votre restaurant n'apparaît pas quand un client cherche "restaurant + [votre ville]". Vos concurrents prennent votre place chaque jour.</div>
+              </div>
+            </div>
+            <div class="problem-item rev d2">
+              <div class="p-icon">📵</div>
+              <div>
+                <div class="p-item-title">Pas de réservation en ligne</div>
+                <div class="p-item-text">70 % des clients préfèrent réserver en ligne, à n'importe quelle heure. Un site sans réservation intégrée, c'est des tables qui restent vides.</div>
+              </div>
+            </div>
+            <div class="problem-item rev d3">
+              <div class="p-icon">💸</div>
+              <div>
+                <div class="p-item-title">Commissions des plateformes</div>
+                <div class="p-item-text">25 à 35 % de commission par commande sur les grandes plateformes. Un site Convert Web vous permet de reprendre la main sur vos revenus.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rev d2">
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="sc-icon">😟</div>
+              <div>
+                <div class="sc-val bad">−30 %</div>
+                <div class="sc-lbl">de revenu perdu en commissions livraison</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-icon">📊</div>
+              <div>
+                <div class="sc-val warn">78 %</div>
+                <div class="sc-lbl">des restaurants ont un site non optimisé pour convertir</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-icon">🚀</div>
+              <div>
+                <div class="sc-val good">× 3</div>
+                <div class="sc-lbl">plus de réservations avec un site Convert Web</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROGRAMME ===================== -->
+  <section id="programme" aria-labelledby="programme-h2">
+    <div class="wrap">
+      <div class="rev">
+        <div class="section-label">Notre programme</div>
+        <h2 class="section-h2" id="programme-h2">
+          Tout ce qu'il faut<br/>pour <em>remplir vos salles</em>
+        </h2>
+        <p class="section-lead" style="max-width:560px">
+          Chaque site Convert Web est une machine à convertir, conçue sur mesure pour le secteur de la restauration.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card rev d1">
+          <div class="feature-num">01</div>
+          <div class="feature-icon">🎨</div>
+          <div class="feature-title">Design sur mesure</div>
+          <div class="feature-text">Un site unique à votre image. Pas de template générique — votre restaurant a une âme, votre site aussi.</div>
+          <span class="feature-tag tag-incl">Inclus</span>
+        </div>
+        <div class="feature-card rev d2">
+          <div class="feature-num">02</div>
+          <div class="feature-icon">🔍</div>
+          <div class="feature-title">SEO local optimisé</div>
+          <div class="feature-text">Apparaissez en premier sur Google quand un client cherche un restaurant dans votre ville. Votre visibilité, notre priorité.</div>
+          <span class="feature-tag tag-incl">Inclus</span>
+        </div>
+        <div class="feature-card rev d3">
+          <div class="feature-num">03</div>
+          <div class="feature-icon">🗓️</div>
+          <div class="feature-title">Réservation en ligne</div>
+          <div class="feature-text">Vos clients réservent directement depuis votre site, 24h/24, 7j/7. Plus de tables vides, plus de coups de téléphone manqués.</div>
+          <span class="feature-tag tag-incl">Inclus</span>
+        </div>
+        <div class="feature-card rev d1">
+          <div class="feature-num">04</div>
+          <div class="feature-icon">📋</div>
+          <div class="feature-title">Menu digital interactif</div>
+          <div class="feature-text">Photos, descriptions, prix, allergènes — tout en ligne, facile à consulter. Et on le met à jour pour vous à chaque changement de carte.</div>
+          <span class="feature-tag tag-incl">Inclus</span>
+        </div>
+        <div class="feature-card rev d2">
+          <div class="feature-num">05</div>
+          <div class="feature-icon">📦</div>
+          <div class="feature-title">Commande à emporter</div>
+          <div class="feature-text">Encaissez vos commandes directement sans commission. Libérez-vous des plateformes et gardez 100 % de vos marges.</div>
+          <span class="feature-tag tag-opt">Option Pro</span>
+        </div>
+        <div class="feature-card rev d3">
+          <div class="feature-num">06</div>
+          <div class="feature-icon">🔧</div>
+          <div class="feature-title">Maintenance mensuelle</div>
+          <div class="feature-text">Votre site est toujours parfait. Nouvelles offres, changement de carte, actualités — vous envoyez, on publie dans la journée.</div>
+          <span class="feature-tag tag-mensuel">Mensuel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COUNTER ===================== -->
+  <section id="counter" aria-labelledby="counter-h2">
+    <div class="wrap">
+      <div class="counter-inner">
+        <div class="big-counter rev">
+          <div class="section-label" style="justify-content:center;margin-bottom:20px">
+            <span class="live-dot" aria-hidden="true"></span>En direct
+          </div>
+          <div class="big-num"><em id="main-counter">0</em>+</div>
+          <div class="big-lbl" id="counter-h2">restaurants utilisent<br/>déjà Convert Web</div>
+        </div>
+        <div class="rev d1">
+          <div class="section-label" style="margin-bottom:20px">Nos résultats</div>
+          <div class="counter-stats">
+            <div class="c-stat">
+              <div class="c-stat-val" id="stat-reserv">0</div>
+              <div class="c-stat-lbl">Réservations générées<br/>ce mois</div>
+            </div>
+            <div class="c-stat">
+              <div class="c-stat-val" id="stat-visitors">0k</div>
+              <div class="c-stat-lbl">Visiteurs uniques<br/>par mois</div>
+            </div>
+            <div class="c-stat">
+              <div class="c-stat-val" id="stat-satisfaction">0 %</div>
+              <div class="c-stat-lbl">Taux de satisfaction<br/>clients</div>
+            </div>
+            <div class="c-stat">
+              <div class="c-stat-val" id="stat-delai">24 h</div>
+              <div class="c-stat-lbl">Délai moyen<br/>de mise en ligne</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section id="process" style="background:var(--dark)" aria-labelledby="process-h2">
+    <div class="wrap">
+      <div class="rev hd">
+        <div class="section-label">Comment ça marche</div>
+        <h2 class="section-h2" id="process-h2">Lancez votre site<br/>en <em>3 étapes</em></h2>
+        <p class="section-lead" style="max-width:500px">Simple, rapide et sans prise de tête. On s'occupe de tout de A à Z.</p>
+      </div>
+      <div class="process-steps" style="margin-top:60px">
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-step rev d1">
+          <div class="pstep-num">01</div>
+          <div class="pstep-title">On échange ensemble</div>
+          <div class="pstep-text">Un appel de 30 min pour comprendre votre restaurant, votre univers et vos besoins. Nous définissons ensemble le site idéal pour vous.</div>
+        </div>
+        <div class="process-step rev d2">
+          <div class="pstep-num">02</div>
+          <div class="pstep-title">On crée votre site</div>
+          <div class="pstep-text">En 24 à 72 heures, votre site est créé, testé et prêt à être lancé. Design, contenu, SEO — tout est pensé pour convertir.</div>
+        </div>
+        <div class="process-step rev d3">
+          <div class="pstep-num">03</div>
+          <div class="pstep-title">Vous attirez des clients</div>
+          <div class="pstep-text">Votre site est en ligne, les réservations arrivent, la visibilité monte. On assure le suivi mensuel pour que ça dure.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section id="pricing" aria-labelledby="pricing-h2">
+    <div class="wrap">
+      <div class="hd rev">
+        <div class="section-label">Tarifs transparents</div>
+        <h2 class="section-h2" id="pricing-h2">Un investissement,<br/><em>des clients pour toujours</em></h2>
+        <p class="section-lead">Pas de surprise. Un prix de création unique, puis une mensualité pour que votre site reste toujours performant.</p>
+      </div>
+      <div class="pricing-grid">
+
+        <!-- ESSENTIEL -->
+        <div class="pricing-card rev d1">
+          <div class="pricing-name">Essentiel</div>
+          <div class="pricing-creation-val">790 <sub>€</sub></div>
+          <div class="pricing-creation-lbl">Création (paiement unique)</div>
+          <div class="pricing-monthly">
+            <div>
+              <div class="pricing-monthly-val">39 €/mois</div>
+              <div class="pricing-monthly-lbl">Hébergement + maintenance<br/>tout compris</div>
+            </div>
+          </div>
+          <hr class="pricing-divider"/>
+          <div class="pricing-features">
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Design personnalisé</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> SEO local de base</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Menu digital</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Formulaire de contact</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Hébergement inclus</div>
+            <div class="pricing-feature off"><span class="pf-cross">✗</span> Réservation en ligne</div>
+            <div class="pricing-feature off"><span class="pf-cross">✗</span> Commande à emporter</div>
+          </div>
+          <a href="#cta-final" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:8px">Démarrer →</a>
+        </div>
+
+        <!-- PRO (featured) -->
+        <div class="pricing-card featured rev d2">
+          <div class="pricing-badge">⭐ Le plus populaire</div>
+          <div class="pricing-name">Pro</div>
+          <div class="pricing-creation-val">1 290 <sub>€</sub></div>
+          <div class="pricing-creation-lbl">Création (paiement unique)</div>
+          <div class="pricing-monthly">
+            <div>
+              <div class="pricing-monthly-val">69 €/mois</div>
+              <div class="pricing-monthly-lbl">Hébergement + maintenance<br/>tout compris</div>
+            </div>
+          </div>
+          <hr class="pricing-divider"/>
+          <div class="pricing-features">
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Design premium sur mesure</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> SEO local avancé</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Menu digital interactif</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Réservation en ligne</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Google Business optimisé</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Mises à jour mensuelles</div>
+            <div class="pricing-feature off"><span class="pf-cross">✗</span> Commande à emporter</div>
+          </div>
+          <a href="#cta-final" class="btn btn-orange" style="width:100%;justify-content:center;border-radius:8px">Démarrer →</a>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="pricing-card rev d3">
+          <div class="pricing-name">Premium</div>
+          <div class="pricing-creation-val">1 990 <sub>€</sub></div>
+          <div class="pricing-creation-lbl">Création (paiement unique)</div>
+          <div class="pricing-monthly">
+            <div>
+              <div class="pricing-monthly-val">99 €/mois</div>
+              <div class="pricing-monthly-lbl">Hébergement + maintenance<br/>tout compris</div>
+            </div>
+          </div>
+          <hr class="pricing-divider"/>
+          <div class="pricing-features">
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Tout du plan Pro</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Commande à emporter intégrée</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Paiement en ligne</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Analytics & rapports mensuels</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Support prioritaire</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Campagnes promotionnelles</div>
+            <div class="pricing-feature on"><span class="pf-check">✓</span> Newsletter clients</div>
+          </div>
+          <a href="#cta-final" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:8px">Démarrer →</a>
+        </div>
+
+      </div>
+      <!-- NOTE -->
+      <p style="text-align:center;font-size:.72rem;color:var(--muted-dk);margin-top:28px;letter-spacing:.06em;text-transform:uppercase">
+        Tous les plans incluent · Hébergement · Nom de domaine · Certificat SSL · Support par e-mail
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" aria-labelledby="faq-h2">
+    <div class="wrap">
+      <div class="rev hd">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-h2" id="faq-h2">Vos questions,<br/><em>nos réponses</em></h2>
+      </div>
+      <div class="faq-list" role="list">
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Combien de temps pour avoir mon site en ligne ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Entre 24 et 72 heures après notre premier échange. Vous nous fournissez vos informations (nom, adresse, horaires, menu, quelques photos) et on s'occupe du reste. Certains sites sont en ligne en moins d'une journée.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Puis-je modifier mon menu moi-même ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Avec la mensualité, les mises à jour font partie du service : vous nous envoyez vos changements et on les applique dans la journée. Simple comme un message WhatsApp. Un accès direct à l'interface peut être ajouté sur demande.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Est-ce que je reste propriétaire de mon site ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Absolument. Votre site vous appartient à 100 %. La mensualité couvre l'hébergement, la maintenance et les mises à jour. Si vous souhaitez récupérer le code source pour l'héberger ailleurs, c'est votre droit.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Et si je veux arrêter la mensualité ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Aucun engagement. Vous pouvez arrêter à tout moment avec un préavis d'un mois. Le site peut être transféré chez un autre hébergeur ou archivé selon votre choix. On part sur un rapport de confiance, pas sur un contrat piège.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Mon type de restaurant est-il compatible ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Convert Web est adapté à tous les types de restaurants : gastronomiques, fast-food, pizzerias, restaurants asiatiques, brasseries, food trucks, traiteurs... Si vous servez à manger, on peut vous aider à remplir vos couverts.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+            Je ne suis pas à l'aise avec la technologie, est-ce un problème ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-a" role="region">Pas du tout — c'est exactement pourquoi Convert Web existe. Vous n'avez rien à faire côté technique. On gère tout : la création, la mise en ligne, les mises à jour. Votre rôle, c'est votre restaurant. Le nôtre, c'est votre site.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <section id="cta-final" aria-labelledby="cta-h2">
+    <div class="cta-bg" aria-hidden="true"></div>
+    <div class="cta-bg2" aria-hidden="true"></div>
+    <div class="wrap" style="position:relative;z-index:1">
+      <h2 class="cta-h2 rev" id="cta-h2">
+        Prêt à <em>remplir vos salles</em> ?
+      </h2>
+      <p class="cta-p rev d1">
+        Rejoignez les restaurateurs qui ont choisi un site web qui travaille pour eux, 24h/24. Le premier échange est gratuit et sans engagement.
+      </p>
+      <div class="rev d2" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="mailto:contact@convertweb.fr" class="btn btn-orange" style="border-radius:8px">Prendre contact →</a>
+        <a href="#pricing" class="btn btn-ghost" style="border-radius:8px">Voir les tarifs</a>
+      </div>
+      <p class="cta-trust rev d3">
+        <span>Réponse sous 24 h</span> · <span>Sans engagement</span> · <span>100 % sur-mesure</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-in">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo" aria-label="Convert Web">
+            <div class="logo-mark" aria-hidden="true">CW</div>
+            <div class="logo-text-wrap">
+              <div class="logo-name">Convert Web</div>
+              <small class="logo-sub">Un site qui convertit</small>
+            </div>
+          </a>
+          <p>L'agence web spécialisée pour les restaurateurs. Des sites haute performance qui transforment vos visiteurs en clients fidèles.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#programme">Notre programme</a></li>
+            <li><a href="#counter">Résultats</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@convertweb.fr">contact@convertweb.fr</a></li>
+            <li><a href="tel:+33600000000">+33 6 00 00 00 00</a></li>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 <a href="#">Convert Web</a>. Tous droits réservés.</p>
+        <p>Conçu avec ❤️ pour les restaurateurs qui veulent remplir leurs salles.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===========================
+       SCROLL PROGRESS BAR
+    =========================== */
+    const prog = document.getElementById('prog');
+    function updateProg() {
+      const s = window.scrollY, total = document.documentElement.scrollHeight - innerHeight;
+      prog.style.width = (total > 0 ? (s / total) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', updateProg, { passive: true });
+
+    /* ===========================
+       NAV SCROLLED CLASS
+    =========================== */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ===========================
+       REVEAL ON SCROLL
+    =========================== */
+    const revEls = document.querySelectorAll('.rev');
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revEls.forEach(el => revObs.observe(el));
+
+    /* ===========================
+       ANIMATED COUNTERS
+    =========================== */
+    function countUp(el, target, suffix, duration = 2000) {
+      const start = performance.now();
+      const update = now => {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3); // cubic ease out
+        el.textContent = Math.round(ease * target) + suffix;
+        if (t < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    }
+
+    // Hero counts
+    let heroStarted = false;
+    const heroObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !heroStarted) {
+        heroStarted = true;
+        countUp(document.getElementById('hero-count'), 27, '');
+        countUp(document.getElementById('hero-mult'), 3, '');
+      }
+    }, { threshold: 0.2 });
+    heroObs.observe(document.getElementById('hero'));
+
+    // Counter section
+    let counterStarted = false;
+    const counterObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !counterStarted) {
+        counterStarted = true;
+        countUp(document.getElementById('main-counter'), 27, '');
+        countUp(document.getElementById('stat-reserv'), 847, '');
+        // Custom for "32k"
+        (() => {
+          const el = document.getElementById('stat-visitors');
+          const start = performance.now();
+          const update = now => {
+            const t = Math.min((now - start) / 2000, 1);
+            const ease = 1 - Math.pow(1 - t, 3);
+            el.textContent = Math.round(ease * 32) + 'k';
+            if (t < 1) requestAnimationFrame(update);
+          };
+          requestAnimationFrame(update);
+        })();
+        // Satisfaction stays 98%
+        (() => {
+          const el = document.getElementById('stat-satisfaction');
+          const start = performance.now();
+          const update = now => {
+            const t = Math.min((now - start) / 2000, 1);
+            const ease = 1 - Math.pow(1 - t, 3);
+            el.textContent = Math.round(ease * 98) + ' %';
+            if (t < 1) requestAnimationFrame(update);
+          };
+          requestAnimationFrame(update);
+        })();
+        document.getElementById('stat-delai').textContent = '24 h';
+      }
+    }, { threshold: 0.25 });
+    counterObs.observe(document.getElementById('counter'));
+
+    /* ===========================
+       FAQ ACCORDION
+    =========================== */
+    document.querySelectorAll('.faq-q').forEach(q => {
+      const handler = () => {
+        const item = q.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          q.setAttribute('aria-expanded', 'true');
+        }
+      };
+      q.addEventListener('click', handler);
+      q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
+    });
+
+    /* ===========================
+       BURGER MENU
+    =========================== */
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobile-nav');
+    let menuOpen = false;
+    burger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      burger.setAttribute('aria-expanded', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+      // Animate burger to X
+      const spans = burger.querySelectorAll('span');
+      if (menuOpen) {
+        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
+    });
+    // Close mobile nav on link click
+    document.querySelectorAll('.mobile-link, #mobile-nav .btn').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileNav.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        const spans = burger.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      });
+    });
+
+    /* ===========================
+       SMOOTH ACTIVE NAV LINK
+    =========================== */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+    const activeObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => {
+            a.style.color = a.getAttribute('href') === '#' + e.target.id
+              ? 'var(--white)' : '';
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => activeObs.observe(s));
+  </script>
+</body>
+</html>
