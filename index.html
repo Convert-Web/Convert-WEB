@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Convert Web — Création de sites web qui convertissent les restaurants</title>
-  <meta name="description" content="Convert Web : agence web artisanale de très haut niveau pour restaurateurs. Création sur mesure, animations 3D, 0% commission. Offre fondateur.">
+  <meta name="description" content="Convert Web : agence web artisanale pour restaurateurs. Création sur mesure, 0% commission, animations, offre fondateur.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
       --glow:         0 0 12px rgba(193,92,43,0.2);
       --display:      'Playfair Display', serif;
       --body:         'Inter', sans-serif;
-      --nav-h:        70px;      /* légèrement réduit pour mobile */
+      --nav-h:        70px;
       --wrap:         1400px;
       --pad:          clamp(48px, 8vw, 100px);
       --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -63,7 +63,7 @@
       background-size: 28px 28px;
     }
 
-    /* Curseur personnalisé (désactivé sur mobile pour éviter les bugs) */
+    /* Curseur personnalisé (désactivé sur mobile) */
     @media (pointer: fine) {
       .custom-cursor {
         width: 40px;
@@ -94,7 +94,7 @@
     ::-webkit-scrollbar-track { background: #E6DED3; }
     ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 10px; }
 
-    /* Grain texture léger */
+    /* Grain texture */
     .grain {
       position: fixed;
       top: 0;
@@ -214,7 +214,7 @@
       font-size: 0.7rem;
     }
 
-    /* ========== NAVIGATION (MOBILE FIRST) ========== */
+    /* ========== NAVIGATION (HEADER PARFAITEMENT CENTRÉ) ========== */
     nav {
       position: fixed;
       top: 0;
@@ -237,6 +237,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
+    }
+    /* Centrage vertical et horizontal du contenu dans le container */
+    .container .nav-inner {
+      margin: 0 auto;
     }
     .logo {
       display: flex;
@@ -765,7 +770,7 @@
       object-fit: cover;
     }
 
-    /* Vidéo section */
+    /* Vidéo d'animation (remplacement YouTube) */
     .video-block {
       background: var(--dark-paper);
       border-radius: 40px;
@@ -775,19 +780,24 @@
     }
     .video-wrapper {
       position: relative;
-      padding-bottom: 56.25%;
+      padding-bottom: 56.25%; /* 16:9 */
       height: 0;
       border-radius: 28px;
       overflow: hidden;
       margin-top: 28px;
+      background: #000;
     }
-    .video-wrapper iframe {
+    .video-wrapper video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      border: none;
+      object-fit: cover;
+    }
+    /* Contrôles vidéo optionnels */
+    .video-wrapper video::-webkit-media-controls {
+      opacity: 0.6;
     }
 
     /* Comparateur */
@@ -1200,8 +1210,13 @@
   <!-- PROMESSE -->
   <section><div class="container"><div class="promise-card reveal"><div class="section-label">Notre ADN</div><h2 class="section-title">L’<span class="accent">honnêteté</span> et l’artisanat</h2><p style="max-width:700px; margin:0 auto; color:var(--text-muted);">Nous refusons les sites qui ne convertissent pas, les commissions cachées et le jargon technique. Nous construisons des sites sur mesure, simples à vivre, et nous nous engageons sur vos résultats. Pas de formule magique, juste du travail bien fait et une vraie relation humaine.</p><div class="team-row"><div class="team-avatar"><img src="IMG_0834.png" alt="Logo Convert Web" onerror="this.src='https://placehold.co/52x52/C15C2B/white?text=CW'"></div><div class="team-text">Nous, c’est Convert Web — une petite équipe passionnée qui met son énergie à remplir vos salles.</div></div></div></div></section>
 
-  <!-- VIDÉO EXPLICATIVE -->
-  <section><div class="container"><div class="video-block reveal"><div class="section-label">Voir, c’est croire</div><h2 class="section-title">Découvrez <span class="accent">notre univers</span> en 90 secondes</h2><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=abc123&autoplay=0&rel=0" title="Présentation Convert Web" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div></section>
+  <!-- VIDÉO D'ANIMATION (remplacement YouTube) -->
+  <section><div class="container"><div class="video-block reveal"><div class="section-label">Voir, c’est croire</div><h2 class="section-title">Découvrez <span class="accent">notre univers</span> en animation</h2><div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-marketing-animation-with-stats-32885-large.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+  </div><p style="margin-top:20px; font-size:0.8rem;">Design, performance & conversion – en mouvement</p></div></div></section>
 
   <!-- COMPARATEUR -->
   <section><div class="container"><div class="reveal"><div class="section-label">Pourquoi nous</div><h2 class="section-title">Convert Web vs <span class="accent">les autres</span></h2></div><div class="comparator-grid"><div class="comp-card"><h3 style="margin-bottom:24px;">❌ Site classique / plateforme</h3><div class="comp-feature"><span>Commission par commande</span><span class="comp-bad">25–30%</span></div><div class="comp-feature"><span>Template générique</span><span class="comp-bad">Souvent oui</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-bad">Inexistant</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-bad">Payantes</span></div><div class="comp-feature"><span>Support</span><span class="comp-bad">Bot / externalisé</span></div></div><div class="comp-card"><h3 style="margin-bottom:24px;">✅ Convert Web</h3><div class="comp-feature"><span>Commission</span><span class="comp-good">0%</span></div><div class="comp-feature"><span>Design sur mesure</span><span class="comp-good">Unique</span></div><div class="comp-feature"><span>SEO local</span><span class="comp-good">Optimisé Google Maps</span></div><div class="comp-feature"><span>Mises à jour</span><span class="comp-good">Incluses (sous 24h)</span></div><div class="comp-feature"><span>Support</span><span class="comp-good">Humain, français, réactif</span></div></div></div><p style="text-align:center; margin-top:32px; color:var(--text-muted);">Création dès 390€ + mensualité tout compris.</p></div></section>
@@ -1234,7 +1249,7 @@
   <section class="cta-section"><div class="container"><h2 class="section-title reveal">Un site qui vous ressemble, <span class="accent">des clients au rendez‑vous</span></h2><div class="reveal delay-1" style="margin-top:28px;"><a href="#contact" class="btn btn-primary">Demander un devis gratuit →</a></div><div class="trust-badge reveal delay-2"><span>✧ sans engagement</span><span>✧ 24h de mise en ligne</span><span>✧ accompagnement humain</span><span>✧ 0% commission</span><span>✧ Garantie 30 jours</span></div></div></section>
 </main>
 
-<footer><div class="container"><div class="footer-inner"><div class="footer-brand"><div class="logo" style="justify-content:flex-start;"><div class="logo-mark">CW</div><div class="logo-text">Convert Web</div></div><p style="margin-top:20px; color:var(--text-muted); font-size:0.8rem;">Agence web en lancement, dédiée aux restaurateurs. Transparence, prix doux, artisans du web.<br>🇫🇷 100% artisanal & fait en France</p></div><div><h4 style="margin-bottom:20px;">Liens</h4><ul style="display:flex; flex-direction:column; gap:12px;"><li><a href="#programme" style="color:var(--text-muted);">Programme</a></li><li><a href="#offre" style="color:var(--text-muted);">Offre fondateur</a></li><li><a href="#tarifs" style="color:var(--text-muted);">Tarifs</a></li></ul></div><div><h4 style="margin-bottom:20px;">Contact</h4><ul style="display:flex; flex-direction:column; gap:12px;"><li><a href="mailto:contact@convertweb.fr" style="color:var(--text-muted);">contact@convertweb.fr</a></li><li><a href="#" style="color:var(--text-muted);">Mentions légales</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 Convert Web — Des sites accessibles pour remplir vos salles</p><p>Fait avec 🧡 pour les restaurateurs</p></div></div></footer>
+<footer><div class="container"><div class="footer-inner"><div class="footer-brand"><div class="logo" style="justify-content:flex-start;"><div class="logo-mark">CW</div><div class="logo-text">Convert Web</div></div><p style="margin-top:20px; color:var(--text-muted); font-size:0.8rem;">Agence web en lancement, dédiée aux restaurateurs. Transparence, prix doux, artisans du web.<br>🇫🇷 100% artisanal & fait en France</p></div><div><h4 style="margin-bottom:20px;">Liens</h4><ul style="display:flex; flex-direction:column; gap:12px;"><li><a href="#programme">Programme</a></li><li><a href="#offre">Offre fondateur</a></li><li><a href="#tarifs">Tarifs</a></li></ul></div><div><h4 style="margin-bottom:20px;">Contact</h4><ul style="display:flex; flex-direction:column; gap:12px;"><li><a href="mailto:contact@convertweb.fr">contact@convertweb.fr</a></li><li><a href="#">Mentions légales</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 Convert Web — Des sites accessibles pour remplir vos salles</p><p>Fait avec 🧡 pour les restaurateurs</p></div></div></footer>
 
 <script>
   (function() {
@@ -1325,7 +1340,7 @@
       }, { threshold: 0.5 });
       gaugeObserver.observe(gaugeFill);
     }
-    // Typing effect (uniquement sur desktop pour éviter les bugs)
+    // Typing effect (desktop only)
     const typedSpan = document.getElementById('typedTitle');
     if (typedSpan && window.innerWidth > 768) {
       const originalText = typedSpan.innerText;
@@ -1346,7 +1361,7 @@
       }, { threshold: 0.3 });
       heroObs.observe(document.querySelector('.hero'));
     }
-    // Custom cursor (désactivé sur mobile)
+    // Custom cursor (uniquement souris)
     const cursor = document.getElementById('cursor');
     if (cursor && window.matchMedia('(pointer: fine)').matches) {
       document.addEventListener('mousemove', (e) => {
