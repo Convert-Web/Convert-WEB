@@ -753,44 +753,6 @@
       color: rgba(255,255,255,.65);
       font-weight: 500;
     }
-    /* Fullscreen iframe modal */
-    #demo-fs-modal {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
-    }
-    #demo-fs-modal.open { display: flex; }
-    #demo-fs-bar {
-      background: #111;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid #222;
-      flex-shrink: 0;
-      z-index: 1;
-    }
-    #demo-fs-bar .rdb-url { text-align: left; }
-    #demo-fs-close {
-      background: rgba(255,255,255,.1);
-      border: none;
-      color: white;
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: .75rem;
-      font-weight: 600;
-      transition: background .2s;
-    }
-    #demo-fs-close:hover { background: rgba(255,255,255,.2); }
-    #demo-fs-iframe {
-      flex: 1;
-      border: none;
-      width: 100%;
-    }
     .demo-badge {
       display: inline-flex;
       align-items: center;
@@ -878,7 +840,7 @@
         </div>
 
         <!-- Preview avec iframe -->
-        <div class="rdb-preview" onclick="openDemoFS()">
+        <div class="rdb-preview" onclick="openDemoFS()" style="cursor:pointer;">
           <iframe src="demo.html" title="Démo Convert Web – Le Spot" loading="lazy" tabindex="-1"></iframe>
           <div class="rdb-preview-overlay">
             <div class="rdb-preview-cta">🔍 Voir la démo complète</div>
@@ -905,13 +867,6 @@
   </div>
 </section>
 
-<!-- Fullscreen Demo Modal -->
-<div id="demo-fs-modal">
-  <div id="demo-fs-bar">
-    <div class="rdb-dots">
-      <div class="rdb-dot" style="background:#ff5f56;"></div>
-      <div class="rdb-dot" style="background:#ffbd2e;"></div>
-      <div class="rdb-dot" style="background:#27c93f;"></div>
     </div>
     <div class="rdb-url">🔒 lespot.fr — Démo Convert Web</div>
     <button id="demo-fs-close" onclick="closeDemoFS()">✕ Fermer</button>
@@ -1075,27 +1030,8 @@
 <script>
 
   function openDemoFS() {
-    var modal = document.getElementById('demo-fs-modal');
-    var iframe = document.getElementById('demo-fs-iframe');
-    if (!iframe.src || iframe.src === 'about:blank') {
-      iframe.src = 'demo.html';
-    }
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.open('demo.html', '_blank');
   }
-  function closeDemoFS() {
-    document.getElementById('demo-fs-modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeDemoFS();
-      document.querySelectorAll('.demo-modal.open').forEach(function(m) {
-        m.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    }
-  });
 
   function openModal(id) {
     document.getElementById(id).classList.add('open');
