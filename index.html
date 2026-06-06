@@ -16,19 +16,20 @@
     }
 
     :root {
-      --bg: #06090C;
-      --bg2: #0C1117;
-      --bg3: #121A22;
-      --accent: #C4F135;
-      --accent2: #9EC920;
-      --a-glow: rgba(196, 241, 53, 0.18);
+      --bg: #0A0F12;
+      --bg2: #11171C;
+      --bg3: #182028;
+      --accent: #2D9C7A;
+      --accent2: #247F62;
+      --a-glow: rgba(45, 156, 122, 0.2);
       --white: #FFFFFF;
-      --text: rgba(255, 255, 255, 0.87);
-      --muted: rgba(255, 255, 255, 0.5);
-      --muted2: rgba(255, 255, 255, 0.26);
-      --border: rgba(255, 255, 255, 0.07);
-      --border2: rgba(255, 255, 255, 0.13);
+      --text: rgba(255, 255, 255, 0.88);
+      --muted: rgba(255, 255, 255, 0.55);
+      --muted2: rgba(255, 255, 255, 0.28);
+      --border: rgba(255, 255, 255, 0.08);
+      --border2: rgba(255, 255, 255, 0.14);
       --card: rgba(255, 255, 255, 0.04);
+      --warm-bg: #F5F0E8;
       --font-d: 'Syne', sans-serif;
       --font-b: 'DM Sans', sans-serif;
       --wrap: 1200px;
@@ -93,12 +94,12 @@
 
     .btn-primary {
       background: var(--accent);
-      color: #000;
+      color: #fff;
       font-weight: 700;
     }
 
     .btn-primary:hover {
-      background: #d6ff52;
+      background: var(--accent2);
       transform: translateY(-2px);
     }
 
@@ -119,8 +120,8 @@
       gap: 7px;
       padding: 5px 12px;
       border-radius: 100px;
-      background: rgba(196, 241, 53, 0.1);
-      border: 1px solid rgba(196, 241, 53, 0.25);
+      background: rgba(45, 156, 122, 0.12);
+      border: 1px solid rgba(45, 156, 122, 0.3);
       font-size: 0.7rem;
       font-weight: 700;
       color: var(--accent);
@@ -137,7 +138,7 @@
       transition: background 0.3s, box-shadow 0.3s;
     }
     #nav.scrolled {
-      background: rgba(6, 9, 12, 0.96);
+      background: rgba(10, 15, 18, 0.96);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
@@ -193,7 +194,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(6, 9, 12, 0.98);
+      background: rgba(10, 15, 18, 0.98);
       backdrop-filter: blur(24px);
       z-index: 999;
       display: flex;
@@ -257,7 +258,7 @@
     }
     .hero-trust {
       margin-top: 32px;
-      background: rgba(196, 241, 53, 0.05);
+      background: rgba(45, 156, 122, 0.08);
       padding: 12px 16px;
       border-radius: 60px;
       display: inline-block;
@@ -365,8 +366,8 @@
       padding: 28px 20px;
     }
     .pcard.main {
-      border-color: rgba(196, 241, 53, 0.4);
-      background: linear-gradient(145deg, rgba(196,241,53,0.08), var(--bg));
+      border-color: rgba(45, 156, 122, 0.5);
+      background: linear-gradient(145deg, rgba(45, 156, 122, 0.08), var(--bg));
     }
     .pcard-name { font-family: var(--font-d); font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
     .pcard-price { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
@@ -474,9 +475,9 @@
 
     /* ── Urgency Banner ── */
     .urgency-banner {
-      background: linear-gradient(90deg,rgba(196,241,53,.10),rgba(196,241,53,.05),rgba(196,241,53,.10));
-      border-top: 1px solid rgba(196,241,53,.18);
-      border-bottom: 1px solid rgba(196,241,53,.18);
+      background: linear-gradient(90deg,rgba(45,156,122,.12),rgba(45,156,122,.05),rgba(45,156,122,.12));
+      border-top: 1px solid rgba(45,156,122,.2);
+      border-bottom: 1px solid rgba(45,156,122,.2);
       padding: 13px 0;
       font-size: .82rem;
       font-weight: 500;
@@ -518,7 +519,7 @@
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
     .demo-card-new:hover {
-      border-color: rgba(196,241,53,.35);
+      border-color: rgba(45,156,122,.45);
       transform: translateY(-4px);
       box-shadow: 0 12px 32px rgba(0,0,0,.35);
     }
@@ -638,12 +639,12 @@
       position: relative;
       transition: border-color .25s, transform .25s;
     }
-    .step:hover { border-color: rgba(196,241,53,.3); transform: translateY(-3px); }
+    .step:hover { border-color: rgba(45,156,122,.4); transform: translateY(-3px); }
     .step-num {
       font-family: var(--font-d);
       font-size: 2rem;
       font-weight: 800;
-      color: rgba(196,241,53,.13);
+      color: rgba(45,156,122,.15);
       position: absolute;
       top: 14px; right: 16px;
       line-height: 1;
@@ -668,7 +669,7 @@
       box-shadow: 0 24px 64px rgba(0,0,0,.55);
       transition: border-color .3s;
     }
-    .real-demo-browser:hover { border-color: rgba(196,241,53,.3); }
+    .real-demo-browser:hover { border-color: rgba(45,156,122,.4); }
     .rdb-chrome {
       background: var(--bg3);
       padding: 12px 18px;
@@ -690,7 +691,7 @@
     }
     .rdb-open-btn {
       background: var(--accent);
-      color: #000;
+      color: #fff;
       font-size: .7rem;
       font-weight: 700;
       padding: 6px 14px;
@@ -729,7 +730,7 @@
     .rdb-preview:hover .rdb-preview-overlay { opacity: 1; }
     .rdb-preview-cta {
       background: var(--accent);
-      color: #000;
+      color: #fff;
       font-weight: 700;
       font-size: .9rem;
       padding: 13px 28px;
@@ -742,7 +743,7 @@
       gap: 8px;
       padding: 18px 20px;
       border-top: 1px solid var(--border);
-      background: rgba(196,241,53,.02);
+      background: rgba(45,156,122,.03);
     }
     .rdb-feat {
       background: rgba(255,255,255,.05);
@@ -757,8 +758,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(196,241,53,.1);
-      border: 1px solid rgba(196,241,53,.25);
+      background: rgba(45,156,122,.12);
+      border: 1px solid rgba(45,156,122,.3);
       border-radius: 20px;
       padding: 5px 14px;
       font-size: .75rem;
@@ -775,7 +776,7 @@
   <div class="wrap">
     <div class="nav-in">
       <a href="#hero" class="nav-logo">
-        <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M4 14 L11 5 L18 14" stroke="#000" stroke-width="2"/><path d="M7 14 C7 16 8.5 18 11 18 C13.5 18 15 16 15 14" stroke="#000" stroke-width="2" fill="none"/></svg></div>
+        <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M4 14 L11 5 L18 14" stroke="#fff" stroke-width="2"/><path d="M7 14 C7 16 8.5 18 11 18 C13.5 18 15 16 15 14" stroke="#fff" stroke-width="2" fill="none"/></svg></div>
         <span class="nav-logo-text">Convert<span>Web</span></span>
       </a>
       <ul class="nav-links">
@@ -804,7 +805,7 @@
           <a href="#cta" class="btn btn-primary">Recevoir une maquette gratuite →</a>
           <a href="#demo" class="btn btn-ghost">Voir un exemple</a>
         </div>
-        <div class="hero-trust">✅ 0 client aujourd’hui – 100% d’attention pour vous (tarifs de lancement)</div>
+        <div class="hero-trust">✅ 0 client aujourd'hui – 100% d'attention pour vous (tarifs de lancement)</div>
       </div>
       <div class="hero-right"></div>
     </div>
@@ -867,13 +868,6 @@
   </div>
 </section>
 
-    </div>
-    <div class="rdb-url">🔒 lespot.fr — Démo Convert Web</div>
-    <button id="demo-fs-close" onclick="closeDemoFS()">✕ Fermer</button>
-  </div>
-  <iframe id="demo-fs-iframe" src="" title="Démo plein écran" allow="fullscreen"></iframe>
-</div>
-
 <!-- Problèmes réels des restaurateurs -->
 <section id="problems" style="padding: 60px 0;">
   <div class="wrap">
@@ -882,7 +876,7 @@
     <div class="probs-grid">
       <div class="prob-item rev"><div class="prob-icon">🚫</div><div><strong>Pas de site web</strong><br>La majorité des clients recherchent un restaurant en ligne avant de commander ou réserver. Sans site, vous êtes invisible.</div></div>
       <div class="prob-item rev d1"><div class="prob-icon">📱</div><div><strong>Menu introuvable</strong><br>Horaires, carte, prix – vos clients veulent les voir en 2 secondes sur mobile.</div></div>
-      <div class="prob-item rev d2"><div class="prob-icon">💸</div><div><strong>Dépendance à Uber Eats</strong><br>Jusqu’à 30% de commission. Votre marge fond.</div></div>
+      <div class="prob-item rev d2"><div class="prob-icon">💸</div><div><strong>Dépendance à Uber Eats</strong><br>Jusqu'à 30% de commission. Votre marge fond.</div></div>
       <div class="prob-item rev d3"><div class="prob-icon">📍</div><div><strong>Mauvais référencement local</strong><br>Vos concurrents apparaissent devant vous sur Google Maps.</div></div>
     </div>
   </div>
@@ -904,7 +898,7 @@
   <div class="wrap">
     <div class="section-label">Tarifs de lancement (jeune agence)</div>
     <h2 class="section-title">Des prix transparents, sans engagement</h2>
-    <p class="section-sub">Nous sommes une toute nouvelle agence. Ces tarifs nous aident à constituer notre premier portefeuille client – vous bénéficiez d’un accompagnement premium à prix réduit.</p>
+    <p class="section-sub">Nous sommes une toute nouvelle agence. Ces tarifs nous aident à constituer notre premier portefeuille client – vous bénéficiez d'un accompagnement premium à prix réduit.</p>
     <div class="price-grid">
       <div class="pcard rev"><div class="pcard-name">Essentiel</div><div class="pcard-price">195€ <small>+19€/mois</small></div><div class="price-note" style="margin:8px 0">Site vitrine + menu digital</div><ul style="margin:20px 0; list-style: none;"><li>✓ Site responsive</li><li>✓ Menu interactif</li><li>✓ SEO local de base</li><li>✓ Hébergement inclus</li></ul><a href="#cta" class="btn btn-primary" style="width:100%">Choisir →</a></div>
       <div class="pcard main rev"><div class="pcard-name">⭐ Restaurant Pro</div><div class="pcard-price">295€ <small>+35€/mois</small></div><div class="price-note" style="margin:8px 0">Idéal pour développer les commandes</div><ul style="margin:20px 0"><li>✓ Tout Essentiel +</li><li>✓ Commandes en ligne (0% commission)</li><li>✓ SEO local avancé + Google Maps</li><li>✓ Support rapide WhatsApp &amp; email</li></ul><a href="#cta" class="btn btn-primary" style="width:100%">Choisir →</a></div>
@@ -921,8 +915,8 @@
       <div class="about-avatar"><svg viewBox="0 0 24 24" width="40" height="40" fill="#000"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/></svg></div>
       <div>
         <h3 class="section-title" style="margin-bottom: 8px;">Le fondateur de Convert Web</h3>
-        <p style="color: var(--muted);">Je développe des sites web et j’ai lancé Convert Web pour aider les restaurateurs indépendants à avoir un vrai site professionnel — performant, honnête, et sans dépenser plusieurs milliers d’euros.</p>
-        <p style="margin-top: 12px;">✅ 0 client aujourd’hui – vous serez mon premier client, donc <strong>votre site sera ma priorité absolue</strong>. Si la maquette ne vous convient pas, je la retravaille sans frais. Garantie de satisfaction sur la maquette initiale, dans les 7 jours après livraison.</p>
+        <p style="color: var(--muted);">Je développe des sites web et j'ai lancé Convert Web pour aider les restaurateurs indépendants à avoir un vrai site professionnel — performant, honnête, et sans dépenser plusieurs milliers d'euros.</p>
+        <p style="margin-top: 12px;">✅ 0 client aujourd'hui – vous serez mon premier client, donc <strong>votre site sera ma priorité absolue</strong>. Si la maquette ne vous convient pas, je la retravaille sans frais. Garantie de satisfaction sur la maquette initiale, dans les 7 jours après livraison.</p>
       </div>
     </div>
   </div>
@@ -992,7 +986,7 @@
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Combien de temps pour créer mon site ?<span>+</span></div><div class="faq-a">Comptez 48h à 5 jours selon la rapidité de vos retours (menu, photos).</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Puis-je modifier mon menu moi-même ?<span>+</span></div><div class="faq-a">Oui, interface simple ou je le fais pour vous – c'est inclus.</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Y a-t-il un engagement ?<span>+</span></div><div class="faq-a">Aucun. La mensualité est sans engagement, vous stoppez quand vous voulez.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Pourquoi des prix si bas ?<span>+</span></div><div class="faq-a">Je débute l’agence. Je propose des tarifs de lancement pour me faire connaître. Vous aurez un accompagnement premium.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Pourquoi des prix si bas ?<span>+</span></div><div class="faq-a">Je débute l'agence. Je propose des tarifs de lancement pour me faire connaître. Vous aurez un accompagnement premium.</div></div>
     </div>
   </div>
 </section>
@@ -1028,7 +1022,6 @@
 </footer>
 
 <script>
-
   function openDemoFS() {
     window.open('demo.html', '_blank');
   }
@@ -1085,15 +1078,6 @@
     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.345.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
   </svg>
 </a>
-
-
-
-
-<!-- ════════════════════════════════════════ -->
-
-
-<!-- ════════════════════════════════════════ -->
-
 
 </body>
 </html>
