@@ -462,6 +462,7 @@
       .prob-item, .guarantee-item { flex: 1; }
       .about-card { flex-direction: row; text-align: left; gap: 32px; }
       .demo-grid { grid-template-columns: repeat(3, 1fr); }
+      .steps-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
     }
     .rev { opacity: 0; transform: translateY(20px); transition: 0.6s; }
     .rev.in { opacity: 1; transform: none; }
@@ -621,6 +622,189 @@
     .legal-section a { color: rgba(255,255,255,.32); text-decoration: underline; }
     .legal-links { margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
+
+    /* ── Comment ça fonctionne ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 40px 0 8px;
+    }
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      position: relative;
+      transition: border-color .25s, transform .25s;
+    }
+    .step:hover { border-color: rgba(196,241,53,.3); transform: translateY(-3px); }
+    .step-num {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgba(196,241,53,.13);
+      position: absolute;
+      top: 14px; right: 16px;
+      line-height: 1;
+    }
+    .step-icon { font-size: 1.7rem; margin-bottom: 10px; }
+    .step h3 { font-weight: 700; font-size: .93rem; margin-bottom: 7px; }
+    .step p { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+    .step-connector {
+      display: none;
+    }
+
+
+    /* ── Real Demo Showcase ── */
+    .real-demo-wrap {
+      margin: 44px 0 8px;
+    }
+    .real-demo-browser {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.55);
+      transition: border-color .3s;
+    }
+    .real-demo-browser:hover { border-color: rgba(196,241,53,.3); }
+    .rdb-chrome {
+      background: var(--bg3);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .rdb-dots { display: flex; gap: 6px; }
+    .rdb-dot  { width: 10px; height: 10px; border-radius: 50%; }
+    .rdb-url  {
+      flex: 1;
+      background: rgba(255,255,255,.06);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .68rem;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+    }
+    .rdb-open-btn {
+      background: var(--accent);
+      color: #000;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .2s;
+    }
+    .rdb-open-btn:hover { opacity: .85; }
+    .rdb-preview {
+      position: relative;
+      background: #080808;
+      height: 420px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .rdb-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+      transform-origin: top left;
+    }
+    .rdb-preview-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.5);
+      opacity: 0;
+      transition: opacity .25s;
+      cursor: pointer;
+    }
+    .rdb-preview:hover .rdb-preview-overlay { opacity: 1; }
+    .rdb-preview-cta {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 13px 28px;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .rdb-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 18px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(196,241,53,.02);
+    }
+    .rdb-feat {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: .72rem;
+      color: rgba(255,255,255,.65);
+      font-weight: 500;
+    }
+    /* Fullscreen iframe modal */
+    #demo-fs-modal {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+    }
+    #demo-fs-modal.open { display: flex; }
+    #demo-fs-bar {
+      background: #111;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #222;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    #demo-fs-bar .rdb-url { text-align: left; }
+    #demo-fs-close {
+      background: rgba(255,255,255,.1);
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: .75rem;
+      font-weight: 600;
+      transition: background .2s;
+    }
+    #demo-fs-close:hover { background: rgba(255,255,255,.2); }
+    #demo-fs-iframe {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(196,241,53,.1);
+      border: 1px solid rgba(196,241,53,.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
   </style>
 </head>
 <body>
@@ -668,89 +852,72 @@
 <!-- ── Bandeau urgence lancement ── -->
 <div class="urgency-banner">
   <div class="wrap">
-    🎁 <strong>Offre de lancement :</strong> les 3 premiers restaurateurs bénéficient d'une maquette gratuite et d'un accompagnement prioritaire.&nbsp;&nbsp;<a href="#cta" style="color:var(--accent);font-weight:700;">En profiter maintenant →</a>
+    🎁 <strong>Offre de lancement :</strong> maquette gratuite sous 24h + accompagnement prioritaire sur votre mise en ligne.&nbsp;&nbsp;<a href="#cta" style="color:var(--accent);font-weight:700;">En profiter →</a>
   </div>
 </div>
 
 <!-- Démonstration concrète -->
 <section id="demo">
   <div class="wrap">
-    <div class="section-label">Exemples de réalisations</div>
-    <h2 class="section-title">3 restaurants, 3 univers distincts</h2>
-    <p class="section-sub">Cliquez sur un exemple pour voir à quoi ressemble un vrai site Convert Web. Votre restaurant aura son propre design unique.</p>
+    <div class="demo-badge rev">⚡ Réalisation réelle — pas une maquette</div>
+    <h2 class="section-title rev">Un vrai site Convert Web, aujourd'hui.</h2>
+    <p class="section-sub rev">Ce site a été créé pour un restaurant street food. Menu complet, commandes WhatsApp, galerie photos, avis Google, carte Maps — et 0% commission sur les commandes.</p>
 
-    <div class="demo-grid">
+    <div class="real-demo-wrap rev">
+      <div class="real-demo-browser">
 
-      <!-- ── Italien ── -->
-      <div class="demo-card-new rev" onclick="openModal('modal-italian')">
-        <div class="demo-card-hdr">
-          <div class="d-dots">
-            <div class="d-dot" style="background:#ff5f56"></div>
-            <div class="d-dot" style="background:#ffbd2e"></div>
-            <div class="d-dot" style="background:#27c93f"></div>
+        <!-- Chrome / URL bar -->
+        <div class="rdb-chrome">
+          <div class="rdb-dots">
+            <div class="rdb-dot" style="background:#ff5f56;"></div>
+            <div class="rdb-dot" style="background:#ffbd2e;"></div>
+            <div class="rdb-dot" style="background:#27c93f;"></div>
           </div>
-          <span style="font-size:.62rem;color:rgba(255,255,255,.28);margin-left:4px;">trattoriroma.fr</span>
+          <div class="rdb-url">🔒 lespot.fr — Site vitrine + commandes</div>
+          <button class="rdb-open-btn" onclick="openDemoFS()">Voir en plein écran ↗</button>
         </div>
-        <div class="demo-preview-mini" style="background:linear-gradient(150deg,#1c0808 0%,#321212 100%);">
-          <div style="font-size:.62rem;color:#e85555;font-weight:700;letter-spacing:.1em;">🍝 RESTAURANT ITALIEN</div>
-          <div style="font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;line-height:1.1;">Trattoria Roma</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.38);">Paris 11e · Ouvert 7j/7</div>
-          <div style="background:#e85555;color:#fff;padding:6px 16px;border-radius:8px;font-size:.72rem;font-weight:700;margin-top:6px;">Commander →</div>
-        </div>
-        <div class="demo-card-ftr">
-          <span style="font-size:.82rem;font-weight:600;">🍝 Restaurant Italien</span>
-          <span style="font-size:.75rem;color:var(--accent);font-weight:600;">Voir la démo →</span>
-        </div>
-      </div>
 
-      <!-- ── Burger ── -->
-      <div class="demo-card-new rev d1" onclick="openModal('modal-burger')">
-        <div class="demo-card-hdr">
-          <div class="d-dots">
-            <div class="d-dot" style="background:#ff5f56"></div>
-            <div class="d-dot" style="background:#ffbd2e"></div>
-            <div class="d-dot" style="background:#27c93f"></div>
+        <!-- Preview avec iframe -->
+        <div class="rdb-preview" onclick="openDemoFS()">
+          <iframe src="demo.html" title="Démo Convert Web – Le Spot" loading="lazy" tabindex="-1"></iframe>
+          <div class="rdb-preview-overlay">
+            <div class="rdb-preview-cta">🔍 Voir la démo complète</div>
           </div>
-          <span style="font-size:.62rem;color:rgba(255,255,255,.28);margin-left:4px;">burgerdistrict.fr</span>
         </div>
-        <div class="demo-preview-mini" style="background:linear-gradient(150deg,#1a1000 0%,#2e1c00 100%);">
-          <div style="font-size:.62rem;color:#F5A623;font-weight:700;letter-spacing:.1em;">🍔 BURGER &amp; STREET FOOD</div>
-          <div style="font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;line-height:1.1;">Burger District</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.38);">Livraison 30min · 0% commission</div>
-          <div style="background:#F5A623;color:#000;padding:6px 16px;border-radius:8px;font-size:.72rem;font-weight:700;margin-top:6px;">Commander →</div>
-        </div>
-        <div class="demo-card-ftr">
-          <span style="font-size:.82rem;font-weight:600;">🍔 Burger &amp; Street Food</span>
-          <span style="font-size:.75rem;color:var(--accent);font-weight:600;">Voir la démo →</span>
-        </div>
-      </div>
 
-      <!-- ── Sushi ── -->
-      <div class="demo-card-new rev d2" onclick="openModal('modal-sushi')">
-        <div class="demo-card-hdr">
-          <div class="d-dots">
-            <div class="d-dot" style="background:#ff5f56"></div>
-            <div class="d-dot" style="background:#ffbd2e"></div>
-            <div class="d-dot" style="background:#27c93f"></div>
-          </div>
-          <span style="font-size:.62rem;color:rgba(255,255,255,.28);margin-left:4px;">sakurasushi.fr</span>
+        <!-- Feature badges -->
+        <div class="rdb-features">
+          <span class="rdb-feat">📱 Commandes WhatsApp intégrées</span>
+          <span class="rdb-feat">🛒 Panier interactif</span>
+          <span class="rdb-feat">📸 Galerie avec lightbox</span>
+          <span class="rdb-feat">⭐ Avis Google affichés</span>
+          <span class="rdb-feat">🗺️ Google Maps</span>
+          <span class="rdb-feat">🌙 Design dark premium</span>
+          <span class="rdb-feat">🍔 Menu tacos personnalisable</span>
+          <span class="rdb-feat">📍 SEO local optimisé</span>
+          <span class="rdb-feat">⚡ 0 % commission</span>
         </div>
-        <div class="demo-preview-mini" style="background:linear-gradient(150deg,#080a14 0%,#0e1428 100%);">
-          <div style="font-size:.62rem;color:#e33;font-weight:700;letter-spacing:.1em;">🍣 RESTAURANT JAPONAIS</div>
-          <div style="font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;line-height:1.1;">Sakura Sushi</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.38);">Sushis &amp; Poké · Fresh every day</div>
-          <div style="background:#e33;color:#fff;padding:6px 16px;border-radius:8px;font-size:.72rem;font-weight:700;margin-top:6px;">Voir la carte →</div>
-        </div>
-        <div class="demo-card-ftr">
-          <span style="font-size:.82rem;font-weight:600;">🍣 Restaurant Japonais</span>
-          <span style="font-size:.75rem;color:var(--accent);font-weight:600;">Voir la démo →</span>
-        </div>
-      </div>
 
+      </div>
     </div>
-    <p class="price-note" style="margin-top:0;">✨ Démos réalisées par Convert Web – votre restaurant aura son propre design sur-mesure.</p>
+
+    <p class="price-note" style="margin-top:16px;">✨ Site développé par Convert Web — votre restaurant aura son propre design sur-mesure.</p>
   </div>
 </section>
+
+<!-- Fullscreen Demo Modal -->
+<div id="demo-fs-modal">
+  <div id="demo-fs-bar">
+    <div class="rdb-dots">
+      <div class="rdb-dot" style="background:#ff5f56;"></div>
+      <div class="rdb-dot" style="background:#ffbd2e;"></div>
+      <div class="rdb-dot" style="background:#27c93f;"></div>
+    </div>
+    <div class="rdb-url">🔒 lespot.fr — Démo Convert Web</div>
+    <button id="demo-fs-close" onclick="closeDemoFS()">✕ Fermer</button>
+  </div>
+  <iframe id="demo-fs-iframe" src="" title="Démo plein écran" allow="fullscreen"></iframe>
+</div>
 
 <!-- Problèmes réels des restaurateurs -->
 <section id="problems" style="padding: 60px 0;">
@@ -785,7 +952,7 @@
     <p class="section-sub">Nous sommes une toute nouvelle agence. Ces tarifs nous aident à constituer notre premier portefeuille client – vous bénéficiez d’un accompagnement premium à prix réduit.</p>
     <div class="price-grid">
       <div class="pcard rev"><div class="pcard-name">Essentiel</div><div class="pcard-price">195€ <small>+19€/mois</small></div><div class="price-note" style="margin:8px 0">Site vitrine + menu digital</div><ul style="margin:20px 0; list-style: none;"><li>✓ Site responsive</li><li>✓ Menu interactif</li><li>✓ SEO local de base</li><li>✓ Hébergement inclus</li></ul><a href="#cta" class="btn btn-primary" style="width:100%">Choisir →</a></div>
-      <div class="pcard main rev"><div class="pcard-name">⭐ Restaurant Pro</div><div class="pcard-price">295€ <small>+35€/mois</small></div><div class="price-note" style="margin:8px 0">Idéal pour développer les commandes</div><ul style="margin:20px 0"><li>✓ Tout Essentiel +</li><li>✓ Commandes en ligne (0% commission)</li><li>✓ SEO local avancé + Google Maps</li><li>✓ Support prioritaire 7j/7</li></ul><a href="#cta" class="btn btn-primary" style="width:100%">Choisir →</a></div>
+      <div class="pcard main rev"><div class="pcard-name">⭐ Restaurant Pro</div><div class="pcard-price">295€ <small>+35€/mois</small></div><div class="price-note" style="margin:8px 0">Idéal pour développer les commandes</div><ul style="margin:20px 0"><li>✓ Tout Essentiel +</li><li>✓ Commandes en ligne (0% commission)</li><li>✓ SEO local avancé + Google Maps</li><li>✓ Support rapide WhatsApp &amp; email</li></ul><a href="#cta" class="btn btn-primary" style="width:100%">Choisir →</a></div>
       <div class="pcard rev"><div class="pcard-name">Premium</div><div class="pcard-price">495€ <small>+49€/mois</small></div><div class="price-note" style="margin:8px 0">Accompagnement total</div><ul style="margin:20px 0"><li>✓ Tout Pro +</li><li>✓ Stratégie SEO complète</li><li>✓ Mises à jour illimitées</li><li>✓ Formation et assistance VIP</li></ul><a href="#cta" class="btn btn-ghost" style="width:100%">Choisir →</a></div>
     </div>
     <p class="price-note">🔒 Création payée à la livraison – Mensualité sans engagement, arrêt possible à tout moment.</p>
@@ -799,8 +966,8 @@
       <div class="about-avatar"><svg viewBox="0 0 24 24" width="40" height="40" fill="#000"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/></svg></div>
       <div>
         <h3 class="section-title" style="margin-bottom: 8px;">Le fondateur de Convert Web</h3>
-        <p style="color: var(--muted);">Je crée des sites web depuis 3 ans en tant que freelance. J’ai décidé de lancer Convert Web pour aider les restaurateurs indépendants à avoir un site professionnel sans dépenser plusieurs milliers d’euros.</p>
-        <p style="margin-top: 12px;">✅ 0 client aujourd’hui – vous serez mon premier client, donc <strong>votre site sera ma priorité absolue</strong>. Je vous offre une garantie "satisfait ou remboursé" 14 jours.</p>
+        <p style="color: var(--muted);">Je développe des sites web et j’ai lancé Convert Web pour aider les restaurateurs indépendants à avoir un vrai site professionnel — performant, honnête, et sans dépenser plusieurs milliers d’euros.</p>
+        <p style="margin-top: 12px;">✅ 0 client aujourd’hui – vous serez mon premier client, donc <strong>votre site sera ma priorité absolue</strong>. Si la maquette ne vous convient pas, je la retravaille sans frais. Garantie de satisfaction sur la maquette initiale, dans les 7 jours après livraison.</p>
       </div>
     </div>
   </div>
@@ -818,6 +985,48 @@
     </div>
   </div>
 </section>
+
+<!-- ── Comment ça fonctionne ── -->
+<section style="padding: 64px 0;">
+  <div class="wrap">
+    <div class="section-label rev">Processus</div>
+    <h2 class="section-title rev">Comment ça fonctionne ?</h2>
+    <p class="section-sub rev">De zéro à un site en ligne en quelques jours. Sans complication, sans jargon.</p>
+
+    <div class="steps-grid">
+
+      <div class="step rev">
+        <div class="step-num">01</div>
+        <div class="step-icon">📞</div>
+        <h3>Appel de 15 min</h3>
+        <p>On discute de votre restaurant, votre ambiance, vos plats. Sans engagement, sans pression.</p>
+      </div>
+
+      <div class="step rev d1">
+        <div class="step-num">02</div>
+        <div class="step-icon">🎨</div>
+        <h3>Maquette gratuite</h3>
+        <p>Je vous envoie un premier aperçu visuel de votre futur site sous 24h. Pour vous projeter concrètement.</p>
+      </div>
+
+      <div class="step rev d2">
+        <div class="step-num">03</div>
+        <div class="step-icon">⚙️</div>
+        <h3>Création du site</h3>
+        <p>Je développe votre site selon vos retours. Livraison en 5 à 10 jours ouvrés selon la formule choisie.</p>
+      </div>
+
+      <div class="step rev d3">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚀</div>
+        <h3>Mise en ligne</h3>
+        <p>Votre site est en ligne, visible sur Google, et prêt à recevoir vos premiers clients.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <!-- FAQ -->
 <section id="faq" style="padding: 60px 0;">
@@ -864,6 +1073,30 @@
 </footer>
 
 <script>
+
+  function openDemoFS() {
+    var modal = document.getElementById('demo-fs-modal');
+    var iframe = document.getElementById('demo-fs-iframe');
+    if (!iframe.src || iframe.src === 'about:blank') {
+      iframe.src = 'demo.html';
+    }
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDemoFS() {
+    document.getElementById('demo-fs-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeDemoFS();
+      document.querySelectorAll('.demo-modal.open').forEach(function(m) {
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
   function openModal(id) {
     document.getElementById(id).classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -917,89 +1150,14 @@
   </svg>
 </a>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- MODAL : Restaurant Italien – Trattoria Roma -->
-<!-- ══════════════════════════════════════════ -->
-<div class="demo-modal" id="modal-italian" onclick="if(event.target===this)closeModal('modal-italian')">
-  <div class="demo-modal-inner">
-    <button class="dmc" onclick="closeModal('modal-italian')">×</button>
-    <!-- Chrome -->
-    <div style="background:#1a1f26;padding:10px 14px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.07);">
-      <div style="display:flex;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#ff5f56;"></div><div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e;"></div><div style="width:8px;height:8px;border-radius:50%;background:#27c93f;"></div></div>
-      <div class="modal-url">trattoriroma.fr</div>
-    </div>
-    <!-- Hero -->
-    <div style="background:linear-gradient(155deg,#1c0808,#321212);padding:34px 24px;text-align:center;">
-      <div style="font-size:.65rem;color:#e85555;font-weight:700;letter-spacing:.12em;margin-bottom:8px;">🍝 RESTAURANT ITALIEN · PARIS 11E</div>
-      <div style="font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:#fff;line-height:1.0;margin-bottom:6px;">Trattoria Roma</div>
-      <div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:22px;">Cuisine authentique · Ouvert 7j/7 · 12h–23h</div>
-      <a href="#cta" onclick="closeModal('modal-italian')" style="display:inline-block;background:#e85555;color:#fff;padding:11px 24px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;text-decoration:none;">Commander maintenant →</a>
-    </div>
-    <!-- Menu -->
-    <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.38);text-transform:uppercase;margin-bottom:4px;">Notre carte</div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍝 Carbonara maison</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Guanciale, pecorino, œuf frais</div></div><div style="color:#e85555;font-weight:700;white-space:nowrap;">14€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍕 Margherita DOC</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Tomate San Marzano, fior di latte</div></div><div style="color:#e85555;font-weight:700;white-space:nowrap;">13€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🥗 Burrata pugliese</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Tomates cerise, basilic, pesto</div></div><div style="color:#e85555;font-weight:700;white-space:nowrap;">11€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍷 Chianti Classico</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Verre · Sélection du mois</div></div><div style="color:#e85555;font-weight:700;white-space:nowrap;">7€</div></div>
-      <div style="margin-top:8px;text-align:center;background:rgba(232,85,85,.08);border:1px solid rgba(232,85,85,.22);border-radius:12px;padding:12px;font-size:.78rem;color:#e85555;font-weight:600;">📱 Commande en ligne · 0% commission · Livraison en 30min</div>
-    </div>
-  </div>
-</div>
+
+
 
 <!-- ════════════════════════════════════════ -->
-<!-- MODAL : Burger & Street Food            -->
-<!-- ════════════════════════════════════════ -->
-<div class="demo-modal" id="modal-burger" onclick="if(event.target===this)closeModal('modal-burger')">
-  <div class="demo-modal-inner">
-    <button class="dmc" onclick="closeModal('modal-burger')">×</button>
-    <div style="background:#1a1f26;padding:10px 14px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.07);">
-      <div style="display:flex;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#ff5f56;"></div><div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e;"></div><div style="width:8px;height:8px;border-radius:50%;background:#27c93f;"></div></div>
-      <div class="modal-url">burgerdistrict.fr</div>
-    </div>
-    <div style="background:linear-gradient(155deg,#1a1000,#2e1c00);padding:34px 24px;text-align:center;">
-      <div style="font-size:.65rem;color:#F5A623;font-weight:700;letter-spacing:.12em;margin-bottom:8px;">🍔 BURGER &amp; STREET FOOD</div>
-      <div style="font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:#fff;line-height:1.0;margin-bottom:6px;">Burger District</div>
-      <div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:22px;">Burgers artisanaux · Livraison 30min · 7j/7</div>
-      <a href="#cta" onclick="closeModal('modal-burger')" style="display:inline-block;background:#F5A623;color:#000;padding:11px 24px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;text-decoration:none;">Commander en ligne →</a>
-    </div>
-    <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.38);text-transform:uppercase;margin-bottom:4px;">Nos burgers</div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍔 Classic District</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Bœuf 180g, cheddar, salade, tomate</div></div><div style="color:#F5A623;font-weight:700;white-space:nowrap;">11€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🔥 Spicy BBQ Double</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Double bœuf, jalapeños, sauce BBQ fumée</div></div><div style="color:#F5A623;font-weight:700;white-space:nowrap;">14€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🌱 Veggie Crispy</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Galette végétale, avocat, oignons crispy</div></div><div style="color:#F5A623;font-weight:700;white-space:nowrap;">12€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍟 Frites maison + sauce</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Coupées à la main, sauce au choix</div></div><div style="color:#F5A623;font-weight:700;white-space:nowrap;">4€</div></div>
-      <div style="margin-top:8px;text-align:center;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.22);border-radius:12px;padding:12px;font-size:.78rem;color:#F5A623;font-weight:600;">📱 Commande en ligne · 0% commission · Prêt en 15min</div>
-    </div>
-  </div>
-</div>
+
 
 <!-- ════════════════════════════════════════ -->
-<!-- MODAL : Restaurant Japonais – Sakura    -->
-<!-- ════════════════════════════════════════ -->
-<div class="demo-modal" id="modal-sushi" onclick="if(event.target===this)closeModal('modal-sushi')">
-  <div class="demo-modal-inner">
-    <button class="dmc" onclick="closeModal('modal-sushi')">×</button>
-    <div style="background:#1a1f26;padding:10px 14px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.07);">
-      <div style="display:flex;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#ff5f56;"></div><div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e;"></div><div style="width:8px;height:8px;border-radius:50%;background:#27c93f;"></div></div>
-      <div class="modal-url">sakurasushi.fr</div>
-    </div>
-    <div style="background:linear-gradient(155deg,#080a14,#0e1428);padding:34px 24px;text-align:center;">
-      <div style="font-size:.65rem;color:#e33;font-weight:700;letter-spacing:.12em;margin-bottom:8px;">🍣 RESTAURANT JAPONAIS · LYON 2E</div>
-      <div style="font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:#fff;line-height:1.0;margin-bottom:6px;">Sakura Sushi</div>
-      <div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:22px;">Sushis &amp; Poké · Fresh every day · Midi &amp; Soir</div>
-      <a href="#cta" onclick="closeModal('modal-sushi')" style="display:inline-block;background:#e33;color:#fff;padding:11px 24px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;text-decoration:none;">Voir la carte →</a>
-    </div>
-    <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.38);text-transform:uppercase;margin-bottom:4px;">À la carte</div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🍣 Plateau Sakura (20 pcs)</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Maki, nigiri, sashimi · Saumon &amp; thon</div></div><div style="color:#e33;font-weight:700;white-space:nowrap;">18€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🥗 Poké Bowl Saumon</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Riz, edamame, avocat, tobiko, ponzu</div></div><div style="color:#e33;font-weight:700;white-space:nowrap;">15€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🌊 Sashimi Premium (8 pcs)</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Saumon, thon, daurade · Wasabi &amp; gingembre</div></div><div style="color:#e33;font-weight:700;white-space:nowrap;">16€</div></div>
-      <div class="mmi"><div><div style="font-weight:600;font-size:.88rem;">🧋 Matcha Latte</div><div style="font-size:.72rem;color:rgba(255,255,255,.38);">Matcha bio, lait d'avoine, sirop d'agave</div></div><div style="color:#e33;font-weight:700;white-space:nowrap;">5€</div></div>
-      <div style="margin-top:8px;text-align:center;background:rgba(238,51,51,.08);border:1px solid rgba(238,51,51,.22);border-radius:12px;padding:12px;font-size:.78rem;color:#e33;font-weight:600;">📱 Commande en ligne · 0% commission · Click &amp; Collect disponible</div>
-    </div>
-  </div>
-</div>
+
 
 </body>
 </html>
