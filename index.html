@@ -535,6 +535,113 @@
       }
     }
     .wa-float:hover { transform: scale(1.08); }
+
+    /* ========== MODALES ========== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 28px 24px;
+      position: relative;
+      color: var(--text);
+    }
+    .modal-content h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+    .modal-content h4 {
+      margin: 20px 0 8px;
+      font-weight: 600;
+    }
+    .modal-content p, .modal-content li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .close-modal {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .close-modal:hover {
+      color: var(--accent);
+    }
+    .modal-footer {
+      margin-top: 24px;
+      text-align: right;
+    }
+
+    /* ========== BANDEAU COOKIES ========== */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(11, 13, 15, 0.98);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 18px 24px;
+      z-index: 1100;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    }
+    .cookie-banner.show {
+      transform: translateY(0);
+    }
+    .cookie-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .cookie-text {
+      flex: 2;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .cookie-text a {
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .cookie-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .cookie-inner { flex-direction: column; align-items: stretch; }
+      .cookie-buttons { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -724,7 +831,7 @@
   </div>
 </section>
 
-<!-- ===================== PIED DE PAGE MODIFIÉ ===================== -->
+<!-- ===================== PIED DE PAGE ===================== -->
 <footer>
   <div class="wrap">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; padding: 40px 0 32px;">
@@ -753,14 +860,80 @@
     <div style="border-top: 1px solid var(--border); padding: 20px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 0.7rem; color: var(--text-dim);">
       <span>© 2026 Convert Web — Tous droits réservés</span>
       <div style="display: flex; gap: 20px;">
-        <a href="#" style="color: var(--text-dim); text-decoration: none;">Mentions légales</a>
-        <a href="#" style="color: var(--text-dim); text-decoration: none;">Politique de confidentialité</a>
+        <a href="#" id="openLegalNotice" style="color: var(--text-dim); text-decoration: none;">Mentions légales</a>
+        <a href="#" id="openPrivacyPolicy" style="color: var(--text-dim); text-decoration: none;">Politique de confidentialité</a>
       </div>
     </div>
   </div>
 </footer>
-<!-- ===================== FIN PIED DE PAGE ===================== -->
 
+<!-- ========== MODALE MENTIONS LÉGALES (mise à jour réelle) ========== -->
+<div id="legalModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('legalModal')">&times;</span>
+    <h3>Mentions légales</h3>
+    <p><strong>Convert Web</strong><br>
+    Édité par <strong>Wissam AIT ELHAJ</strong>, entrepreneur individuel (micro-entreprise en cours d’immatriculation).<br>
+    Adresse professionnelle : <strong>Montereau-Fault-Yonne (77130)</strong> – adresse complète disponible sur simple demande.<br>
+    Téléphone : <a href="tel:+33763676191" style="color:var(--accent)">07 63 67 61 91</a><br>
+    E-mail : <a href="mailto:contact.convertweb@gmail.com" style="color:var(--accent)">contact.convertweb@gmail.com</a></p>
+    <p><strong>Statut juridique</strong><br>
+    L’activité est actuellement en cours d’immatriculation sous le régime de la micro-entreprise. Numéro SIRET et TVA intracommunautaire : <strong>non encore attribués (en cours)</strong>.<br>
+    Capital social : 0 € (entreprise individuelle).</p>
+    <p><strong>Directeur de la publication</strong><br>
+    Wissam AIT ELHAJ</p>
+    <p><strong>Hébergement</strong><br>
+    Le site est hébergé par GitHub, Inc.<br>
+    Adresse : 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis.<br>
+    Site web : <a href="https://pages.github.com/" target="_blank" style="color:var(--accent)">https://pages.github.com/</a></p>
+    <p><strong>Propriété intellectuelle</strong><br>
+    L’ensemble des éléments (textes, images, logos, vidéos…) présents sur ce site sont la propriété exclusive de Wissam AIT ELHAJ / Convert Web, sauf mention contraire. Toute reproduction est interdite sans autorisation préalable.</p>
+    <p><strong>Responsabilité</strong><br>
+    Convert Web s’efforce de fournir des informations exactes et à jour. En cas d’erreur, d’indisponibilité ou de dommage lié à l’utilisation du site, la responsabilité de l’éditeur ne saurait être engagée.</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('legalModal')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODALE POLITIQUE DE CONFIDENTIALITÉ (mise à jour réelle) ========== -->
+<div id="privacyModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('privacyModal')">&times;</span>
+    <h3>Politique de confidentialité</h3>
+    <p>Chez Convert Web, la protection de vos données personnelles est essentielle. Cette politique explique quelles informations nous collectons et comment nous les utilisons.</p>
+    <h4>1. Données collectées</h4>
+    <p>Lorsque vous utilisez notre formulaire de contact, envoyez un e-mail ou un message WhatsApp, nous pouvons recueillir : votre nom, adresse e-mail, numéro de téléphone, ainsi que toute information que vous nous transmettez librement (ex : description de votre projet).<br>
+    Nous ne collectons aucune donnée bancaire.</p>
+    <h4>2. Utilisation des données</h4>
+    <p>Ces données sont utilisées uniquement pour : vous répondre, vous accompagner dans la création de votre site, réaliser une maquette gratuite, exécuter nos prestations et améliorer nos services. Aucune donnée n’est vendue à des tiers.</p>
+    <h4>3. Cookies</h4>
+    <p>Ce site n’utilise pas de cookies publicitaires ou de traçage tiers. Seuls des cookies strictement nécessaires au bon fonctionnement (session, préférences d’affichage) peuvent être déposés. Vous pouvez les refuser via les paramètres de votre navigateur ou la bannière dédiée.</p>
+    <h4>4. Vos droits (RGPD)</h4>
+    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous pouvez accéder, rectifier ou supprimer vos données personnelles en nous écrivant à : <a href="mailto:contact.convertweb@gmail.com" style="color:var(--accent)">contact.convertweb@gmail.com</a>.</p>
+    <h4>5. Sécurité</h4>
+    <p>Vos données sont conservées uniquement le temps nécessaire à la gestion de votre demande et ne sont jamais partagées. Nous mettons en œuvre des mesures techniques pour les protéger.</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('privacyModal')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== BANDEAU COOKIES ========== -->
+<div id="cookieBanner" class="cookie-banner">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      🍪 Nous utilisons uniquement des cookies essentiels pour le fonctionnement du site. Vous pouvez les refuser, mais certaines fonctionnalités pourraient être affectées. 
+      <a href="#" id="cookiePolicyLink">En savoir plus</a>
+    </div>
+    <div class="cookie-buttons">
+      <button id="refuseCookies" class="btn btn-outline">Refuser</button>
+      <button id="acceptCookies" class="btn btn-primary">Tout accepter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== BOUTON FLOAT WHATSAPP ========== -->
 <a href="https://wa.me/33763676191" target="_blank" class="wa-float">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
 </a>
@@ -806,12 +979,72 @@
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
+      if (target && !this.closest('.modal-content')) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
+
+  // ----- GESTION DES MODALES -----
+  function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+  }
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+  }
+  // Fermer en cliquant à l'extérieur du contenu
+  window.onclick = function(e) {
+    if (e.target.classList && e.target.classList.contains('modal')) {
+      e.target.classList.remove('active');
+    }
+  }
+  // Liens footer
+  document.getElementById('openLegalNotice')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal('legalModal');
+  });
+  document.getElementById('openPrivacyPolicy')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal('privacyModal');
+  });
+  // Lien "En savoir plus" dans le bandeau cookies ouvre la politique
+  const cookiePolicyLink = document.getElementById('cookiePolicyLink');
+  if(cookiePolicyLink) {
+    cookiePolicyLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal('privacyModal');
+    });
+  }
+
+  // ----- GESTION COOKIES (bannière) -----
+  const cookieBanner = document.getElementById('cookieBanner');
+  const acceptBtn = document.getElementById('acceptCookies');
+  const refuseBtn = document.getElementById('refuseCookies');
+
+  function setCookieConsent(choice) {
+    localStorage.setItem('cookieConsent', choice);
+    cookieBanner.classList.remove('show');
+    if(choice === 'accepted') {
+      console.log('Cookies acceptés (aucun cookie tiers déposé pour le moment)');
+    } else {
+      console.log('Cookies refusés, seuls les cookies essentiels fonctionnent');
+    }
+  }
+
+  function checkCookieConsent() {
+    const consent = localStorage.getItem('cookieConsent');
+    if(!consent) {
+      cookieBanner.classList.add('show');
+    } else {
+      cookieBanner.classList.remove('show');
+    }
+  }
+
+  if(acceptBtn) acceptBtn.addEventListener('click', () => setCookieConsent('accepted'));
+  if(refuseBtn) refuseBtn.addEventListener('click', () => setCookieConsent('refused'));
+
+  checkCookieConsent();
 </script>
 </body>
 </html>
