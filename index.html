@@ -785,9 +785,9 @@
         <div style="margin: 5px 0 20px;">+49€/mois</div>
         <ul style="list-style: none; margin-bottom: 24px;">
           <li>✓ Tout Pro +</li>
-          <li>✓ Stratégie SEO complète</li>
-          <li>✓ Mises à jour illimitées</li>
-          <li>✓ Assistance VIP (téléphone)</li>
+          <li>✓ Audit SEO avancé + conseils</li>
+          <li>✓ Mises à jour prioritaires</li>
+          <li>✓ Assistance VIP WhatsApp & email</li>
         </ul>
         <a href="#contact" class="btn btn-outline" style="width:100%;">Choisir →</a>
       </div>
@@ -818,15 +818,31 @@
     <div class="cta-section rev">
       <span class="label">🎁 Offre inaugurale</span>
       <h2 style="max-width: 600px; margin-left: auto; margin-right: auto;">Recevez votre maquette gratuite sous 24h</h2>
-      <p class="text-muted" style="max-width: 480px; margin: 12px auto;">Un échange rapide, une proposition visuelle, sans engagement. Découvrez ce que Convert Web peut faire pour votre restaurant.</p>
-      <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 28px;">
-        <a href="mailto:contact.convertweb@gmail.com" class="btn btn-primary" style="width: auto;">📧 contact.convertweb@gmail.com</a>
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
-          <a href="https://wa.me/33763676191" target="_blank" class="btn btn-outline">💬 WhatsApp 07 63 67 61 91</a>
-          <a href="tel:+33763676191" class="btn btn-outline">📞 Appeler</a>
+      <p class="text-muted" style="max-width: 480px; margin: 12px auto;">Remplissez les champs ci-dessous, nous vous envoyons une maquette personnalisée sans engagement.</p>
+
+      <!-- Formulaire lead -->
+      <div id="leadForm" style="max-width: 420px; margin: 32px auto 0; text-align: left;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <input type="text" id="f-name" placeholder="Votre prénom" autocomplete="given-name"
+            style="background: var(--bg-elevated); border: 1.5px solid var(--border-light); border-radius: 14px; padding: 13px 16px; color: var(--white); font-size: 0.9rem; font-family: var(--font-sans); outline: none; transition: border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'">
+          <input type="text" id="f-resto" placeholder="Nom du restaurant"
+            style="background: var(--bg-elevated); border: 1.5px solid var(--border-light); border-radius: 14px; padding: 13px 16px; color: var(--white); font-size: 0.9rem; font-family: var(--font-sans); outline: none; transition: border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'">
+          <input type="tel" id="f-tel" placeholder="Votre téléphone" autocomplete="tel"
+            style="background: var(--bg-elevated); border: 1.5px solid var(--border-light); border-radius: 14px; padding: 13px 16px; color: var(--white); font-size: 0.9rem; font-family: var(--font-sans); outline: none; transition: border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'">
+          <input type="text" id="f-ville" placeholder="Votre ville"
+            style="background: var(--bg-elevated); border: 1.5px solid var(--border-light); border-radius: 14px; padding: 13px 16px; color: var(--white); font-size: 0.9rem; font-family: var(--font-sans); outline: none; transition: border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'">
+          <button onclick="submitLeadForm()" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1rem; border-radius: 14px; margin-top: 4px;">
+            📲 Recevoir ma maquette →
+          </button>
+          <p id="f-error" style="color: #ff6b6b; font-size: 0.75rem; text-align: center; display: none;">Merci de remplir tous les champs.</p>
         </div>
       </div>
-      <p style="font-size: 0.65rem; color: var(--text-dim); margin-top: 28px;">Sans engagement. Données confidentielles.</p>
+
+      <p style="font-size: 0.65rem; color: var(--text-dim); margin-top: 20px;">Sans engagement. Données confidentielles. Réponse sous 24h.</p>
     </div>
   </div>
 </section>
@@ -1043,6 +1059,26 @@
 
   if(acceptBtn) acceptBtn.addEventListener('click', () => setCookieConsent('accepted'));
   if(refuseBtn) refuseBtn.addEventListener('click', () => setCookieConsent('refused'));
+
+  // ----- FORMULAIRE LEAD → WHATSAPP -----
+  function submitLeadForm() {
+    const name  = document.getElementById('f-name').value.trim();
+    const resto = document.getElementById('f-resto').value.trim();
+    const tel   = document.getElementById('f-tel').value.trim();
+    const ville = document.getElementById('f-ville').value.trim();
+    const err   = document.getElementById('f-error');
+
+    if (!name || !resto || !tel || !ville) {
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+
+    const msg = encodeURIComponent(
+      `Bonjour Convert Web 👋\n\nJe suis ${name}, du restaurant « ${resto} » à ${ville}.\nMon numéro : ${tel}\n\nJe souhaite recevoir une maquette gratuite pour mon restaurant. Merci !`
+    );
+    window.open(`https://wa.me/33763676191?text=${msg}`, '_blank');
+  }
 
   checkCookieConsent();
 </script>
