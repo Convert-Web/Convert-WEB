@@ -112,6 +112,7 @@
       border: none;
       text-decoration: none;
       width: 100%;
+      position: relative; /* Fix: requis pour le shimmer ::before en position absolute */
     }
     @media (min-width: 480px) {
       .btn { width: auto; }
@@ -179,7 +180,11 @@
       height: 2px;
       background: white;
       transition: 0.3s;
+      transform-origin: center;
     }
+    .mobile-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .mobile-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .mobile-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
       position: fixed;
       top: 60px;
@@ -1023,7 +1028,7 @@
         <h4 style="font-weight: 600; margin-bottom: 16px;">Contact</h4>
         <ul style="list-style: none;">
           <li><a href="mailto:contact.convertweb@gmail.com" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; line-height: 2;">📧 contact.convertweb@gmail.com</a></li>
-          <li><a href="https://wa.me/33763676191" target="_blank" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; line-height: 2;">💬 WhatsApp</a></li>
+          <li><a href="https://wa.me/33763676191" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; line-height: 2;">💬 WhatsApp</a></li>
           <li><a href="tel:+33763676191" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; line-height: 2;">📞 07 63 67 61 91</a></li>
         </ul>
       </div>
@@ -1056,7 +1061,7 @@
     <p><strong>Hébergement</strong><br>
     Le site est hébergé par GitHub, Inc.<br>
     Adresse : 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis.<br>
-    Site web : <a href="https://pages.github.com/" target="_blank" style="color:var(--accent)">https://pages.github.com/</a></p>
+    Site web : <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">https://pages.github.com/</a></p>
     <p><strong>Propriété intellectuelle</strong><br>
     L’ensemble des éléments (textes, images, logos, vidéos…) présents sur ce site sont la propriété exclusive de Wissam AIT ELHAJ / Convert Web, sauf mention contraire. Toute reproduction est interdite sans autorisation préalable.</p>
     <p><strong>Responsabilité</strong><br>
@@ -1105,7 +1110,7 @@
 </div>
 
 <!-- ========== BOUTON FLOAT WHATSAPP ========== -->
-<a href="https://wa.me/33763676191" target="_blank" class="wa-float">
+<a href="https://wa.me/33763676191" target="_blank" rel="noopener noreferrer" class="wa-float">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
 </a>
 
@@ -1220,13 +1225,20 @@
     if (!wasOpen) item.classList.add('open');
   }
 
-  // Smooth anchor scroll
+  // Smooth anchor scroll — Fix critique: querySelector('#') lève une SyntaxError
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target && !this.closest('.modal-content')) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
+      const href = this.getAttribute('href');
+      // Ignorer les liens purement "#" (modales, bandeau cookies…)
+      if (!href || href === '#') return;
+      try {
+        const target = document.querySelector(href);
+        if (target && !this.closest('.modal-content')) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch(err) {
+        // Sélecteur CSS invalide — ne rien faire
       }
     });
   });
@@ -1234,15 +1246,19 @@
   // ----- GESTION DES MODALES -----
   function openModal(modalId) {
     document.getElementById(modalId).classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
   function closeModal(modalId) {
     document.getElementById(modalId).classList.remove('active');
+    document.body.style.overflow = '';
   }
-  window.onclick = function(e) {
+  // Fix: addEventListener au lieu de window.onclick (évite d'écraser d'autres handlers)
+  window.addEventListener('click', function(e) {
     if (e.target.classList && e.target.classList.contains('modal')) {
       e.target.classList.remove('active');
+      document.body.style.overflow = '';
     }
-  }
+  });
   document.getElementById('openLegalNotice')?.addEventListener('click', (e) => {
     e.preventDefault();
     openModal('legalModal');
@@ -1285,6 +1301,15 @@
     const err   = document.getElementById('f-error');
 
     if (!name || !resto || !tel || !ville) {
+      err.textContent = 'Merci de remplir tous les champs.';
+      err.style.display = 'block';
+      return;
+    }
+    // Validation du numéro de téléphone (France : 0X XX XX XX XX ou +33…)
+    const telClean = tel.replace(/[\s\-\.]/g, '');
+    const telRegex = /^(\+33|0033|0)[1-9](\d{8})$/;
+    if (!telRegex.test(telClean)) {
+      err.textContent = 'Numéro de téléphone invalide (ex: 06 12 34 56 78).';
       err.style.display = 'block';
       return;
     }
@@ -1293,7 +1318,7 @@
     const msg = encodeURIComponent(
       `Bonjour Convert Web 👋\n\nJe suis ${name}, du restaurant « ${resto} » à ${ville}.\nMon numéro : ${tel}\n\nJe souhaite recevoir une maquette gratuite pour mon restaurant. Merci !`
     );
-    window.open(`https://wa.me/33763676191?text=${msg}`, '_blank');
+    window.open(`https://wa.me/33763676191?text=${msg}`, '_blank', 'noopener,noreferrer');
   }
 
   checkCookieConsent();
