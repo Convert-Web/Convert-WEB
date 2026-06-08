@@ -501,12 +501,166 @@
     /* Animations */
     .rev {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(36px);
+      transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
     }
     .rev.in {
       opacity: 1;
       transform: translateY(0);
+    }
+    .rev.d1 { transition-delay: 0.08s; }
+    .rev.d2 { transition-delay: 0.18s; }
+    .rev.d3 { transition-delay: 0.28s; }
+    .rev.d4 { transition-delay: 0.38s; }
+
+    /* Hero h1 word reveal */
+    .hero-word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+    .hero-word-inner {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 0.75s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
+    }
+    .hero-word-inner.in {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Label underline draw */
+    .label {
+      position: relative;
+    }
+    .label::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 1px;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.6s cubic-bezier(0.22,1,0.36,1) 0.3s;
+    }
+    .rev.in .label::after, .label.in::after {
+      width: 100%;
+    }
+
+    /* Shimmer sur btn-primary */
+    @keyframes shimmer {
+      0%   { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .btn-primary {
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40%;
+      height: 100%;
+      background: rgba(255,255,255,0.18);
+      transform: translateX(-120%) skewX(-20deg);
+      animation: shimmer 3.5s ease-in-out infinite 1.5s;
+    }
+
+    /* Glow pulsé hero bg */
+    @keyframes glowDrift {
+      0%   { transform: translate(0, 0) scale(1); opacity: 0.15; }
+      33%  { transform: translate(60px, -40px) scale(1.2); opacity: 0.22; }
+      66%  { transform: translate(-30px, 30px) scale(0.9); opacity: 0.12; }
+      100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+    }
+    .hero-bg-glow {
+      animation: glowDrift 12s ease-in-out infinite;
+    }
+    .hero-bg-glow-2 {
+      position: absolute;
+      top: 50%;
+      right: -5%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(196,241,53,0.08), transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      animation: glowDrift 15s ease-in-out infinite reverse 3s;
+    }
+
+    /* Step number count */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.8); }
+      to   { opacity: 0.4; transform: translateY(0) scale(1); }
+    }
+    .process-card.in .step-number {
+      animation: countUp 0.6s cubic-bezier(0.22,1,0.36,1) both 0.1s;
+    }
+
+    /* Pricing featured card — animated border glow */
+    @keyframes borderRotate {
+      to { --angle: 360deg; }
+    }
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+    .pricing-card.featured {
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 25px;
+      background: conic-gradient(from var(--angle), transparent 70%, var(--accent) 85%, transparent 95%);
+      animation: borderRotate 4s linear infinite;
+      z-index: -1;
+    }
+
+    /* WhatsApp float pulse ring */
+    @keyframes waPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.45), 0 4px 12px rgba(0,0,0,0.3); }
+      60%  { box-shadow: 0 0 0 14px rgba(37,211,102,0), 0 4px 12px rgba(0,0,0,0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 4px 12px rgba(0,0,0,0.3); }
+    }
+    .wa-float {
+      animation: waPulse 3s ease-out infinite;
+    }
+
+    /* Stats counter fade-in */
+    @keyframes statPop {
+      from { transform: scale(0.7) translateY(8px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .stat.popped .stat-number {
+      animation: statPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    /* CTA section animated gradient */
+    @keyframes ctaGlow {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    .cta-section {
+      background-size: 200% 200%;
+      animation: ctaGlow 8s ease infinite;
+    }
+
+    /* FAQ smooth open */
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 18px;
+    }
+    .faq-question span {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-item.open .faq-question span {
+      transform: rotate(45deg);
     }
 
     /* WhatsApp float */
@@ -675,18 +829,19 @@
 
 <section class="hero">
   <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow-2"></div>
   <div class="wrap">
     <div class="hero-grid">
       <div class="rev">
         <div class="hero-badge">⚡ 0% commission · sans engagement</div>
-        <h1>Votre restaurant <span style="color: var(--accent);">mérite un site</span> qui rapporte</h1>
+        <h1 id="hero-h1">Votre restaurant <span style="color: var(--accent);">mérite un site</span> qui rapporte</h1>
         <p class="text-muted" style="margin-bottom: 20px;">Commandes en ligne sans commission, menu interactif, SEO local. Nous créons votre site sur-mesure en moins de 10 jours.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">📲 Maquette gratuite</a>
           <a href="#demo" class="btn btn-outline">🎬 Voir une démo</a>
         </div>
         <div class="hero-stats">
-          <div class="stat"><div class="stat-number">+0%</div><div>commission</div></div>
+          <div class="stat"><div class="stat-number">0%</div><div>commission</div></div>
           <div class="stat"><div class="stat-number">48h</div><div>maquette</div></div>
           <div class="stat"><div class="stat-number">100%</div><div>sur-mesure</div></div>
         </div>
@@ -976,19 +1131,93 @@
     });
   });
 
-  // Reveal animations
+  // ── Hero h1 word-by-word reveal ──
+  (function() {
+    const h1 = document.getElementById('hero-h1');
+    if (!h1) return;
+    function wrapWords(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const words = node.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        words.forEach(part => {
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(part));
+          } else if (part.length) {
+            const outer = document.createElement('span');
+            outer.className = 'hero-word';
+            const inner = document.createElement('span');
+            inner.className = 'hero-word-inner';
+            inner.textContent = part;
+            outer.appendChild(inner);
+            frag.appendChild(outer);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
+        Array.from(node.childNodes).forEach(wrapWords);
+      }
+    }
+    wrapWords(h1);
+    const inners = h1.querySelectorAll('.hero-word-inner');
+    setTimeout(() => {
+      inners.forEach((el, i) => {
+        setTimeout(() => el.classList.add('in'), i * 60);
+      });
+    }, 150);
+  })();
+
+  // ── Reveal animations (IntersectionObserver) ──
   const revs = document.querySelectorAll('.rev');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('in');
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   revs.forEach(el => observer.observe(el));
+
+  // ── Stats counter animation ──
+  function animateCounter(el, target, suffix, duration) {
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('popped');
+        const num = entry.target.querySelector('.stat-number');
+        if (!num || num.dataset.animated) return;
+        num.dataset.animated = '1';
+        const raw = num.textContent.trim();
+        if (raw === '0%') { animateCounter(num, 0, '%', 800); }
+        else if (raw === '48h') { animateCounter(num, 48, 'h', 900); }
+        else if (raw === '100%') { animateCounter(num, 100, '%', 1000); }
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat').forEach(el => statObserver.observe(el));
+
+  // ── Process cards: ajouter class 'in' au reveal ──
+  const procObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.process-card').forEach(el => procObserver.observe(el));
 
   // FAQ toggle
   function toggleFaq(el) {
     const item = el.closest('.faq-item');
-    item.classList.toggle('open');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
   }
 
   // Smooth anchor scroll
@@ -1009,13 +1238,11 @@
   function closeModal(modalId) {
     document.getElementById(modalId).classList.remove('active');
   }
-  // Fermer en cliquant à l'extérieur du contenu
   window.onclick = function(e) {
     if (e.target.classList && e.target.classList.contains('modal')) {
       e.target.classList.remove('active');
     }
   }
-  // Liens footer
   document.getElementById('openLegalNotice')?.addEventListener('click', (e) => {
     e.preventDefault();
     openModal('legalModal');
@@ -1024,7 +1251,6 @@
     e.preventDefault();
     openModal('privacyModal');
   });
-  // Lien "En savoir plus" dans le bandeau cookies ouvre la politique
   const cookiePolicyLink = document.getElementById('cookiePolicyLink');
   if(cookiePolicyLink) {
     cookiePolicyLink.addEventListener('click', (e) => {
@@ -1033,7 +1259,7 @@
     });
   }
 
-  // ----- GESTION COOKIES (bannière) -----
+  // ----- GESTION COOKIES -----
   const cookieBanner = document.getElementById('cookieBanner');
   const acceptBtn = document.getElementById('acceptCookies');
   const refuseBtn = document.getElementById('refuseCookies');
@@ -1041,22 +1267,12 @@
   function setCookieConsent(choice) {
     localStorage.setItem('cookieConsent', choice);
     cookieBanner.classList.remove('show');
-    if(choice === 'accepted') {
-      console.log('Cookies acceptés (aucun cookie tiers déposé pour le moment)');
-    } else {
-      console.log('Cookies refusés, seuls les cookies essentiels fonctionnent');
-    }
   }
-
   function checkCookieConsent() {
     const consent = localStorage.getItem('cookieConsent');
-    if(!consent) {
-      cookieBanner.classList.add('show');
-    } else {
-      cookieBanner.classList.remove('show');
-    }
+    if(!consent) cookieBanner.classList.add('show');
+    else cookieBanner.classList.remove('show');
   }
-
   if(acceptBtn) acceptBtn.addEventListener('click', () => setCookieConsent('accepted'));
   if(refuseBtn) refuseBtn.addEventListener('click', () => setCookieConsent('refused'));
 
