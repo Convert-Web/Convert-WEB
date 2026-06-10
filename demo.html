@@ -430,6 +430,177 @@
     }
     .demo-banner a { color: var(--gold); font-weight: 600; text-decoration: none; }
     .demo-banner a:hover { text-decoration: underline; }
+
+    /* ── GALERIE ── */
+    .gallery-section { padding: 96px 0; }
+    .gallery-head { margin-bottom: 40px; }
+    .gallery-head h2 { margin-top: 14px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 8px;
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    @media (min-width: 768px) { .gallery-grid { padding: 0 40px; } }
+    @media (max-width: 680px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 180px 180px;
+      }
+      .gallery-item--tall { grid-row: span 1 !important; }
+    }
+    .gallery-item {
+      position: relative; overflow: hidden; border-radius: 14px;
+      border: 1px solid var(--border); cursor: pointer; background: var(--raised);
+    }
+    .gallery-item--tall { grid-row: span 2; }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.82) saturate(0.88);
+      transition: transform 0.55s ease, filter 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); filter: brightness(0.55) saturate(1.1); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end; padding: 18px 20px;
+      background: linear-gradient(to top, rgba(8,8,13,0.80) 0%, transparent 52%);
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span {
+      font-family: var(--display); font-style: italic;
+      font-size: 0.9rem; color: var(--text);
+    }
+
+    /* ── RÉSERVATION ── */
+    .resa-section { padding: 96px 0; }
+    .resa-inner {
+      display: grid; grid-template-columns: 1fr; gap: 52px; align-items: center;
+    }
+    @media (min-width: 900px) { .resa-inner { grid-template-columns: 1fr 1fr; } }
+    .resa-promises { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .resa-promise { font-size: 0.84rem; color: var(--muted); }
+    .resa-card {
+      background: var(--surface); border: 1px solid var(--border-lit);
+      border-radius: 22px; padding: 36px 32px;
+      position: relative; overflow: hidden;
+    }
+    @media (max-width: 480px) { .resa-card { padding: 28px 20px; } }
+    .resa-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .resa-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    @media (max-width: 420px) { .resa-row { grid-template-columns: 1fr; } }
+    .resa-field { display: flex; flex-direction: column; gap: 6px; }
+    .resa-field-full { display: flex; flex-direction: column; gap: 6px; margin-bottom: 22px; }
+    .resa-label {
+      font-size: 0.63rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--dim);
+    }
+    .resa-input {
+      font-family: var(--body); font-size: 0.88rem;
+      background: var(--raised); border: 1px solid var(--border);
+      color: var(--text); border-radius: 10px; padding: 11px 14px;
+      transition: border-color 0.2s; outline: none; width: 100%;
+      -webkit-appearance: none; appearance: none;
+    }
+    .resa-input:focus { border-color: var(--gold); }
+    .resa-input option, .resa-input optgroup { background: #161620; color: var(--text); }
+    .resa-input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.5) sepia(0.5); opacity: 0.6; cursor: pointer;
+    }
+    .resa-submit-note { font-size: 0.7rem; color: var(--dim); text-align: center; margin-top: 12px; }
+
+    /* ── PERFORMANCES ── */
+    .perf-section { padding: 96px 0; }
+    .perf-head { text-align: center; max-width: 560px; margin: 0 auto 48px; }
+    .perf-head h2 { margin-top: 14px; }
+    .perf-head p { color: var(--muted); font-size: 0.9rem; margin-top: 12px; line-height: 1.8; }
+    .perf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; }
+    @media (min-width: 768px) { .perf-grid { grid-template-columns: repeat(4, 1fr); } }
+    .perf-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 30px 24px; text-align: center;
+      transition: border-color 0.22s, transform 0.22s;
+      position: relative; overflow: hidden;
+    }
+    .perf-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .perf-card:hover { border-color: var(--border-lit); transform: translateY(-3px); }
+    .perf-card:hover::after { opacity: 1; }
+    .perf-icon { font-size: 1.5rem; margin-bottom: 16px; display: block; }
+    .perf-number {
+      font-family: var(--display); font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 8px;
+    }
+    .perf-label { font-size: 0.78rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .perf-sub { font-size: 0.7rem; color: var(--green-text); }
+    .perf-note { text-align: center; font-size: 0.72rem; color: var(--dim); margin-top: 24px; font-style: italic; }
+
+    /* ── SEO LOCAL ── */
+    .seo-section { padding: 96px 0; }
+    .seo-inner {
+      display: grid; grid-template-columns: 1fr; gap: 52px; align-items: center;
+    }
+    @media (min-width: 900px) { .seo-inner { grid-template-columns: 1fr 1.2fr; } }
+    .seo-features { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .seo-feat { font-size: 0.84rem; color: var(--muted); }
+    .seo-kw-block { display: flex; flex-direction: column; gap: 18px; }
+    .seo-kw-title { font-size: 0.63rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+    .seo-keywords { display: flex; flex-wrap: wrap; gap: 8px; }
+    .seo-kw {
+      display: inline-flex; align-items: center;
+      padding: 5px 13px; border-radius: 100px; font-size: 0.74rem; font-weight: 500;
+      border: 1px solid var(--border); color: var(--muted); background: var(--surface);
+    }
+    .seo-kw--hot { border-color: rgba(212,180,131,0.30); background: var(--gold-dim); color: var(--gold); }
+    .seo-mock { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .seo-mock-bar {
+      background: var(--raised); padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .seo-mock-brand { font-size: 0.82rem; font-weight: 700; color: var(--gold); font-style: italic; flex-shrink: 0; }
+    .seo-mock-query {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; font-size: 0.78rem; color: var(--text);
+    }
+    .seo-result { padding: 18px; }
+    .seo-result-title { font-size: 0.88rem; color: #8ab4f8; font-weight: 500; margin-bottom: 2px; text-decoration: underline; }
+    .seo-result-url { font-size: 0.7rem; color: #bdc1c6; margin-bottom: 6px; }
+    .seo-result-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.55; margin-bottom: 8px; }
+    .seo-result-stars { font-size: 0.72rem; color: var(--green-text); }
+
+    /* ── VIP STRIP ── */
+    .vip-strip {
+      background: var(--surface); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 36px 0;
+    }
+    .vip-inner { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+    @media (min-width: 768px) { .vip-inner { flex-direction: row; align-items: center; gap: 36px; } }
+    .vip-badge {
+      white-space: nowrap; display: inline-flex; align-items: center; gap: 7px;
+      background: var(--gold-dim); border: 1px solid rgba(212,180,131,0.25);
+      color: var(--gold); font-size: 0.67rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 8px 18px; border-radius: 100px; flex-shrink: 0;
+    }
+    .vip-badge::before { content: '★'; font-size: 0.6rem; }
+    .vip-items { display: flex; flex-wrap: wrap; gap: 0; flex: 1; align-items: center; }
+    @media (min-width: 640px) { .vip-items { flex-wrap: nowrap; } }
+    .vip-item { display: flex; align-items: center; gap: 14px; padding: 10px 24px; flex: 1; min-width: 180px; }
+    .vip-item:first-child { padding-left: 0; }
+    .vip-ico { font-size: 1.3rem; flex-shrink: 0; }
+    .vip-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .vip-item-desc { font-size: 0.73rem; color: var(--muted); }
+    .vip-div { width: 1px; height: 44px; background: var(--border); flex-shrink: 0; display: none; }
+    @media (min-width: 640px) { .vip-div { display: block; } }
   </style>
 </head>
 <body>
@@ -448,6 +619,7 @@
         <a href="#menu">La Carte</a>
         <a href="#histoire">Notre Histoire</a>
         <a href="#avis">Avis</a>
+        <a href="#reservation" style="color:var(--gold);">Réserver</a>
         <a href="#infos">Infos</a>
       </div>
       <div class="nav-right">
@@ -461,6 +633,7 @@
   <a href="#menu">La Carte</a>
   <a href="#histoire">Notre Histoire</a>
   <a href="#avis">Avis clients</a>
+  <a href="#reservation">Réserver une table</a>
   <a href="#infos">Infos pratiques</a>
   <a href="#order" class="btn btn-gold" style="justify-content:center;">Commander →</a>
 </div>
@@ -570,6 +743,40 @@
 
 <div class="ornament">· · ✦ · ·</div>
 
+<!-- ── GALERIE ── -->
+<section class="gallery-section" id="galerie">
+  <div class="wrap">
+    <div class="gallery-head rv">
+      <span class="eyebrow">Galerie</span>
+      <h2>Dans l'assiette &amp;<br><em style="color:var(--gold);">dans la salle</em></h2>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item gallery-item--tall rv">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&h=1080&q=80" alt="Entrecôte maturée" loading="lazy">
+      <div class="gallery-overlay"><span>Entrecôte maturée 45 jours</span></div>
+    </div>
+    <div class="gallery-item rv d1">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=380&q=80" alt="Cuisine du marché" loading="lazy">
+      <div class="gallery-overlay"><span>Cuisine du marché</span></div>
+    </div>
+    <div class="gallery-item rv d2">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&h=380&q=80" alt="Cave à vins" loading="lazy">
+      <div class="gallery-overlay"><span>Notre sélection de vins</span></div>
+    </div>
+    <div class="gallery-item rv d1">
+      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&h=380&q=80" alt="Poisson du jour" loading="lazy">
+      <div class="gallery-overlay"><span>Pavé de cabillaud sauvage</span></div>
+    </div>
+    <div class="gallery-item rv d2">
+      <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=600&h=380&q=80" alt="Pâtisseries" loading="lazy">
+      <div class="gallery-overlay"><span>Paris-Brest du chef</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">· · ✦ · ·</div>
+
 <!-- ── REVIEWS ── -->
 <section class="reviews-section" id="avis">
   <div class="wrap">
@@ -633,6 +840,91 @@
 
 <div class="ornament">· · ✦ · ·</div>
 
+<!-- ── RÉSERVATION ── -->
+<section class="resa-section" id="reservation">
+  <div class="wrap">
+    <div class="resa-inner rv">
+      <div>
+        <span class="eyebrow">Réservation</span>
+        <h2 style="margin: 14px 0 16px;">Réservez votre<br><em style="color:var(--gold);">table en ligne</em></h2>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;max-width:360px;">Choisissez votre créneau, nous confirmons par WhatsApp en moins de 5 minutes — sans frais, sans compte à créer.</p>
+        <div class="resa-promises">
+          <div class="resa-promise">✓ &nbsp;Confirmation sous 5 min</div>
+          <div class="resa-promise">✓ &nbsp;Aucun frais de réservation</div>
+          <div class="resa-promise">✓ &nbsp;Modification jusqu'à 2h avant</div>
+        </div>
+      </div>
+      <div>
+        <div class="resa-card">
+          <div class="resa-row">
+            <div class="resa-field">
+              <label class="resa-label" for="resa-date">Date</label>
+              <input class="resa-input" type="date" id="resa-date">
+            </div>
+            <div class="resa-field">
+              <label class="resa-label" for="resa-time">Heure</label>
+              <select class="resa-input" id="resa-time">
+                <option value="">Choisir…</option>
+                <optgroup label="Déjeuner">
+                  <option value="12h00">12h00</option>
+                  <option value="12h30">12h30</option>
+                  <option value="13h00">13h00</option>
+                  <option value="13h30">13h30</option>
+                </optgroup>
+                <optgroup label="Dîner">
+                  <option value="19h00">19h00</option>
+                  <option value="19h30">19h30</option>
+                  <option value="20h00">20h00</option>
+                  <option value="20h30">20h30</option>
+                  <option value="21h00">21h00</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="resa-row">
+            <div class="resa-field">
+              <label class="resa-label" for="resa-guests">Personnes</label>
+              <select class="resa-input" id="resa-guests">
+                <option value="">Choisir…</option>
+                <option>1 personne</option>
+                <option>2 personnes</option>
+                <option>3 personnes</option>
+                <option>4 personnes</option>
+                <option>5 personnes</option>
+                <option>6 personnes</option>
+                <option>7 personnes</option>
+                <option>8 personnes</option>
+                <option>9+ personnes</option>
+              </select>
+            </div>
+            <div class="resa-field">
+              <label class="resa-label" for="resa-name">Prénom</label>
+              <input class="resa-input" type="text" id="resa-name" placeholder="Votre prénom">
+            </div>
+          </div>
+          <div class="resa-field-full">
+            <label class="resa-label" for="resa-occasion">Occasion (optionnel)</label>
+            <select class="resa-input" id="resa-occasion">
+              <option value="">Aucune occasion particulière</option>
+              <option value="anniversaire">🎂 Anniversaire</option>
+              <option value="dîner romantique">🌹 Dîner romantique</option>
+              <option value="repas d'affaires">💼 Repas d'affaires</option>
+              <option value="repas en famille">👨‍👩‍👧 Repas en famille</option>
+            </select>
+          </div>
+          <button class="btn btn-gold btn-lg" style="width:100%;justify-content:center;" onclick="submitResa()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
+            Confirmer ma réservation
+          </button>
+          <p class="resa-submit-note">Confirmation par WhatsApp · Réponse sous 5 min</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">· · ✦ · ·</div>
+
 <!-- ── ORDER ── -->
 <section class="order-section" id="order">
   <div class="wrap">
@@ -650,6 +942,94 @@
         Commander sur WhatsApp
       </a>
       <p class="order-note">Livraison disponible · À emporter · Réservation de table</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">· · ✦ · ·</div>
+
+<!-- ── PERFORMANCES ── -->
+<section class="perf-section" id="performances">
+  <div class="wrap">
+    <div class="perf-head rv">
+      <span class="eyebrow">Rapport mensuel</span>
+      <h2>Vos performances,<br><em style="color:var(--gold);">en un coup d'œil</em></h2>
+      <p>Chaque mois, vous recevez un rapport complet de l'activité de votre site — visiteurs, commandes, réservations, positionnement Google.</p>
+    </div>
+    <div class="perf-grid">
+      <div class="perf-card rv">
+        <span class="perf-icon">👁</span>
+        <div class="perf-number" data-target="847">0</div>
+        <div class="perf-label">Visiteurs uniques</div>
+        <div class="perf-sub">↑ +23% vs mois dernier</div>
+      </div>
+      <div class="perf-card rv d1">
+        <span class="perf-icon">💬</span>
+        <div class="perf-number" data-target="156">0</div>
+        <div class="perf-label">Clics WhatsApp</div>
+        <div class="perf-sub">↑ +18% vs mois dernier</div>
+      </div>
+      <div class="perf-card rv d2">
+        <span class="perf-icon">🗓</span>
+        <div class="perf-number" data-target="89">0</div>
+        <div class="perf-label">Réservations reçues</div>
+        <div class="perf-sub">↑ +31% vs mois dernier</div>
+      </div>
+      <div class="perf-card rv d3">
+        <span class="perf-icon">⭐</span>
+        <div class="perf-number" data-target="49" data-decimal="true">0</div>
+        <div class="perf-label">Note Google</div>
+        <div class="perf-sub">214 avis vérifiés</div>
+      </div>
+    </div>
+    <p class="perf-note rv">Ces chiffres sont des exemples illustratifs. Votre rapport personnel est envoyé chaque 1er du mois.</p>
+  </div>
+</section>
+
+<div class="ornament">· · ✦ · ·</div>
+
+<!-- ── SEO LOCAL ── -->
+<section class="seo-section" id="seo">
+  <div class="wrap">
+    <div class="seo-inner rv">
+      <div>
+        <span class="eyebrow">SEO Local</span>
+        <h2 style="margin: 14px 0 16px;">Visible en premier<br><em style="color:var(--gold);">sur Google</em></h2>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.85;max-width:400px;">Votre site est optimisé pour apparaître en tête des recherches locales de vos futurs clients — sans agence SEO supplémentaire, inclus dans le pack.</p>
+        <div class="seo-features">
+          <div class="seo-feat">✓ &nbsp;Google Business Profile optimisé</div>
+          <div class="seo-feat">✓ &nbsp;Balises titre &amp; description sur mesure</div>
+          <div class="seo-feat">✓ &nbsp;Schema.org Restaurant intégré</div>
+          <div class="seo-feat">✓ &nbsp;Rapport de positions mensuel</div>
+        </div>
+      </div>
+      <div class="seo-kw-block">
+        <div class="seo-kw-title">Mots-clés ciblés pour La Maison Dorée</div>
+        <div class="seo-keywords">
+          <span class="seo-kw seo-kw--hot">restaurant Paris 8e</span>
+          <span class="seo-kw">brasserie Paris 8</span>
+          <span class="seo-kw seo-kw--hot">déjeuner Paris 8e</span>
+          <span class="seo-kw">dîner Paris 8ème</span>
+          <span class="seo-kw seo-kw--hot">meilleur restaurant Paris 8</span>
+          <span class="seo-kw">brasserie Faubourg Saint-Honoré</span>
+          <span class="seo-kw seo-kw--hot">livraison repas Paris 8</span>
+          <span class="seo-kw">restaurant gastronomique Paris</span>
+          <span class="seo-kw">commande en ligne restaurant Paris</span>
+        </div>
+        <div class="seo-mock">
+          <div class="seo-mock-bar">
+            <span class="seo-mock-brand">Google</span>
+            <span class="seo-mock-query">restaurant Paris 8e</span>
+            <span style="font-size:0.9rem;">🔍</span>
+          </div>
+          <div class="seo-result">
+            <div class="seo-result-title">La Maison Dorée · Brasserie Parisienne depuis 1987</div>
+            <div class="seo-result-url">maisondoree.fr</div>
+            <div class="seo-result-desc">Brasserie parisienne depuis 1987. Cuisine du marché, produits locaux, recettes de saison. Commandez directement en ligne — 0% de commission.</div>
+            <div class="seo-result-stars">⭐⭐⭐⭐⭐ 4.9 (214 avis) · Ouvert · 12h–14h30 &amp; 19h–23h · 17 rue du Faubourg St-Honoré</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -694,6 +1074,40 @@
   </div>
 </section>
 
+<!-- ── SUPPORT VIP ── -->
+<section class="vip-strip">
+  <div class="wrap">
+    <div class="vip-inner rv">
+      <div class="vip-badge">Support VIP inclus</div>
+      <div class="vip-items">
+        <div class="vip-item">
+          <span class="vip-ico">🛡️</span>
+          <div>
+            <div class="vip-item-title">Assistance 7j/7</div>
+            <div class="vip-item-desc">WhatsApp &amp; email, réponse sous 2h</div>
+          </div>
+        </div>
+        <div class="vip-div"></div>
+        <div class="vip-item">
+          <span class="vip-ico">⚡</span>
+          <div>
+            <div class="vip-item-title">Modifications sous 24h</div>
+            <div class="vip-item-desc">Textes, photos, menu — on s'occupe de tout</div>
+          </div>
+        </div>
+        <div class="vip-div"></div>
+        <div class="vip-item">
+          <span class="vip-ico">📊</span>
+          <div>
+            <div class="vip-item-title">Rapport mensuel inclus</div>
+            <div class="vip-item-desc">Visiteurs, clics, réservations, Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer style="margin-bottom: 60px;">
   <div class="wrap">
@@ -705,8 +1119,10 @@
       <div class="footer-col">
         <h5>Navigation</h5>
         <a href="#menu">La Carte</a>
+        <a href="#galerie">Galerie</a>
         <a href="#histoire">Notre Histoire</a>
         <a href="#avis">Avis clients</a>
+        <a href="#reservation">Réserver</a>
         <a href="#infos">Infos pratiques</a>
         <a href="#order">Commander</a>
       </div>
@@ -859,6 +1275,66 @@ drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   hbg.classList.remove('open');
   drawer.classList.remove('open');
 }));
+
+/* ── RÉSERVATION ── */
+(function() {
+  const d = document.getElementById('resa-date');
+  if (d) d.min = new Date().toISOString().split('T')[0];
+})();
+
+function submitResa() {
+  const date     = document.getElementById('resa-date').value;
+  const time     = document.getElementById('resa-time').value;
+  const guests   = document.getElementById('resa-guests').value;
+  const name     = document.getElementById('resa-name').value.trim();
+  const occasion = document.getElementById('resa-occasion').value;
+
+  if (!date || !time || !guests) {
+    const el = document.querySelector('.resa-card');
+    el.style.borderColor = 'rgba(212,180,131,0.55)';
+    setTimeout(() => el.style.borderColor = '', 1800);
+    return;
+  }
+
+  const d = new Date(date + 'T12:00:00');
+  const dateStr = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  let msg = `Bonjour La Maison Dorée 🌟\n\nJe souhaite réserver une table :\n`;
+  msg += `→ Date : ${dateStr}\n`;
+  msg += `→ Heure : ${time}\n`;
+  msg += `→ Couverts : ${guests}\n`;
+  if (name) msg += `→ Prénom : ${name}\n`;
+  if (occasion) msg += `→ Occasion : ${occasion}\n`;
+  msg += `\nMerci !`;
+
+  window.open(`https://wa.me/33600000000?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+/* ── COMPTEURS ANIMÉS ── */
+function animateCounter(el) {
+  const target  = parseInt(el.dataset.target, 10);
+  const decimal = el.dataset.decimal === 'true';
+  const dur     = 1800;
+  const t0      = performance.now();
+
+  function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val  = Math.round(target * ease);
+    el.textContent = decimal
+      ? (val / 10).toFixed(1)
+      : val.toLocaleString('fr-FR');
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const cntObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animateCounter(e.target); cntObs.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.perf-number').forEach(el => cntObs.observe(el));
 
 /* ── REVEAL ON SCROLL ── */
 const rvObs = new IntersectionObserver(entries => {
