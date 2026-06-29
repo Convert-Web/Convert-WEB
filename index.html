@@ -1,521 +1,777 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Convert Web · Un site qui convertit</title>
-  <meta name="description" content="Convert Web crée des sites sur-mesure pour restaurants. Commandes en ligne, 0% commission, SEO local. Maquette gratuite sous 24h.">
-  <meta name="theme-color" content="#C4F135">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConvertWEB – Sites internet qui convertissent pour les restaurants</title>
+  <meta name="description" content="ConvertWEB crée des sites web ultra-rapides, mobiles et optimisés pour transformer vos visiteurs en clients. Offres sans engagement à partir de 195 €." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.convertweb.fr/" />
+  <meta property="og:title" content="ConvertWEB – Sites internet qui convertissent pour les restaurants" />
+  <meta property="og:description" content="Sites web pensés pour transformer vos visiteurs en réservations et commandes. À partir de 195 €, sans engagement." />
+  <meta property="og:image" content="https://www.convertweb.fr/og-image.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ConvertWEB – Sites internet qui convertissent pour les restaurants" />
+  <meta name="twitter:description" content="Sites web pensés pour transformer vos visiteurs en réservations et commandes. À partir de 195 €, sans engagement." />
+  <meta name="twitter:image" content="https://www.convertweb.fr/og-image.jpg" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.convertweb.fr/" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "ConvertWEB",
+    "description": "Agence spécialisée dans la création de sites internet qui convertissent pour les restaurants.",
+    "url": "https://www.convertweb.fr",
+    "email": "[EMAIL_AGENCE]",
+    "telephone": "[TELEPHONE_AGENCE]",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "[ADRESSE_RUE]",
+      "addressLocality": "[VILLE]",
+      "postalCode": "[CODE_POSTAL]",
+      "addressCountry": "FR"
+    },
+    "areaServed": "FR",
+    "priceRange": "€€"
+  }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#2563eb',
+            'accent-dark': '#1d4ed8',
+            'accent-light': '#dbeafe',
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'system-ui', 'sans-serif'],
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            fadeInUp: {
+              from: { opacity: '0', transform: 'translateY(32px)' },
+              to: { opacity: '1', transform: 'translateY(0)' },
+            },
+            reveal: {
+              from: { clipPath: 'inset(0 100% 0 0)' },
+              to: { clipPath: 'inset(0 0% 0 0)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% center' },
+              '100%': { backgroundPosition: '200% center' },
+            }
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both',
+            shimmer: 'shimmer 2.5s linear infinite',
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ===== CSS CUSTOM PROPERTIES ===== */
     :root {
-      --bg: #080808;
-      --bg-card: #0f0f0f;
-      --bg-elevated: #161616;
-      --border: rgba(255,255,255,0.07);
-      --border-lit: rgba(255,255,255,0.13);
-      --accent: #C4F135;
-      --accent-dim: rgba(196,241,53,0.1);
-      --accent-glow: rgba(196,241,53,0.25);
-      --white: #fff;
-      --text: rgba(255,255,255,0.88);
-      --text-muted: rgba(255,255,255,0.5);
-      --text-dim: rgba(255,255,255,0.28);
-      --red: #FF4F4F;
-      --radius: 20px;
-      --display: 'Syne', sans-serif;
-      --body: 'Instrument Sans', sans-serif;
-      --wrap: 1200px;
+      --color-bg: #ffffff;
+      --color-fg: #0a0a0a;
+      --color-muted: #6b7280;
+      --color-subtle: #f3f4f6;
+      --color-border: #e5e7eb;
+      --color-accent: #2563eb;
+      --color-accent-dark: #1d4ed8;
+      --radius-card: 20px;
+      --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lifted: 0 20px 50px -12px rgba(0,0,0,0.15);
     }
 
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--body);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { background: var(--color-bg); color: var(--color-fg); font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    /* Grain subtil */
-    body::after {
-      content: '';
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ===== HERO MOCKUP ===== */
+    .mockup-wrapper {
+      position: relative;
+      perspective: 1000px;
+    }
+    .mockup-phone {
+      background: #1c1c1e;
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 40px 80px -20px rgba(0,0,0,0.4), 0 20px 40px -10px rgba(37,99,235,0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+    .mockup-screen {
+      background: #fff;
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 9/17;
+      max-height: 560px;
+    }
+    .mockup-notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      background: #1c1c1e;
+      border-radius: 0 0 12px 12px;
+      z-index: 10;
+    }
+
+    /* ===== RESTAURANT SITE MOCKUP CONTENT ===== */
+    .rest-hero {
+      background: linear-gradient(160deg, #0f0f0f 0%, #1a0a00 100%);
+      height: 42%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .rest-hero-badge {
+      font-size: 6px;
+      color: #f59e0b;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .rest-hero-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .rest-hero-sub {
+      font-size: 6px;
+      color: rgba(255,255,255,0.6);
+    }
+    .rest-hero-cta {
+      margin-top: 6px;
+      background: #f59e0b;
+      color: #000;
+      font-size: 6px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .rest-hero-stars { font-size: 7px; color: #f59e0b; }
+    .rest-body { padding: 10px 8px; background: #fafafa; }
+    .rest-section-label { font-size: 5px; font-weight: 700; color: #6b7280; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .rest-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 5px;
+    }
+    .rest-img-ph {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .rest-item-name { font-size: 6px; font-weight: 600; color: #111; }
+    .rest-item-desc { font-size: 5px; color: #9ca3af; margin-top: 1px; }
+    .rest-item-price { font-size: 6px; font-weight: 700; color: #2563eb; margin-top: 2px; }
+    .rest-add-btn {
+      margin-left: auto;
+      background: #2563eb;
+      color: white;
+      font-size: 10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rest-bottom-bar {
+      background: #fff;
+      border-top: 1px solid #f3f4f6;
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .rest-cart-btn {
+      background: #25d366;
+      color: white;
+      font-size: 5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 20px;
+    }
+    .rest-stars-row { display: flex; align-items: center; gap: 3px; font-size: 5px; }
+
+    /* ===== GRADIENT BLUR ORBS ===== */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #2563eb; top: -100px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: 0; left: -100px; }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-card {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-lifted);
+      transform: translateY(-4px);
+      border-color: rgba(37,99,235,0.2);
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* ===== PRICING CARDS ===== */
+    .pricing-card {
+      background: #fff;
+      border: 1.5px solid var(--color-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .pricing-card:hover {
+      box-shadow: var(--shadow-lifted);
+      transform: translateY(-4px);
+    }
+    .pricing-card.featured {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 1px var(--color-accent), 0 20px 50px -12px rgba(37,99,235,0.2);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 4px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .pricing-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #374151;
+      padding: 6px 0;
+    }
+    .pricing-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #dbeafe;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pricing-check svg { width: 10px; height: 10px; color: #2563eb; }
+
+    /* ===== CTA BUTTONS ===== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--color-accent-dark);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.45);
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--color-fg);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 27px;
+      border-radius: 100px;
+      border: 1.5px solid var(--color-border);
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+      transform: translateY(-2px);
+    }
+
+    /* ===== NAV ===== */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .nav-bar.scrolled {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-item { border-bottom: 1px solid var(--color-border); }
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      font-size: 1rem;
+      font-weight: 600;
+      background: none;
+      border: none;
+      text-align: left;
+      color: var(--color-fg);
+      transition: color 0.2s ease;
+    }
+    .faq-btn:hover { color: var(--color-accent); }
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s ease, transform 0.3s ease;
+    }
+    .faq-btn[aria-expanded="true"] .faq-icon {
+      background: var(--color-accent);
+      transform: rotate(45deg);
+    }
+    .faq-btn[aria-expanded="true"] .faq-icon svg { color: #fff; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .faq-answer.open { max-height: 400px; }
+    .faq-answer-inner { padding-bottom: 1.25rem; color: #4b5563; line-height: 1.7; font-size: 0.95rem; }
+
+    /* ===== FORM ===== */
+    .form-group { position: relative; }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--color-fg);
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: #9ca3af; }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
+    }
+    .form-input.error { border-color: #ef4444; }
+    .form-error { color: #ef4444; font-size: 0.78rem; margin-top: 4px; display: none; }
+    .form-error.visible { display: block; }
+    textarea.form-input { resize: vertical; min-height: 120px; }
+
+    /* ===== COOKIE BANNER ===== */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--color-border);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 1.25rem 1.5rem;
+    }
+    #cookie-banner.show { transform: translateY(0); }
+    .cookie-btn {
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: #fff; border: none; }
+    .cookie-btn-accept:hover { background: var(--color-accent-dark); }
+    .cookie-btn-refuse { background: transparent; color: var(--color-fg); border: 1.5px solid var(--color-border); }
+    .cookie-btn-refuse:hover { border-color: var(--color-fg); }
+    .cookie-btn-custom { background: transparent; color: var(--color-muted); border: none; text-decoration: underline; font-size: 0.82rem; }
+
+    /* ===== MOBILE NAV ===== */
+    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    #mobile-menu.open { max-height: 400px; }
+    .hamburger { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--color-fg); border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-divider {
+      width: 40px;
+      height: 3px;
+      background: var(--color-accent);
+      border-radius: 2px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* ===== UTILITY ===== */
+    .text-gradient {
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prose-muted { color: #4b5563; line-height: 1.75; }
+
+    /* ===== FOOTER ===== */
+    footer a { transition: color 0.2s ease; }
+    footer a:hover { color: var(--color-accent); }
+
+    /* ===== COOKIE PREFERENCES MODAL ===== */
+    #cookie-modal-overlay {
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.022;
+      background: rgba(0,0,0,0.5);
+      z-index: 10000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
       pointer-events: none;
-      z-index: 9999;
+      transition: opacity 0.3s ease;
     }
-
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
-    @media (min-width: 768px) { .wrap { padding: 0 40px; } }
-
-    /* ── TYPOGRAPHY ── */
-    h1, h2, h3, h4 { font-family: var(--display); letter-spacing: -0.025em; line-height: 1.1; }
-    h1 { font-size: clamp(2.6rem, 6.5vw, 5.8rem); font-weight: 800; }
-    h2 { font-size: clamp(1.9rem, 4vw, 3.4rem); font-weight: 700; }
-    h3 { font-size: 1.05rem; font-weight: 600; }
-
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    #cookie-modal-overlay.show { opacity: 1; pointer-events: all; }
+    #cookie-modal {
+      background: #fff;
+      border-radius: 24px 24px 0 0;
+      padding: 2rem;
+      width: 100%;
+      max-width: 560px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .eyebrow::before { content: ''; width: 20px; height: 1.5px; background: var(--accent); display: block; }
-    .sub { font-size: clamp(0.95rem, 1.8vw, 1.05rem); color: var(--text-muted); line-height: 1.75; }
-
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      font-family: var(--body); font-weight: 600; font-size: 0.9rem;
-      padding: 13px 26px; border-radius: 100px;
-      text-decoration: none; cursor: pointer; border: none;
-      transition: all 0.22s ease; white-space: nowrap;
+    #cookie-modal-overlay.show #cookie-modal { transform: translateY(0); }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #d1d5db;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background 0.2s ease;
     }
-    .btn-primary { background: var(--accent); color: #000; }
-    .btn-primary:hover { background: #d8ff55; transform: translateY(-2px); box-shadow: 0 10px 28px var(--accent-glow); }
-    .btn-outline { background: transparent; color: var(--white); border: 1.5px solid var(--border-lit); }
-    .btn-outline:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
-    .btn-lg { padding: 16px 34px; font-size: 0.98rem; }
-
-    /* ── REVEAL ── */
-    .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .rv.in { opacity: 1; transform: none; }
-    .rv.d1 { transition-delay: 0.08s; }
-    .rv.d2 { transition-delay: 0.16s; }
-    .rv.d3 { transition-delay: 0.24s; }
-    .rv.d4 { transition-delay: 0.32s; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      padding: 18px 0; z-index: 900; transition: all 0.3s;
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
-    nav.scrolled {
-      background: rgba(8,8,8,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border); padding: 12px 0;
+    .toggle-switch input:checked + .toggle-slider { background: var(--color-accent); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .toggle-switch input:disabled + .toggle-slider { opacity: 0.6; cursor: not-allowed; }
+
+    @media (min-width: 768px) {
+      #cookie-modal { border-radius: 24px; margin: 2rem; }
+      #cookie-modal-overlay { align-items: center; }
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .logo { font-family: var(--display); font-size: 1.2rem; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -0.02em; }
-    .logo span { color: var(--accent); }
-    .nav-links { display: none; gap: 32px; }
-    @media (min-width: 768px) { .nav-links { display: flex; } }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--white); }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    @media (min-width: 768px) { .hamburger { display: none; } }
-    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: all 0.25s; transform-origin: center; }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .mobile-drawer { display: none; flex-direction: column; gap: 0; padding: 12px 20px 24px; background: rgba(8,8,8,0.98); border-bottom: 1px solid var(--border); }
-    .mobile-drawer.open { display: flex; }
-    .mobile-drawer a { color: var(--text-muted); text-decoration: none; font-size: 1rem; font-weight: 500; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .mobile-drawer a:last-child { border: none; margin-top: 12px; justify-content: center; border-radius: 100px; }
-    .nav-cta-desktop { display: none; }
-    @media (min-width: 640px) { .nav-cta-desktop { display: block; } }
-
-    /* ── HERO ── */
-    .hero { min-height: 100vh; display: flex; align-items: center; padding: 130px 0 80px; position: relative; overflow: hidden; }
-    .hero-glow { position: absolute; top: 30%; left: 40%; transform: translate(-50%, -50%); width: 700px; height: 500px; background: radial-gradient(ellipse, rgba(196,241,53,0.06) 0%, transparent 65%); pointer-events: none; }
-    .hero-wm {
-      position: absolute; top: 50%; right: -4%;
-      font-family: var(--display); font-size: clamp(220px, 32vw, 420px);
-      font-weight: 800; color: rgba(255,255,255,0.022); line-height: 1;
-      transform: translateY(-50%); pointer-events: none; user-select: none; letter-spacing: -0.04em;
-    }
-    .hero-content { position: relative; z-index: 2; max-width: 820px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent-dim); border: 1px solid rgba(196,241,53,0.22);
-      border-radius: 100px; padding: 6px 16px;
-      font-size: 0.75rem; font-weight: 600; color: var(--accent); margin-bottom: 28px;
-    }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s infinite; }
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-
-    /* Hero word reveal */
-    .hero h1 { margin-bottom: 22px; }
-    .w-outer { display: inline-block; overflow: hidden; }
-    .w-inner { display: inline-block; transform: translateY(110%); opacity: 0; transition: transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.4s; }
-    .w-inner.in { transform: none; opacity: 1; }
-    .acc { color: var(--accent); }
-
-    .hero-sub { max-width: 560px; margin-bottom: 32px; }
-    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
-    .hero-stats { display: flex; gap: 28px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--border); }
-    .hstat-num { font-family: var(--display); font-size: 1.9rem; font-weight: 800; color: var(--accent); line-height: 1; }
-    .hstat-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
-
-    /* ── TICKER ── */
-    .ticker-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 13px 0; }
-    .ticker-track { display: flex; animation: scroll-left 28s linear infinite; width: max-content; }
-    .ticker-track:hover { animation-play-state: paused; }
-    .tk-item { display: flex; align-items: center; gap: 14px; padding: 0 36px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
-    .tk-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-    @keyframes scroll-left { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-
-    /* ── CALCULATOR ── */
-    .calc-section { padding: 90px 0; }
-    .calc-wrap {
-      background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 26px;
-      padding: 44px 40px; max-width: 800px; margin: 0 auto; position: relative; overflow: hidden;
-    }
-    @media (max-width: 600px) { .calc-wrap { padding: 28px 20px; } }
-    .calc-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%); }
-    .calc-head { text-align: center; margin-bottom: 36px; }
-    .calc-head h2 { margin-bottom: 10px; }
-    .slider-label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-    .slider-row { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
-    input[type=range] { -webkit-appearance: none; flex: 1; height: 4px; border-radius: 4px; background: var(--border-lit); outline: none; cursor: pointer; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px var(--accent-dim); cursor: pointer; }
-    .slider-val { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: var(--white); min-width: 90px; text-align: right; }
-    .calc-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 30px; }
-    @media (max-width: 580px) { .calc-results { grid-template-columns: 1fr; } }
-    .calc-card {
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px 16px; text-align: center;
-    }
-    .calc-card.loss { border-color: rgba(255,79,79,0.25); }
-    .calc-card.gain { border-color: rgba(196,241,53,0.25); }
-    .calc-num { font-family: var(--display); font-size: 1.6rem; font-weight: 800; line-height: 1; margin-bottom: 5px; }
-    .calc-card.loss .calc-num { color: var(--red); }
-    .calc-card.gain .calc-num { color: var(--accent); }
-    .calc-lbl { font-size: 0.73rem; color: var(--text-muted); line-height: 1.4; }
-    .calc-bottom { text-align: center; }
-    .calc-note { font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; }
-
-    /* ── DEMO ── */
-    .demo-section { padding: 90px 0; }
-    .demo-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
-    @media (min-width: 900px) { .demo-grid { grid-template-columns: 1fr 1fr; } }
-    .demo-text h2 { margin-bottom: 14px; }
-    .demo-text .sub { margin-bottom: 24px; }
-    .demo-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { background: var(--bg-elevated); border: 1px solid var(--border-lit); border-radius: 100px; padding: 5px 14px; font-size: 0.75rem; font-weight: 500; color: var(--text-muted); }
-    .browser-frame {
-      background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 20px;
-      overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,0.55);
-    }
-    .browser-bar {
-      background: var(--bg-elevated); padding: 11px 16px;
-      display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border);
-    }
-    .bdots { display: flex; gap: 6px; }
-    .bdot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.1); }
-    .bdot:nth-child(1) { background: #ff5f56; }
-    .bdot:nth-child(2) { background: #ffbd2e; }
-    .bdot:nth-child(3) { background: #27c93f; }
-    .burl { flex: 1; background: rgba(255,255,255,0.05); border-radius: 6px; padding: 5px 12px; font-size: 0.65rem; color: var(--text-dim); text-align: center; }
-    .frame-box { position: relative; height: 400px; cursor: pointer; }
-    @media (min-width: 768px) { .frame-box { height: 460px; } }
-    .frame-box iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
-    .frame-overlay {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.45); backdrop-filter: blur(1px);
-      transition: background 0.2s;
-    }
-    .frame-box:hover .frame-overlay { background: rgba(0,0,0,0.2); }
-    .frame-cta { background: var(--accent); color: #000; font-family: var(--body); font-weight: 700; font-size: 0.88rem; padding: 11px 22px; border-radius: 100px; border: none; cursor: pointer; pointer-events: none; }
-
-    /* ── PAIN ── */
-    .pain-section { padding: 90px 0; }
-    .sec-header { text-align: center; max-width: 600px; margin: 0 auto 52px; }
-    .sec-header h2 { margin-bottom: 12px; }
-    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 16px; }
-    .pain-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 28px; transition: border-color 0.2s;
-    }
-    .pain-card:hover { border-color: var(--border-lit); }
-    .pain-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
-    .pain-card h3 { margin-bottom: 8px; }
-    .pain-card p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
-
-    /* ── PROCESS ── */
-    .process-section { padding: 90px 0; }
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 2px; margin-top: 52px; }
-    .step {
-      background: var(--bg-card); border: 1px solid var(--border); padding: 32px 26px;
-      transition: border-color 0.2s;
-    }
-    .step:first-child { border-radius: 18px 0 0 18px; }
-    .step:last-child { border-radius: 0 18px 18px 0; }
-    @media (max-width: 640px) { .step { border-radius: 14px !important; } }
-    .step:hover { border-color: rgba(196,241,53,0.25); }
-    .step-n { font-family: var(--display); font-size: 3.2rem; font-weight: 800; color: rgba(255,255,255,0.05); line-height: 1; margin-bottom: 16px; }
-    .step h3 { margin-bottom: 8px; font-size: 0.98rem; }
-    .step p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
-
-    /* ── PRICING ── */
-    .pricing-section { padding: 90px 0; }
-    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); gap: 16px; max-width: 960px; margin: 52px auto 0; }
-    .plan {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
-      padding: 30px 26px; display: flex; flex-direction: column; position: relative; overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .plan:hover { border-color: var(--border-lit); transform: translateY(-3px); }
-    .plan.featured { border-color: rgba(196,241,53,0.32); background: rgba(196,241,53,0.03); transform: none; }
-    .plan.featured:hover { border-color: rgba(196,241,53,0.5); transform: translateY(-3px); }
-    .plan.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
-    .plan-badge { display: inline-block; background: var(--accent); color: #000; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 18px; align-self: flex-start; }
-    .plan-name { font-family: var(--display); font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
-    .plan-price { font-family: var(--display); font-size: 2.9rem; font-weight: 800; line-height: 1; }
-    .plan-mo { font-size: 0.8rem; color: var(--text-muted); margin: 5px 0 24px; }
-    .plan-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; flex: 1; }
-    .plan-feats li { font-size: 0.84rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 10px; }
-    .plan-feats li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; line-height: 1.5; }
-
-    /* ── FOUNDERS ── */
-    .founders-section { padding: 90px 0; }
-    .founders-card {
-      background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 26px;
-      padding: 52px 48px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 52px; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    @media (max-width: 768px) { .founders-card { grid-template-columns: 1fr; padding: 32px 24px; gap: 36px; } }
-    .founders-card::after { content: ''; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(196,241,53,0.05), transparent 70%); pointer-events: none; }
-    .founders-text h2 { margin-bottom: 14px; }
-    .founders-text p { color: var(--text-muted); font-size: 0.93rem; line-height: 1.8; margin-bottom: 26px; }
-    .perks { display: flex; flex-direction: column; gap: 18px; }
-    .perk { display: flex; align-items: flex-start; gap: 14px; }
-    .perk-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-    .perk strong { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; color: var(--text); }
-    .perk span { font-size: 0.78rem; color: var(--text-muted); }
-
-    /* ── FAQ ── */
-    .faq-section { padding: 90px 0; }
-    .faq-list { max-width: 720px; margin: 52px auto 0; display: flex; flex-direction: column; gap: 8px; }
-    .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color 0.2s; }
-    .faq-item.open { border-color: var(--border-lit); }
-    .faq-q { width: 100%; background: none; border: none; padding: 20px 24px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--body); font-size: 0.9rem; font-weight: 600; color: var(--text); }
-    .faq-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--bg-elevated); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; line-height: 1; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; font-size: 0.87rem; color: var(--text-muted); line-height: 1.75; padding: 0 24px; }
-    .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
-
-    /* ── CTA SECTION ── */
-    .cta-section { padding: 90px 0; }
-    .cta-box {
-      background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 26px;
-      padding: 56px 48px; text-align: center; position: relative; overflow: hidden;
-      max-width: 620px; margin: 0 auto;
-    }
-    @media (max-width: 600px) { .cta-box { padding: 36px 22px; } }
-    .cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
-    .cta-box h2 { margin-bottom: 10px; }
-    .cta-box p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 30px; }
-    .form-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-    .field { background: var(--bg-elevated); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 18px; font-family: var(--body); font-size: 0.9rem; color: var(--white); outline: none; transition: border-color 0.2s; width: 100%; }
-    .field::placeholder { color: var(--text-dim); }
-    .field:focus { border-color: rgba(196,241,53,0.45); }
-    .form-err { font-size: 0.77rem; color: var(--red); text-align: center; display: none; margin-bottom: 6px; }
-    .form-note { font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; }
-
-    /* ── FOOTER ── */
-    footer { border-top: 1px solid var(--border); padding: 52px 0 24px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 36px; }
-    @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
-    .footer-logo { font-family: var(--display); font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
-    .footer-logo span { color: var(--accent); }
-    .footer-brand p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; max-width: 260px; }
-    .footer-col h5 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; }
-    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; font-size: 0.84rem; line-height: 2; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--white); }
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.7rem; color: var(--text-dim); }
-    .footer-legal { display: flex; gap: 20px; }
-    .footer-legal a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-    .footer-legal a:hover { color: var(--text-muted); }
-
-    /* ── MODALS ── */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px); z-index: 9990; align-items: center; justify-content: center; padding: 24px; }
-    .modal.active { display: flex; }
-    .modal-box { background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 22px; padding: 36px 32px; max-width: 560px; width: 100%; max-height: 82vh; overflow-y: auto; position: relative; }
-    @media (max-width: 480px) { .modal-box { padding: 26px 20px; } }
-    .modal-close { position: absolute; top: 14px; right: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; color: var(--text-muted); transition: color 0.2s; }
-    .modal-close:hover { color: var(--white); }
-    .modal-box h3 { font-family: var(--display); font-size: 1.3rem; font-weight: 700; margin-bottom: 18px; }
-    .modal-box p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px; }
-    .modal-box h4 { font-family: var(--display); font-size: 0.9rem; font-weight: 600; color: var(--text); margin: 18px 0 6px; }
-    .modal-box a { color: var(--accent); }
-    .modal-box strong { color: var(--text); }
-
-    /* ── COOKIE ── */
-    .cookie-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(12,12,12,0.97); border-top: 1px solid var(--border-lit); padding: 16px 24px; display: none; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; z-index: 950; backdrop-filter: blur(12px); }
-    .cookie-bar.show { display: flex; }
-    .cookie-txt { font-size: 0.8rem; color: var(--text-muted); flex: 1; min-width: 200px; }
-    .cookie-txt a { color: var(--accent); cursor: pointer; text-decoration: none; }
-    .cookie-btns { display: flex; gap: 10px; }
-
-    /* ── WA FLOAT ── */
-    .wa-float { position: fixed; bottom: 26px; right: 22px; width: 52px; height: 52px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.35); z-index: 800; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
-    .wa-float:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
-<nav id="nav">
-  <div class="wrap">
-    <div class="nav-inner">
-      <a class="logo" href="#">Convert<span>Web</span></a>
-      <div class="nav-links">
-        <a href="#demo">Démo</a>
-        <a href="#process">Process</a>
-        <a href="#pricing">Tarifs</a>
-        <a href="#faq">FAQ</a>
+<!-- ============================================================
+  COOKIE BANNER
+============================================================ -->
+<div id="cookie-banner" role="dialog" aria-label="Gestion des cookies" aria-modal="true">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-sm text-gray-700 mb-3">
+      Nous utilisons des cookies pour analyser notre trafic et améliorer votre expérience. Aucun cookie non essentiel n'est chargé sans votre consentement.
+      <a href="cookies.html" class="text-accent font-medium underline ml-1">En savoir plus</a>
+    </p>
+    <div class="flex flex-wrap gap-2 items-center">
+      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accepter</button>
+      <button class="cookie-btn cookie-btn-refuse" onclick="refuseCookies()">Refuser</button>
+      <button class="cookie-btn cookie-btn-custom" onclick="openCookieModal()">Personnaliser</button>
+    </div>
+  </div>
+</div>
+
+<!-- COOKIE PREFERENCES MODAL -->
+<div id="cookie-modal-overlay" role="dialog" aria-label="Préférences cookies" aria-modal="true">
+  <div id="cookie-modal">
+    <h2 class="text-lg font-bold mb-1">Préférences cookies</h2>
+    <p class="text-sm text-gray-500 mb-4">Choisissez les cookies que vous acceptez. Les cookies essentiels ne peuvent pas être désactivés.</p>
+    <div class="space-y-4">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="font-semibold text-sm">Cookies essentiels</p>
+          <p class="text-xs text-gray-500">Nécessaires au fonctionnement du site (session, sécurité).</p>
+        </div>
+        <label class="toggle-switch" aria-label="Cookies essentiels">
+          <input type="checkbox" checked disabled />
+          <span class="toggle-slider"></span>
+        </label>
       </div>
-      <div class="nav-right">
-        <a href="#contact" class="btn btn-outline nav-cta-desktop" style="padding:9px 20px;">Maquette gratuite</a>
-        <button class="hamburger" id="hbg" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="font-semibold text-sm">Cookies analytiques</p>
+          <p class="text-xs text-gray-500">Nous aident à comprendre comment le site est utilisé (ex. Google Analytics).</p>
+        </div>
+        <label class="toggle-switch" aria-label="Cookies analytiques">
+          <input type="checkbox" id="analytics-toggle" />
+          <span class="toggle-slider"></span>
+        </label>
       </div>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button class="cookie-btn cookie-btn-accept flex-1" onclick="savePreferences()">Enregistrer</button>
+      <button class="cookie-btn cookie-btn-refuse flex-1" onclick="closeCookieModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  NAV
+============================================================ -->
+<nav class="nav-bar" id="navbar">
+  <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2" aria-label="ConvertWEB - Accueil">
+      <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1L14 4.5V11.5L8 15L2 11.5V4.5L8 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+          <path d="M8 4L11.5 6V10L8 12L4.5 10V6L8 4Z" fill="#2563eb" stroke="white" stroke-width="0.3" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="font-bold text-lg tracking-tight">ConvertWEB</span>
+    </a>
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-7">
+      <a href="#pourquoi" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Pourquoi nous</a>
+      <a href="#offres" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Nos offres</a>
+      <a href="#faq" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
+      <a href="#contact" class="btn-primary text-sm py-2.5 px-5">Obtenir un devis</a>
+    </div>
+    <!-- Mobile hamburger -->
+    <button class="hamburger md:hidden" id="hamburger-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100">
+    <div class="px-5 py-4 flex flex-col gap-4">
+      <a href="#pourquoi" class="text-sm font-medium text-gray-700 py-1" onclick="closeMobileMenu()">Pourquoi nous</a>
+      <a href="#offres" class="text-sm font-medium text-gray-700 py-1" onclick="closeMobileMenu()">Nos offres</a>
+      <a href="#faq" class="text-sm font-medium text-gray-700 py-1" onclick="closeMobileMenu()">FAQ</a>
+      <a href="#contact" class="btn-primary text-center text-sm" onclick="closeMobileMenu()">Obtenir un devis</a>
     </div>
   </div>
 </nav>
-<div class="mobile-drawer" id="drawer">
-  <a href="#demo" class="drawer-link">Démonstration</a>
-  <a href="#process" class="drawer-link">Comment ça marche</a>
-  <a href="#pricing" class="drawer-link">Tarifs</a>
-  <a href="#faq" class="drawer-link">FAQ</a>
-  <a href="#contact" class="btn btn-primary">📲 Maquette gratuite</a>
-</div>
 
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-wm">30%</div>
-  <div class="wrap">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        ⚡ Offre de lancement — 0% commission
-      </div>
-      <h1 id="hero-h1">
-        Arrêtez de payer<br>
-        <span class="acc">30% à Uber Eats.</span>
-      </h1>
-      <p class="sub hero-sub">Recevez vos commandes directement sur votre propre site. Menu interactif, SEO local, livré en 10 jours. Sans engagement.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary btn-lg">📲 Maquette gratuite en 24h</a>
-        <a href="#demo" class="btn btn-outline btn-lg">🎬 Voir la démo</a>
-      </div>
-      <div class="hero-stats">
-        <div class="rv">
-          <div class="hstat-num" data-target="0" data-suffix="%">0%</div>
-          <div class="hstat-lbl">commission</div>
-        </div>
-        <div class="rv d1">
-          <div class="hstat-num" data-target="24" data-suffix="h">24h</div>
-          <div class="hstat-lbl">maquette</div>
-        </div>
-        <div class="rv d2">
-          <div class="hstat-num" data-target="10" data-suffix=" jours">10 jours</div>
-          <div class="hstat-lbl">livraison</div>
-        </div>
-        <div class="rv d3">
-          <div class="hstat-num" data-target="100" data-suffix="%">100%</div>
-          <div class="hstat-lbl">sur-mesure</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── TICKER ── -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="tk-item">0% de commission<span class="tk-dot"></span></span>
-    <span class="tk-item">Maquette gratuite 24h<span class="tk-dot"></span></span>
-    <span class="tk-item">Livraison en 10 jours<span class="tk-dot"></span></span>
-    <span class="tk-item">SEO local inclus<span class="tk-dot"></span></span>
-    <span class="tk-item">Commandes directes<span class="tk-dot"></span></span>
-    <span class="tk-item">Sans engagement<span class="tk-dot"></span></span>
-    <span class="tk-item">Support WhatsApp<span class="tk-dot"></span></span>
-    <span class="tk-item">Menu interactif<span class="tk-dot"></span></span>
-    <!-- Duplicate pour loop infini -->
-    <span class="tk-item">0% de commission<span class="tk-dot"></span></span>
-    <span class="tk-item">Maquette gratuite 24h<span class="tk-dot"></span></span>
-    <span class="tk-item">Livraison en 10 jours<span class="tk-dot"></span></span>
-    <span class="tk-item">SEO local inclus<span class="tk-dot"></span></span>
-    <span class="tk-item">Commandes directes<span class="tk-dot"></span></span>
-    <span class="tk-item">Sans engagement<span class="tk-dot"></span></span>
-    <span class="tk-item">Support WhatsApp<span class="tk-dot"></span></span>
-    <span class="tk-item">Menu interactif<span class="tk-dot"></span></span>
-  </div>
-</div>
+<!-- ============================================================
+  HERO
+============================================================ -->
+<section class="relative min-h-screen flex items-center overflow-hidden pt-20 pb-16 px-5">
+  <!-- Background orbs -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <!-- Subtle grid -->
+  <div class="absolute inset-0 opacity-[0.025]" style="background-image: linear-gradient(#000 1px,transparent 1px),linear-gradient(90deg,#000 1px,transparent 1px);background-size:60px 60px;" aria-hidden="true"></div>
 
-<!-- ── CALCULATOR ── -->
-<section class="calc-section">
-  <div class="wrap">
-    <div class="calc-wrap rv">
-      <div class="calc-head">
-        <span class="eyebrow">Calculateur</span>
-        <h2>Combien perdez-vous<br>chaque mois&nbsp;?</h2>
-        <p class="sub" style="margin: 10px auto 0; max-width: 480px;">Entrez vos ventes mensuelles via Uber Eats, Deliveroo ou Just Eat. Voyez ce que vous perdez en commission.</p>
-      </div>
-      <div class="slider-label">Mes ventes mensuelles via plateformes</div>
-      <div class="slider-row">
-        <input type="range" id="rev-slider" min="200" max="8000" step="100" value="2000">
-        <div class="slider-val" id="rev-val">2 000 €/mois</div>
-      </div>
-      <div class="calc-results">
-        <div class="calc-card loss rv d1">
-          <div class="calc-num" id="c-month">—</div>
-          <div class="calc-lbl">Commission perdue<br>ce mois-ci</div>
+  <div class="max-w-6xl mx-auto w-full">
+    <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+      <!-- Left content -->
+      <div class="flex-1 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 bg-accent-light text-accent text-xs font-semibold px-4 py-2 rounded-full mb-8 reveal">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          Agence web spécialisée restaurants
         </div>
-        <div class="calc-card loss rv d2">
-          <div class="calc-num" id="c-year">—</div>
-          <div class="calc-lbl">Commission perdue<br>en 1 an</div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 reveal reveal-delay-1">
+          Votre restaurant<br />mérite plus qu'un<br /><span class="text-gradient">simple site internet.</span>
+        </h1>
+        <p class="text-lg text-gray-500 leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0 reveal reveal-delay-2">
+          Nous créons des sites web pensés pour transformer vos visiteurs en clients grâce à une expérience rapide, moderne et optimisée.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 reveal reveal-delay-3">
+          <a href="#offres" class="btn-primary w-full sm:w-auto justify-center">
+            Découvrir nos offres
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn-secondary w-full sm:w-auto justify-center">Obtenir un devis</a>
         </div>
-        <div class="calc-card gain rv d3">
-          <div class="calc-num" id="c-save">—</div>
-          <div class="calc-lbl">Économie avec<br>Convert Web</div>
-        </div>
-      </div>
-      <div class="calc-bottom">
-        <a href="#contact" class="btn btn-primary btn-lg">Récupérer cet argent →</a>
-        <p class="calc-note">* Taux de commission moyen estimé à 30% (Uber Eats, Deliveroo). Convert Web : abonnement Pro à 35€/mois.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── DEMO ── -->
-<section class="demo-section" id="demo">
-  <div class="wrap">
-    <div class="demo-grid">
-      <div class="demo-text rv">
-        <span class="eyebrow">Démonstration</span>
-        <h2>Pas une promesse.<br>Une démo réelle.</h2>
-        <p class="sub">La plupart des agences montrent des captures d'écran. Nous vous montrons exactement ce que vous aurez — cliquez pour explorer le site en vrai.</p>
-        <div class="demo-chips" style="margin-top: 24px;">
-          <span class="chip">📱 Panier interactif</span>
-          <span class="chip">💬 Commande WhatsApp</span>
-          <span class="chip">⭐ Avis Google</span>
-          <span class="chip">🗺️ Maps intégrée</span>
-          <span class="chip">📸 Galerie photos</span>
-        </div>
-      </div>
-      <div class="rv d1">
-        <div class="browser-frame">
-          <div class="browser-bar">
-            <div class="bdots"><div class="bdot"></div><div class="bdot"></div><div class="bdot"></div></div>
-            <div class="burl">🔒 demo.convertweb.fr · Convert Web</div>
+        <!-- Trust signals -->
+        <div class="flex flex-wrap justify-center lg:justify-start gap-6 mt-12 reveal reveal-delay-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+              <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-sm text-gray-600 font-medium">Sans engagement</span>
           </div>
-          <div class="frame-box" onclick="window.open('demo.html','_blank')">
-            <iframe src="demo.html" title="Démo site restaurant Convert Web" loading="lazy"></iframe>
-            <div class="frame-overlay">
-              <button class="frame-cta">🔍 Voir le site en vrai →</button>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+              <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v6l3.5 2" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-sm text-gray-600 font-medium">Livraison rapide</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+              <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="#7c3aed" stroke-width="1.8"/><path d="M7 4.5v3l1.5 1.5" stroke="#7c3aed" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="text-sm text-gray-600 font-medium">Support réactif</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Phone mockup -->
+      <div class="flex-1 flex justify-center lg:justify-end reveal reveal-delay-2">
+        <div class="mockup-wrapper w-full max-w-[260px] sm:max-w-[300px]">
+          <div class="mockup-phone relative">
+            <div class="mockup-notch" aria-hidden="true"></div>
+            <div class="mockup-screen" aria-label="Aperçu d'un site restaurant ConvertWEB" role="img">
+              <!-- Restaurant site preview -->
+              <div class="rest-hero">
+                <div class="rest-hero-badge">🍕 Pizzeria Roma</div>
+                <div class="rest-hero-title">Vraie pizza napolitaine</div>
+                <div class="rest-hero-sub">Montereau-Fault-Yonne · Ouvert jusqu'à 22h</div>
+                <div class="rest-hero-stars">★★★★★ <span style="color:rgba(255,255,255,0.6); font-size:5px; margin-left:2px;">4.9 (127 avis)</span></div>
+                <div class="rest-hero-cta">Commander via WhatsApp</div>
+              </div>
+              <div class="rest-body">
+                <div class="rest-section-label">Nos meilleures pizzas</div>
+                <div class="rest-card">
+                  <div class="rest-img-ph" style="background: linear-gradient(135deg,#fbbf24,#f97316);" aria-hidden="true"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="rest-item-name">Margherita</div>
+                    <div class="rest-item-desc">Tomate, mozzarella, basilic</div>
+                    <div class="rest-item-price">11,90 €</div>
+                  </div>
+                  <div class="rest-add-btn" aria-hidden="true">+</div>
+                </div>
+                <div class="rest-card">
+                  <div class="rest-img-ph" style="background: linear-gradient(135deg,#ef4444,#b91c1c);" aria-hidden="true"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="rest-item-name">Quatre Fromages</div>
+                    <div class="rest-item-desc">Mozza, gorgonzola, parmesan</div>
+                    <div class="rest-item-price">14,90 €</div>
+                  </div>
+                  <div class="rest-add-btn" aria-hidden="true">+</div>
+                </div>
+                <div class="rest-card">
+                  <div class="rest-img-ph" style="background: linear-gradient(135deg,#84cc16,#16a34a);" aria-hidden="true"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="rest-item-name">Végétarienne</div>
+                    <div class="rest-item-desc">Légumes de saison, pesto</div>
+                    <div class="rest-item-price">13,50 €</div>
+                  </div>
+                  <div class="rest-add-btn" aria-hidden="true">+</div>
+                </div>
+              </div>
+              <div class="rest-bottom-bar">
+                <div class="rest-stars-row">
+                  <span style="color:#f59e0b;">★</span> <span style="color:#374151;">Google Reviews</span>
+                </div>
+                <div class="rest-cart-btn">🛒 Commander</div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating badge -->
+          <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl p-3 shadow-xl border border-gray-100 flex items-center gap-2" aria-hidden="true">
+            <div class="w-8 h-8 rounded-xl bg-green-100 flex items-center justify-center">
+              <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7l3.5 3.5L12 3" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-gray-900" style="font-size:10px;">Score Lighthouse</div>
+              <div class="text-xs font-bold text-green-600" style="font-size:10px;">100 / 100 ✓</div>
             </div>
           </div>
         </div>
@@ -524,504 +780,720 @@
   </div>
 </section>
 
-<!-- ── PAIN POINTS ── -->
-<section class="pain-section">
-  <div class="wrap">
-    <div class="sec-header rv">
-      <span class="eyebrow">Le problème</span>
-      <h2>Trois raisons pour lesquelles votre restaurant perd de l'argent</h2>
-    </div>
-    <div class="pain-grid">
-      <div class="pain-card rv">
-        <span class="pain-icon">📉</span>
-        <h3>30% de commission à chaque commande</h3>
-        <p>Sur 3 000 € de ventes, 900 € partent directement chez Uber Eats. Sur un an, c'est 10 800 € qui ne vous appartiennent pas.</p>
-      </div>
-      <div class="pain-card rv d1">
-        <span class="pain-icon">🔍</span>
-        <h3>Invisible sur Google Maps et les recherches locales</h3>
-        <p>Un client à 200m cherche "restaurant [votre ville]" et ne vous trouve pas. Sans SEO local optimisé, vous existez pour les plateformes, pas pour Google.</p>
-      </div>
-      <div class="pain-card rv d2">
-        <span class="pain-icon">📱</span>
-        <h3>Votre menu est introuvable en 2 secondes</h3>
-        <p>72% des clients consultent le menu en ligne avant de commander. S'ils ne le trouvent pas ou s'il est mal affiché, ils choisissent un concurrent.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── PROCESS ── -->
-<section class="process-section" id="process">
-  <div class="wrap">
-    <div class="sec-header rv">
-      <span class="eyebrow">Comment ça marche</span>
-      <h2>Simple, rapide, sans stress</h2>
+<!-- ============================================================
+  POURQUOI CONVERTWEB
+============================================================ -->
+<section id="pourquoi" class="py-24 px-5 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Le problème</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 reveal reveal-delay-1">Un site lent ou dépassé,<br /><span class="text-gradient">c'est un client perdu.</span></h2>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed reveal reveal-delay-2">
+        53 % des visiteurs quittent un site qui met plus de 3 secondes à charger. Sur mobile, un menu illisible ou un bouton de réservation introuvable signifie une commande en moins.
+      </p>
     </div>
-    <div class="steps">
-      <div class="step rv">
-        <div class="step-n">01</div>
-        <h3>Appel découverte</h3>
-        <p>Un appel de 15 minutes pour comprendre votre carte, votre ambiance et vos objectifs. Aucun engagement.</p>
-      </div>
-      <div class="step rv d1">
-        <div class="step-n">02</div>
-        <h3>Maquette gratuite</h3>
-        <p>Sous 24h, vous recevez une maquette visuelle de votre futur site. Vous validez ou demandez des ajustements, sans rien payer.</p>
-      </div>
-      <div class="step rv d2">
-        <div class="step-n">03</div>
-        <h3>Développement & mise en ligne</h3>
-        <p>Nous créons, hébergeons et référençons votre site sur Google. Livré en moins de 10 jours. Vous n'installez rien.</p>
-      </div>
-      <div class="step rv d3">
-        <div class="step-n">04</div>
-        <h3>Évolutions incluses</h3>
-        <p>Menu, prix, photos, promotions : envoyez-nous vos modifications par WhatsApp, nous les appliquons sous 24h.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── PRICING ── -->
-<section class="pricing-section" id="pricing">
-  <div class="wrap">
-    <div class="sec-header rv">
-      <span class="eyebrow">Tarifs</span>
-      <h2>Des prix justes, sans engagement</h2>
-      <p class="sub" style="margin: 12px auto 0;">Nous débutons notre activité — vous bénéficiez d'un suivi premium au prix de lancement.</p>
-    </div>
-    <div class="plans">
-      <div class="plan rv">
-        <div class="plan-name">Essentiel</div>
-        <div class="plan-price">195€</div>
-        <div class="plan-mo">+ 19€/mois · Sans engagement</div>
-        <ul class="plan-feats">
-          <li>Site responsive (mobile &amp; desktop)</li>
-          <li>Menu interactif</li>
-          <li>SEO local de base</li>
-          <li>Hébergement &amp; sécurité inclus</li>
-          <li>Modifications sous 24h</li>
+    <!-- Split section -->
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-red-50 border border-red-100 rounded-3xl p-8 reveal">
+        <div class="text-2xl mb-4">❌</div>
+        <h3 class="text-xl font-bold text-red-800 mb-4">Un site classique</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3 text-red-700 text-sm">
+            <span class="mt-0.5">•</span> Lent à charger, pénalisé par Google
+          </li>
+          <li class="flex items-start gap-3 text-red-700 text-sm">
+            <span class="mt-0.5">•</span> Pas optimisé mobile : visiteurs qui fuient
+          </li>
+          <li class="flex items-start gap-3 text-red-700 text-sm">
+            <span class="mt-0.5">•</span> Menu non interactif, pas de commande directe
+          </li>
+          <li class="flex items-start gap-3 text-red-700 text-sm">
+            <span class="mt-0.5">•</span> Invisible sur Google Maps et recherches locales
+          </li>
+          <li class="flex items-start gap-3 text-red-700 text-sm">
+            <span class="mt-0.5">•</span> Pas de connexion WhatsApp ni d'avis Google
+          </li>
         </ul>
-        <a href="#contact" class="btn btn-outline" style="width:100%;">Choisir →</a>
       </div>
-      <div class="plan featured rv d1">
-        <div class="plan-badge">⭐ Recommandé</div>
-        <div class="plan-name">Restaurant Pro</div>
-        <div class="plan-price">295€</div>
-        <div class="plan-mo">+ 35€/mois · Sans engagement</div>
-        <ul class="plan-feats">
-          <li>Tout Essentiel, plus :</li>
-          <li>Commandes en ligne via WhatsApp</li>
-          <li>SEO local avancé + Google Maps intégré</li>
-          <li>Avis Google affichés en temps réel</li>
-          <li>Support WhatsApp prioritaire</li>
+      <div class="bg-blue-50 border border-blue-100 rounded-3xl p-8 reveal reveal-delay-1">
+        <div class="text-2xl mb-4">✅</div>
+        <h3 class="text-xl font-bold text-blue-800 mb-4">Un site ConvertWEB</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3 text-blue-700 text-sm">
+            <span class="mt-0.5">•</span> Ultra-rapide, score Lighthouse proche de 100
+          </li>
+          <li class="flex items-start gap-3 text-blue-700 text-sm">
+            <span class="mt-0.5">•</span> Mobile First : parfait sur tous les écrans
+          </li>
+          <li class="flex items-start gap-3 text-blue-700 text-sm">
+            <span class="mt-0.5">•</span> Menu interactif avec commande WhatsApp intégrée
+          </li>
+          <li class="flex items-start gap-3 text-blue-700 text-sm">
+            <span class="mt-0.5">•</span> SEO local avancé pour dominer les recherches Google
+          </li>
+          <li class="flex items-start gap-3 text-blue-700 text-sm">
+            <span class="mt-0.5">•</span> Avis Google affichés, réservation en 2 clics
+          </li>
         </ul>
-        <a href="#contact" class="btn btn-primary" style="width:100%;">Choisir →</a>
       </div>
-      <div class="plan rv d2">
-        <div class="plan-name">Premium</div>
-        <div class="plan-price">495€</div>
-        <div class="plan-mo">+ 49€/mois · Sans engagement</div>
-        <ul class="plan-feats">
-          <li>Tout Restaurant Pro, plus :</li>
-          <li>Audit SEO avancé + recommandations</li>
-          <li>Mises à jour prioritaires (24h max)</li>
-          <li>Assistance VIP WhatsApp &amp; email</li>
-          <li>Rapport de performance mensuel</li>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  NOS AVANTAGES
+============================================================ -->
+<section class="py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Ce que nous faisons</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal reveal-delay-1">Tout ce dont votre restaurant<br />a besoin, dès le départ.</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Feature cards -->
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">📱</span>
+        <h3 class="text-lg font-bold mb-2">Mobile First</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Conçu d'abord pour smartphone — là où se trouvent 80 % de vos futurs clients. Chaque bouton, chaque image, chaque ligne de texte est pensée pour le pouce.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <span class="feature-icon" aria-hidden="true">⚡</span>
+        <h3 class="text-lg font-bold mb-2">Ultra rapide</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Code optimisé, images compressées, hébergement haute performance. Votre site se charge en moins d'une seconde, même sur une connexion 4G faible.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <span class="feature-icon" aria-hidden="true">🍽️</span>
+        <h3 class="text-lg font-bold mb-2">Menu interactif</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Parcours fluide : photos, descriptions, prix, allergènes. Vos clients naviguent dans votre carte comme dans une vraie app, sans friction.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">📈</span>
+        <h3 class="text-lg font-bold mb-2">SEO local</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Structure sémantique, données structurées Schema.org, fiche Google My Business optimisée. Vous apparaissez en premier quand un client cherche « pizza près de chez moi ».</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <span class="feature-icon" aria-hidden="true">💬</span>
+        <h3 class="text-lg font-bold mb-2">Commandes WhatsApp</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Un clic, et la commande arrive sur votre téléphone via WhatsApp. Simple pour vous, rapide pour le client. Pas de commission, pas d'intermédiaire.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <span class="feature-icon" aria-hidden="true">🔒</span>
+        <h3 class="text-lg font-bold mb-2">Hébergement sécurisé</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">HTTPS, sauvegardes automatiques, certificat SSL, protection contre les attaques. Votre site est entre de bonnes mains, 24h/24 et 7j/7.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  NOS OFFRES
+============================================================ -->
+<section id="offres" class="py-24 px-5 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Tarifs transparents</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 reveal reveal-delay-1">Des offres claires,<br />sans mauvaise surprise.</h2>
+      <p class="text-gray-500 text-lg reveal reveal-delay-2">Sans engagement. Résiliable à tout moment.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 items-start">
+
+      <!-- Essentiel -->
+      <div class="pricing-card reveal">
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Essentiel</p>
+        <div class="flex items-end gap-1 mb-1">
+          <span class="text-4xl font-bold tracking-tight">195 €</span>
+        </div>
+        <p class="text-gray-500 text-sm mb-6">+ 19 €/mois · Sans engagement</p>
+        <div class="h-px bg-gray-100 mb-6"></div>
+        <ul class="space-y-2 mb-8">
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Site responsive (mobile &amp; desktop)
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Menu interactif
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            SEO local de base
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Hébergement &amp; sécurité inclus
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Modifications sous 24 h
+          </li>
         </ul>
-        <a href="#contact" class="btn btn-outline" style="width:100%;">Choisir →</a>
+        <a href="#contact" class="btn-secondary w-full justify-center">Choisir Essentiel</a>
+      </div>
+
+      <!-- Restaurant Pro (featured) -->
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">⭐ La plus populaire</div>
+        <p class="text-xs font-bold text-accent uppercase tracking-widest mb-2">Restaurant Pro</p>
+        <div class="flex items-end gap-1 mb-1">
+          <span class="text-4xl font-bold tracking-tight">295 €</span>
+        </div>
+        <p class="text-gray-500 text-sm mb-6">+ 35 €/mois · Sans engagement</p>
+        <div class="h-px bg-gray-100 mb-6"></div>
+        <ul class="space-y-2 mb-8">
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Tout ce qui est inclus dans Essentiel
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Commandes en ligne via WhatsApp
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Panier interactif
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Google Maps intégré
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Avis Google affichés en temps réel
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            SEO local avancé
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Support WhatsApp prioritaire
+          </li>
+        </ul>
+        <a href="#contact" class="btn-primary w-full justify-center">Choisir Restaurant Pro</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Premium</p>
+        <div class="flex items-end gap-1 mb-1">
+          <span class="text-4xl font-bold tracking-tight">495 €</span>
+        </div>
+        <p class="text-gray-500 text-sm mb-6">+ 49 €/mois · Sans engagement</p>
+        <div class="h-px bg-gray-100 mb-6"></div>
+        <ul class="space-y-2 mb-8">
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Tout ce qui est inclus dans Restaurant Pro
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Audit SEO avancé
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Recommandations personnalisées
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Mises à jour prioritaires (24 h max)
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-check"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Assistance VIP (WhatsApp &amp; e-mail)
+          </li>
+        </ul>
+        <a href="#contact" class="btn-secondary w-full justify-center">Choisir Premium</a>
       </div>
     </div>
-    <p style="text-align:center; font-size:0.72rem; color:var(--text-dim); margin-top:20px;">🔒 Paiement à la livraison de la maquette. Premier mois d'hébergement offert. Résiliable à tout moment.</p>
+
+    <p class="text-center text-sm text-gray-400 mt-8 reveal">Tous les prix sont HT · TVA 20 % applicable · Aucun engagement de durée</p>
   </div>
 </section>
 
-<!-- ── FOUNDERS / SOCIAL PROOF WORKAROUND ── -->
-<section class="founders-section">
-  <div class="wrap">
-    <div class="founders-card rv">
-      <div class="founders-text">
-        <span class="eyebrow">Offre Fondateurs</span>
-        <h2>Nous démarrons.<br>Vous en profitez.</h2>
-        <p>Convert Web est une agence en cours de lancement. C'est une opportunité : vous bénéficiez de notre attention totale, de nos meilleurs prix, et d'un suivi direct avec le fondateur — sans intermédiaire.</p>
-        <a href="#contact" class="btn btn-primary">📲 Devenir client fondateur</a>
+
+<!-- ============================================================
+  POURQUOI NOUS CHOISIR
+============================================================ -->
+<section class="py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Notre philosophie</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal reveal-delay-1">Simples, rapides,<br />et toujours là pour vous.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div class="text-center reveal">
+        <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl" aria-hidden="true">🎯</span>
+        </div>
+        <h3 class="font-bold mb-2">Simplicité</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Pas de jargon, pas de surprise. Vous savez exactement ce que vous obtenez et pour quel prix.</p>
       </div>
-      <div class="perks">
-        <div class="perk">
-          <div class="perk-ico">👤</div>
-          <div>
-            <strong>Wissam vous suit en direct</strong>
-            <span>Pas de commercial, pas de chef de projet. Le fondateur gère votre projet lui-même.</span>
-          </div>
+      <div class="text-center reveal reveal-delay-1">
+        <div class="w-14 h-14 rounded-2xl bg-yellow-50 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl" aria-hidden="true">⚡</span>
         </div>
-        <div class="perk">
-          <div class="perk-ico">💰</div>
-          <div>
-            <strong>Prix de lancement garantis</strong>
-            <span>Les tarifs actuels sont les plus bas que nous proposerons. Ils monteront avec notre croissance.</span>
-          </div>
+        <h3 class="font-bold mb-2">Rapidité</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Votre site est livré rapidement, sans attente inutile. Notre process est rodé pour l'efficacité.</p>
+      </div>
+      <div class="text-center reveal reveal-delay-2">
+        <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl" aria-hidden="true">📊</span>
         </div>
-        <div class="perk">
-          <div class="perk-ico">🎯</div>
-          <div>
-            <strong>Votre site, priorité absolue</strong>
-            <span>Peu de clients actifs = zéro compromis sur la qualité et les délais pour votre projet.</span>
-          </div>
+        <h3 class="font-bold mb-2">Performance</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Chaque décision technique vise un seul objectif : convertir vos visiteurs en clients réels.</p>
+      </div>
+      <div class="text-center reveal reveal-delay-3">
+        <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl" aria-hidden="true">🤝</span>
         </div>
-        <div class="perk">
-          <div class="perk-ico">🔒</div>
-          <div>
-            <strong>Paiement uniquement à la livraison</strong>
-            <span>Vous ne payez que si la maquette vous convient. Zéro risque financier.</span>
+        <h3 class="font-bold mb-2">Accompagnement</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Notre équipe est disponible pour modifier votre site, répondre à vos questions et vous conseiller.</p>
+      </div>
+      <div class="text-center reveal reveal-delay-4">
+        <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl" aria-hidden="true">🔍</span>
+        </div>
+        <h3 class="font-bold mb-2">Transparence</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Tarifs affichés, délais respectés, propriété de votre site garantie. Toujours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  FAQ
+============================================================ -->
+<section id="faq" class="py-24 px-5 bg-gray-50">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Questions fréquentes</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight reveal reveal-delay-1">On répond à tout.</h2>
+    </div>
+
+    <div class="space-y-0 reveal">
+      <!-- FAQ items -->
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Combien de temps faut-il pour créer mon site ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Une fois que nous avons reçu vos contenus (textes, photos, menu), nous livrons votre site en 5 à 10 jours ouvrés. Pour l'offre Premium, comptez 10 à 15 jours en raison de l'audit SEO approfondi.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Puis-je modifier mon site après la livraison ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Oui, bien sûr. Les modifications (mise à jour du menu, ajout de photos, changement d'horaires, etc.) sont incluses dans votre abonnement mensuel. Nous les traitons sous 24 h sur simple demande par WhatsApp ou e-mail.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Y a-t-il un engagement de durée ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Aucun engagement. L'abonnement mensuel est résiliable à tout moment, sans préavis ni pénalité. Si vous résiliez, vous conservez votre site (le code vous appartient). L'hébergement et les mises à jour s'arrêtent à la date de fin d'abonnement.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Le référencement local (SEO) est-il vraiment inclus ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Oui. Dès l'offre Essentiel, nous intégrons les balises SEO de base, les données structurées Schema.org et les bonnes pratiques Google My Business. L'offre Restaurant Pro ajoute le SEO local avancé (mots-clés géolocalisés, optimisation des descriptions, intégration Google Maps). L'offre Premium inclut en plus un audit complet et des recommandations personnalisées.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Puis-je recevoir des commandes directement via WhatsApp ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Oui, c'est l'une des fonctionnalités phares des offres Restaurant Pro et Premium. Votre client compose sa commande directement depuis votre site, et la reçoit avec un récapitulatif structuré sur votre WhatsApp. Aucune commission, aucun intermédiaire, aucune application tierce à gérer.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Que se passe-t-il si je n'ai pas de photos ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Pas de problème. Nous pouvons sélectionner des photos libres de droits professionnelles adaptées à votre type de cuisine pour démarrer. Vous pourrez les remplacer par vos propres photos à tout moment, sans frais supplémentaires.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Le site m'appartient-il vraiment ?</span>
+          <div class="faq-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Oui. Après livraison et règlement de la prestation initiale, vous êtes propriétaire du code source de votre site. Nos CGV le stipulent clairement. En cas de résiliation, vous pouvez héberger votre site ailleurs ou le confier à un autre prestataire.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ── -->
-<section class="faq-section" id="faq">
-  <div class="wrap">
-    <div class="sec-header rv">
-      <span class="eyebrow">FAQ</span>
-      <h2>On répond à tout</h2>
+
+<!-- ============================================================
+  CONTACT
+============================================================ -->
+<section id="contact" class="py-24 px-5">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="section-divider reveal"></div>
+      <p class="text-xs font-bold text-accent uppercase tracking-widest mb-3 reveal">Parlons-en</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 reveal reveal-delay-1">Recevez votre devis<br />sous 24 heures.</h2>
+      <p class="text-gray-500 reveal reveal-delay-2">Dites-nous en un peu plus sur votre restaurant. Notre équipe vous répond rapidement avec une proposition adaptée.</p>
     </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Combien de temps pour créer mon site ?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">Maquette sous 24h, mise en ligne sous 5 à 10 jours après validation de votre part.</div>
+
+    <form id="contact-form" class="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm reveal" novalidate aria-label="Formulaire de demande de devis">
+      <!-- Honeypot anti-spam -->
+      <div style="display:none;" aria-hidden="true">
+        <label for="website_url">Ne pas remplir</label>
+        <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Puis-je modifier mon menu moi-même ?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">Non, c'est nous qui gérons tout. Envoyez-nous vos modifications par WhatsApp (nouveau plat, changement de prix, photo…) et nous les appliquons sous 24h — c'est inclus dans l'abonnement.</div>
+
+      <div class="grid sm:grid-cols-2 gap-5 mb-5">
+        <div class="form-group">
+          <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Votre nom <span class="text-red-500" aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="Jean Dupont" required autocomplete="name" aria-required="true" aria-describedby="name-error" />
+          <p class="form-error" id="name-error" role="alert">Ce champ est requis.</p>
+        </div>
+        <div class="form-group">
+          <label for="restaurant" class="block text-sm font-semibold text-gray-700 mb-2">Nom du restaurant <span class="text-red-500" aria-hidden="true">*</span></label>
+          <input type="text" id="restaurant" name="restaurant" class="form-input" placeholder="La Bella Italia" required autocomplete="organization" aria-required="true" aria-describedby="restaurant-error" />
+          <p class="form-error" id="restaurant-error" role="alert">Ce champ est requis.</p>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Y a-t-il un engagement ?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">Aucun. La mensualité est sans engagement, vous stoppez quand vous voulez. Vous payez la création une fois, puis uniquement si vous restez.</div>
+
+      <div class="grid sm:grid-cols-2 gap-5 mb-5">
+        <div class="form-group">
+          <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Téléphone <span class="text-red-500" aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="06 12 34 56 78" required autocomplete="tel" aria-required="true" aria-describedby="phone-error" />
+          <p class="form-error" id="phone-error" role="alert">Numéro invalide.</p>
+        </div>
+        <div class="form-group">
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">E-mail <span class="text-red-500" aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="contact@monrestaurant.fr" required autocomplete="email" aria-required="true" aria-describedby="email-error" />
+          <p class="form-error" id="email-error" role="alert">Adresse e-mail invalide.</p>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Le site sera-t-il visible sur Google ?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">Oui, optimisation SEO locale incluse sur toutes les formules : Google Maps, mots-clés "restaurant + votre ville", balises techniques optimisées.</div>
+
+      <div class="form-group mb-5">
+        <label for="offre" class="block text-sm font-semibold text-gray-700 mb-2">Offre qui vous intéresse</label>
+        <select id="offre" name="offre" class="form-input">
+          <option value="">Choisissez une offre (optionnel)</option>
+          <option value="essentiel">Essentiel – 195 € + 19 €/mois</option>
+          <option value="pro">Restaurant Pro – 295 € + 35 €/mois</option>
+          <option value="premium">Premium – 495 € + 49 €/mois</option>
+          <option value="indecis">Je ne sais pas encore</option>
+        </select>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Comment fonctionnent les commandes sans commission ?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a">Vos clients passent leur commande directement via votre site. La commande vous arrive par WhatsApp, email ou notification. Aucune plateforme intermédiaire. Aucune commission.</div>
+
+      <div class="form-group mb-6">
+        <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Votre message</label>
+        <textarea id="message" name="message" class="form-input" placeholder="Dites-nous en plus sur votre restaurant, votre type de cuisine, vos besoins..." aria-describedby="message-hint"></textarea>
+        <p id="message-hint" class="text-xs text-gray-400 mt-1.5">Informations facultatives mais utiles pour personnaliser votre devis.</p>
       </div>
+
+      <!-- RGPD consent -->
+      <div class="mb-6">
+        <label class="flex items-start gap-3 cursor-pointer" for="rgpd">
+          <input type="checkbox" id="rgpd" name="rgpd" required aria-required="true" aria-describedby="rgpd-error"
+            class="mt-0.5 w-4 h-4 rounded border-gray-300 accent-[#2563eb] flex-shrink-0" />
+          <span class="text-sm text-gray-600 leading-relaxed">
+            J'accepte que mes données soient traitées par ConvertWEB dans le but de recevoir un devis. Je peux exercer mes droits à tout moment.
+            <a href="confidentialite.html" class="text-accent underline" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a>.
+            <span class="text-red-500" aria-hidden="true">*</span>
+          </span>
+        </label>
+        <p class="form-error" id="rgpd-error" role="alert" style="margin-left: 28px;">Vous devez accepter pour continuer.</p>
+      </div>
+
+      <button type="submit" class="btn-primary w-full justify-center text-base" id="submit-btn" aria-label="Envoyer ma demande de devis">
+        <span id="submit-text">Recevoir mon devis</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <p class="text-xs text-gray-400 text-center mt-4">Réponse garantie sous 24 h · Sans engagement</p>
+    </form>
+    <div id="form-success" class="hidden text-center py-16 reveal">
+      <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M5 14l6 6L23 7" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="text-xl font-bold mb-2">Message envoyé !</h3>
+      <p class="text-gray-500">Notre équipe vous répondra sous 24 h. Merci pour votre confiance.</p>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
-<section class="cta-section" id="contact">
-  <div class="wrap">
-    <div class="cta-box rv">
-      <span class="eyebrow" style="justify-content: center;">🎁 Offre de lancement</span>
-      <h2>Recevez votre maquette<br>gratuite sous 24h</h2>
-      <p>Remplissez les champs ci-dessous. Nous vous envoyons une maquette personnalisée, sans engagement et sans carte bancaire.</p>
-      <div class="form-stack">
-        <input class="field" type="text" id="f-name" placeholder="Votre prénom" autocomplete="given-name">
-        <input class="field" type="text" id="f-resto" placeholder="Nom du restaurant">
-        <input class="field" type="tel" id="f-tel" placeholder="Votre téléphone" autocomplete="tel">
-        <input class="field" type="text" id="f-ville" placeholder="Votre ville">
-      </div>
-      <div class="form-err" id="f-err">Merci de remplir tous les champs correctement.</div>
-      <button onclick="sendLead()" class="btn btn-primary btn-lg" style="width:100%;">📲 Recevoir ma maquette gratuite →</button>
-      <p class="form-note">Sans engagement · Données confidentielles · Réponse sous 24h</p>
-    </div>
-  </div>
-</section>
 
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-logo">Convert<span>Web</span></div>
-        <p>Création de sites sur-mesure pour restaurants, bars et food trucks. 0% commission, 100% personnalisable.</p>
+<!-- ============================================================
+  FOOTER
+============================================================ -->
+<footer class="bg-gray-950 text-white py-16 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <!-- Brand -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 1L14 4.5V11.5L8 15L2 11.5V4.5L8 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+              <path d="M8 4L11.5 6V10L8 12L4.5 10V6L8 4Z" fill="#2563eb" stroke="white" stroke-width="0.3" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="font-bold text-lg">ConvertWEB</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs">Nous créons des sites web qui transforment vos visiteurs en clients. Spécialisés dans la restauration.</p>
+        <div class="flex gap-4 mt-6">
+          <a href="mailto:[EMAIL_AGENCE]" class="text-gray-400 hover:text-white transition-colors text-sm" aria-label="Nous contacter par e-mail">[EMAIL_AGENCE]</a>
+        </div>
       </div>
-      <div class="footer-col">
-        <h5>Navigation</h5>
-        <a href="#demo">Démo</a>
-        <a href="#process">Process</a>
-        <a href="#pricing">Tarifs</a>
-        <a href="#faq">FAQ</a>
+      <!-- Navigation -->
+      <div>
+        <h3 class="font-semibold text-sm uppercase tracking-widest text-gray-400 mb-4">Navigation</h3>
+        <ul class="space-y-3">
+          <li><a href="#pourquoi" class="text-gray-300 text-sm hover:text-white">Pourquoi ConvertWEB</a></li>
+          <li><a href="#offres" class="text-gray-300 text-sm hover:text-white">Nos offres</a></li>
+          <li><a href="#faq" class="text-gray-300 text-sm hover:text-white">FAQ</a></li>
+          <li><a href="#contact" class="text-gray-300 text-sm hover:text-white">Contact</a></li>
+        </ul>
       </div>
-      <div class="footer-col">
-        <h5>Contact</h5>
-        <a href="mailto:contact.convertweb@gmail.com">📧 contact.convertweb@gmail.com</a>
-        <a href="https://wa.me/33763676191" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
-        <a href="tel:+33763676191">📞 07 63 67 61 91</a>
+      <!-- Legal -->
+      <div>
+        <h3 class="font-semibold text-sm uppercase tracking-widest text-gray-400 mb-4">Légal</h3>
+        <ul class="space-y-3">
+          <li><a href="mentions-legales.html" class="text-gray-300 text-sm hover:text-white">Mentions légales</a></li>
+          <li><a href="confidentialite.html" class="text-gray-300 text-sm hover:text-white">Politique de confidentialité</a></li>
+          <li><a href="cookies.html" class="text-gray-300 text-sm hover:text-white">Politique de cookies</a></li>
+          <li><a href="cgv.html" class="text-gray-300 text-sm hover:text-white">CGV</a></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Convert Web — Tous droits réservés</span>
-      <div class="footer-legal">
-        <a href="#" id="openLegal">Mentions légales</a>
-        <a href="#" id="openPrivacy">Politique de confidentialité</a>
-      </div>
+
+    <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-gray-500 text-sm">&copy; <span id="footer-year"></span> ConvertWEB. Tous droits réservés.</p>
+      <p class="text-gray-600 text-xs">Fait avec ❤️ pour les restaurateurs français</p>
     </div>
   </div>
 </footer>
 
-<!-- ── MODAL MENTIONS LÉGALES ── -->
-<div id="legalModal" class="modal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('legalModal')">✕</button>
-    <h3>Mentions légales</h3>
-    <p><strong>Convert Web</strong><br>
-    Édité par <strong>Wissam AIT ELHAJ</strong>, entrepreneur individuel (micro-entreprise en cours d'immatriculation).<br>
-    Adresse professionnelle : <strong>Montereau-Fault-Yonne (77130)</strong> – adresse complète disponible sur simple demande.<br>
-    Téléphone : <a href="tel:+33763676191">07 63 67 61 91</a><br>
-    E-mail : <a href="mailto:contact.convertweb@gmail.com">contact.convertweb@gmail.com</a></p>
-    <h4>Statut juridique</h4>
-    <p>L'activité est actuellement en cours d'immatriculation sous le régime de la micro-entreprise. Numéro SIRET et TVA intracommunautaire : <strong>non encore attribués (en cours)</strong>. Capital social : 0 € (entreprise individuelle).</p>
-    <h4>Directeur de la publication</h4>
-    <p>Wissam AIT ELHAJ</p>
-    <h4>Hébergement</h4>
-    <p>Le site est hébergé par GitHub, Inc. — 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis. <a href="https://pages.github.com/" target="_blank" rel="noopener">https://pages.github.com/</a></p>
-    <h4>Propriété intellectuelle</h4>
-    <p>L'ensemble des éléments présents sur ce site sont la propriété exclusive de Wissam AIT ELHAJ / Convert Web. Toute reproduction est interdite sans autorisation préalable.</p>
-    <h4>Responsabilité</h4>
-    <p>Convert Web s'efforce de fournir des informations exactes et à jour. En cas d'erreur, d'indisponibilité ou de dommage lié à l'utilisation du site, la responsabilité de l'éditeur ne saurait être engagée.</p>
-    <div style="margin-top:24px;">
-      <button class="btn btn-outline" onclick="closeModal('legalModal')">Fermer</button>
-    </div>
-  </div>
-</div>
 
-<!-- ── MODAL CONFIDENTIALITÉ ── -->
-<div id="privacyModal" class="modal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('privacyModal')">✕</button>
-    <h3>Politique de confidentialité</h3>
-    <p>Chez Convert Web, la protection de vos données personnelles est essentielle.</p>
-    <h4>1. Données collectées</h4>
-    <p>Lors de l'utilisation de notre formulaire de contact ou d'un message WhatsApp, nous pouvons recueillir : votre nom, adresse e-mail, numéro de téléphone, et toute information que vous nous transmettez librement. Nous ne collectons aucune donnée bancaire.</p>
-    <h4>2. Utilisation des données</h4>
-    <p>Ces données sont utilisées uniquement pour vous répondre, vous accompagner et exécuter nos prestations. Aucune donnée n'est vendue à des tiers.</p>
-    <h4>3. Cookies</h4>
-    <p>Ce site n'utilise pas de cookies publicitaires ou de traçage tiers. Seuls des cookies strictement nécessaires au bon fonctionnement peuvent être déposés.</p>
-    <h4>4. Vos droits (RGPD)</h4>
-    <p>Conformément au RGPD, vous pouvez accéder, rectifier ou supprimer vos données en écrivant à : <a href="mailto:contact.convertweb@gmail.com">contact.convertweb@gmail.com</a></p>
-    <h4>5. Sécurité</h4>
-    <p>Vos données sont conservées uniquement le temps nécessaire à la gestion de votre demande et ne sont jamais partagées.</p>
-    <div style="margin-top:24px;">
-      <button class="btn btn-outline" onclick="closeModal('privacyModal')">Fermer</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── COOKIE BANNER ── -->
-<div class="cookie-bar" id="cookieBar">
-  <div class="cookie-txt">🍪 Nous utilisons uniquement des cookies essentiels. <a id="cookiePolicyLink">En savoir plus</a></div>
-  <div class="cookie-btns">
-    <button class="btn btn-outline" style="padding:9px 18px;" onclick="setCookie('refused')">Refuser</button>
-    <button class="btn btn-primary" style="padding:9px 18px;" onclick="setCookie('accepted')">Accepter</button>
-  </div>
-</div>
-
-<!-- ── WA FLOAT ── -->
-<a href="https://wa.me/33763676191" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Nous contacter sur WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
-</a>
-
+<!-- ============================================================
+  JAVASCRIPT
+============================================================ -->
 <script>
-  /* ── NAV scroll ── */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+  // ===== FOOTER YEAR =====
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-  /* ── HAMBURGER ── */
-  const hbg = document.getElementById('hbg');
-  const drawer = document.getElementById('drawer');
-  hbg.addEventListener('click', () => {
-    hbg.classList.toggle('open');
-    drawer.classList.toggle('open');
-  });
-  drawer.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      hbg.classList.remove('open');
-      drawer.classList.remove('open');
-    });
-  });
-
-  /* ── HERO WORD REVEAL ── */
-  (function() {
-    const h1 = document.getElementById('hero-h1');
-    if (!h1) return;
-    function splitWords(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const frag = document.createDocumentFragment();
-        node.textContent.split(/(\s+)/).forEach(part => {
-          if (/^\s+$/.test(part)) {
-            frag.appendChild(document.createTextNode(part));
-          } else if (part) {
-            const outer = document.createElement('span');
-            outer.className = 'w-outer';
-            const inner = document.createElement('span');
-            inner.className = 'w-inner';
-            inner.textContent = part;
-            outer.appendChild(inner);
-            frag.appendChild(outer);
-          }
-        });
-        node.parentNode.replaceChild(frag, node);
-      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
-        Array.from(node.childNodes).forEach(splitWords);
-      }
-    }
-    splitWords(h1);
-    setTimeout(() => {
-      h1.querySelectorAll('.w-inner').forEach((el, i) => {
-        setTimeout(() => el.classList.add('in'), i * 70);
-      });
-    }, 100);
-  })();
-
-  /* ── REVEAL ON SCROLL ── */
-  const rvObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); } });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
-
-  /* ── STAT COUNTERS ── */
-  function animCount(el, target, suffix, dur) {
-    let start = null;
-    const step = ts => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(ease * target) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-  const statObs = new IntersectionObserver((entries) => {
+  // ===== SCROLL REVEAL =====
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const el = e.target.querySelector('.hstat-num');
-        if (!el || el.dataset.done) return;
-        el.dataset.done = '1';
-        const t = parseInt(el.dataset.target);
-        const s = el.dataset.suffix;
-        animCount(el, t, s, 900);
-        statObs.unobserve(e.target);
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
       }
     });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.hero-stats > div').forEach(el => statObs.observe(el));
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-  /* ── CALCULATOR ── */
-  const slider = document.getElementById('rev-slider');
-  const revVal = document.getElementById('rev-val');
-  const cMonth = document.getElementById('c-month');
-  const cYear  = document.getElementById('c-year');
-  const cSave  = document.getElementById('c-save');
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  function fmt(n) {
-    return n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  // ===== NAV SCROLL =====
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // ===== MOBILE MENU =====
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburgerBtn.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
   }
 
-  function updateCalc() {
-    const rev = parseInt(slider.value);
-    const comm = Math.round(rev * 0.30);
-    const annual = comm * 12;
-    const saved = annual - (35 * 12);
-    revVal.textContent = fmt(rev) + '/mois';
-    cMonth.textContent = '-' + fmt(comm);
-    cYear.textContent  = '-' + fmt(annual);
-    cSave.textContent  = '≈ ' + fmt(Math.max(0, saved));
-  }
-
-  slider.addEventListener('input', updateCalc);
-  updateCalc();
-
-  /* ── FAQ ── */
+  // ===== FAQ =====
   function toggleFaq(btn) {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    // Close all
+    document.querySelectorAll('.faq-btn').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!expanded) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.nextElementSibling.classList.add('open');
+    }
   }
 
-  /* ── SMOOTH SCROLL ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (!href || href === '#') return;
-      try {
-        const target = document.querySelector(href);
-        if (target && !this.closest('.modal-box')) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      } catch(_) {}
+  // ===== FORM VALIDATION =====
+  const form = document.getElementById('contact-form');
+  const formSuccess = document.getElementById('form-success');
+
+  function validateField(id, validationFn) {
+    const input = document.getElementById(id);
+    const error = document.getElementById(id + '-error');
+    const valid = validationFn(input.value.trim());
+    input.classList.toggle('error', !valid);
+    if (error) error.classList.toggle('visible', !valid);
+    return valid;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Honeypot check
+    if (document.getElementById('website_url').value) return;
+
+    const isNameValid = validateField('name', v => v.length >= 2);
+    const isRestaurantValid = validateField('restaurant', v => v.length >= 2);
+    const isPhoneValid = validateField('phone', v => /^[\d\s\+\-\(\)\.]{6,20}$/.test(v));
+    const isEmailValid = validateField('email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    const rgpdBox = document.getElementById('rgpd');
+    const isRgpdValid = rgpdBox.checked;
+    document.getElementById('rgpd-error').classList.toggle('visible', !isRgpdValid);
+
+    if (!isNameValid || !isRestaurantValid || !isPhoneValid || !isEmailValid || !isRgpdValid) return;
+
+    // Simulate submission
+    const submitBtn = document.getElementById('submit-btn');
+    const submitText = document.getElementById('submit-text');
+    submitBtn.disabled = true;
+    submitText.textContent = 'Envoi en cours…';
+
+    setTimeout(() => {
+      form.style.display = 'none';
+      formSuccess.classList.remove('hidden');
+      formSuccess.classList.add('visible');
+    }, 1200);
+  });
+
+  // Real-time validation on blur
+  ['name', 'restaurant', 'email', 'phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', () => {
+      if (id === 'email') validateField('email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      else if (id === 'phone') validateField('phone', v => /^[\d\s\+\-\(\)\.]{6,20}$/.test(v));
+      else validateField(id, v => v.length >= 2);
     });
   });
 
-  /* ── MODALS ── */
-  function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-  function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
-  window.addEventListener('click', e => {
-    if (e.target.classList.contains('modal')) closeModal(e.target.id);
+  // ===== COOKIE MANAGEMENT =====
+  function getCookieConsent() { return localStorage.getItem('cookie_consent'); }
+  const cookieBanner = document.getElementById('cookie-banner');
+
+  function showBanner() {
+    setTimeout(() => cookieBanner.classList.add('show'), 1500);
+  }
+
+  function acceptCookies() {
+    localStorage.setItem('cookie_consent', 'accepted');
+    localStorage.setItem('cookie_analytics', 'true');
+    cookieBanner.classList.remove('show');
+    loadAnalytics();
+  }
+
+  function refuseCookies() {
+    localStorage.setItem('cookie_consent', 'refused');
+    localStorage.setItem('cookie_analytics', 'false');
+    cookieBanner.classList.remove('show');
+  }
+
+  function openCookieModal() {
+    const overlay = document.getElementById('cookie-modal-overlay');
+    overlay.classList.add('show');
+    const analyticsStored = localStorage.getItem('cookie_analytics') === 'true';
+    document.getElementById('analytics-toggle').checked = analyticsStored;
+  }
+
+  function closeCookieModal() {
+    document.getElementById('cookie-modal-overlay').classList.remove('show');
+  }
+
+  function savePreferences() {
+    const analyticsEnabled = document.getElementById('analytics-toggle').checked;
+    localStorage.setItem('cookie_consent', 'custom');
+    localStorage.setItem('cookie_analytics', analyticsEnabled ? 'true' : 'false');
+    if (analyticsEnabled) loadAnalytics();
+    closeCookieModal();
+    cookieBanner.classList.remove('show');
+  }
+
+  function loadAnalytics() {
+    // Analytics only loaded after consent
+    // Replace with actual GA4 snippet when you have a tracking ID:
+    // const s = document.createElement('script');
+    // s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+    // s.async = true;
+    // document.head.appendChild(s);
+    console.log('[ConvertWEB] Analytics consent granted. Load your GA4 snippet here.');
+  }
+
+  // Init cookie banner
+  if (!getCookieConsent()) {
+    showBanner();
+  } else if (localStorage.getItem('cookie_analytics') === 'true') {
+    loadAnalytics();
+  }
+
+  // Close cookie modal on overlay click
+  document.getElementById('cookie-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeCookieModal();
   });
-  document.getElementById('openLegal')?.addEventListener('click', e => { e.preventDefault(); openModal('legalModal'); });
-  document.getElementById('openPrivacy')?.addEventListener('click', e => { e.preventDefault(); openModal('privacyModal'); });
-  document.getElementById('cookiePolicyLink')?.addEventListener('click', e => { e.preventDefault(); openModal('privacyModal'); });
 
-  /* ── COOKIES ── */
-  function setCookie(choice) {
-    localStorage.setItem('cwConsent', choice);
-    document.getElementById('cookieBar').classList.remove('show');
-  }
-  if (!localStorage.getItem('cwConsent')) {
-    document.getElementById('cookieBar').classList.add('show');
-  }
-
-  /* ── LEAD FORM → WHATSAPP ── */
-  function sendLead() {
-    const name  = document.getElementById('f-name').value.trim();
-    const resto = document.getElementById('f-resto').value.trim();
-    const tel   = document.getElementById('f-tel').value.trim();
-    const ville = document.getElementById('f-ville').value.trim();
-    const err   = document.getElementById('f-err');
-
-    if (!name || !resto || !tel || !ville) {
-      err.textContent = 'Merci de remplir tous les champs.';
-      err.style.display = 'block';
-      return;
+  // ===== KEYBOARD TRAP FOR MODALS =====
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCookieModal();
+      closeMobileMenu();
     }
-    const clean = tel.replace(/[\s\-\.]/g, '');
-    if (!/^(\+33|0033|0)[1-9](\d{8})$/.test(clean)) {
-      err.textContent = 'Numéro de téléphone invalide (ex: 06 12 34 56 78).';
-      err.style.display = 'block';
-      return;
-    }
-    err.style.display = 'none';
-
-    const msg = encodeURIComponent(
-      `Bonjour Convert Web 👋\n\nJe suis ${name}, du restaurant « ${resto} » à ${ville}.\nMon numéro : ${tel}\n\nJe souhaite recevoir une maquette gratuite. Merci !`
-    );
-    window.open(`https://wa.me/33763676191?text=${msg}`, '_blank', 'noopener,noreferrer');
-  }
+  });
 </script>
 </body>
 </html>

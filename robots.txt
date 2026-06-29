@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+
+# Legal pages - prefer not to index
+Disallow: /mentions-legales.html
+Disallow: /confidentialite.html
+Disallow: /cookies.html
+Disallow: /cgv.html
+
+# Sitemap
+Sitemap: https://www.convertweb.fr/sitemap.xml
