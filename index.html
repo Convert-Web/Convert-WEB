@@ -237,7 +237,7 @@ html{scroll-padding-top:84px}
 #hero-dust{position:absolute;inset:0;z-index:2;pointer-events:none}
 .dust-mote{position:absolute;border-radius:50%;background:rgba(91,157,255,.55);will-change:transform,opacity}
 
-#hero-headline{position:relative;z-index:6;text-align:center;max-width:1000px;padding:0 24px;margin-top:-30px}
+#hero-headline{position:relative;z-index:6;text-align:center;max-width:1000px;padding:0 24px;margin-top:-30px;transform:translateZ(0);isolation:isolate}
 #hero-headline h1{font-family:var(--font-display);font-size:clamp(34px,6.6vw,80px);font-weight:700;letter-spacing:-.04em;line-height:1.04;color:#fff}
 .word-mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
 .word{display:inline-block;transform:translateY(112%);opacity:0;animation:wordIn 1s var(--ease-out-expo) forwards;animation-delay:calc(var(--i)*.055s + .2s)}
@@ -305,12 +305,12 @@ html{scroll-padding-top:84px}
   box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.2);
   opacity:0;will-change:transform,opacity;
 }
-#panel-browser{width:208px;padding:0;overflow:hidden;left:50%;top:50%;margin:-300px 0 0 -360px}
+#panel-browser{width:208px;padding:0;overflow:hidden;left:50%;top:50%;margin:-300px 0 0 -700px}
 .pb-bar{display:flex;align-items:center;gap:5px;padding:9px 11px;border-bottom:1px solid rgba(255,255,255,.1)}
 .pb-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25)}
 .pb-body{padding:13px}
 .pb-line{height:7px;border-radius:4px;background:rgba(255,255,255,.14);margin-bottom:7px}
-#panel-reserve{width:188px;padding:16px;left:50%;top:50%;margin:140px 0 0 220px}
+#panel-reserve{width:188px;padding:16px;left:50%;top:50%;margin:140px 0 0 500px}
 .pr-row{display:flex;align-items:center;gap:10px}
 .pr-icon{width:34px;height:34px;border-radius:10px;background:rgba(52,211,153,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pr-icon svg{width:16px;height:16px}
@@ -321,9 +321,15 @@ html{scroll-padding-top:84px}
 .hp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);transition:background .3s,transform .3s}
 .hp-dot.active{background:var(--azure-2);transform:scale(1.5);box-shadow:0 0 10px var(--azure-2)}
 
-/* Prevent overlap of orbiting widgets/panels with headline on narrow & short (landscape) viewports */
-@media(max-width:480px){
+/* The headline can reach ±476px from center once its clamp() hits max font-size + max-width
+   (around 1100px viewport and up). The floating panels now sit at ±700/500px from center —
+   genuinely clear of that zone — but still need a wide enough viewport for the frame itself
+   to contain them without clipping. Below that, hide them entirely rather than let a
+   decorative element sit on top of the headline: that reads as a bug, not as polish. */
+@media(max-width:1499px){
   #panel-browser,#panel-reserve{display:none}
+}
+@media(max-width:480px){
   #phone-rig{width:190px;height:388px}
   .orbit-chip{width:52px;height:52px;margin:-26px 0 0 -26px}
 }
@@ -657,12 +663,12 @@ html{scroll-padding-top:84px}
   opacity:.65;animation:rotateBorder 7s linear infinite;
 }
 @keyframes rotateBorder{to{--ang:360deg}}
-.plan-badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;
+.plan-badge{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;
   background:linear-gradient(135deg,var(--azure),var(--violet));color:#fff;font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
   padding:7px 16px;border-radius:980px;white-space:nowrap;box-shadow:0 8px 24px rgba(10,102,255,.4);z-index:2}
 .plan-badge svg{width:11px;height:11px}
 .plan-name{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mist-dim);margin-bottom:24px}
-.plan--featured .plan-name{color:rgba(255,255,255,.5)}
+.plan--featured .plan-name{color:rgba(255,255,255,.5);margin-top:26px}
 .plan-price{font-family:var(--font-mono);font-size:48px;font-weight:600;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
 .plan-price sup{font-size:20px;vertical-align:super;margin-right:2px;font-weight:500}
 .plan-cycle{font-size:13.5px;color:var(--ink-soft);margin-bottom:32px}
@@ -1273,10 +1279,15 @@ function updateHero(){
   const introP = clamp(p/0.12,0,1);
   eyebrow.style.opacity = introP;
   eyebrow.style.transform = `translateX(-50%) translateY(${(1-introP)*-10}px)`;
-  heroCtas.style.opacity = clamp((p-0.02)/0.12,0,1);
   heroProgress.style.opacity = clamp((p-0.05)/0.1,0,1);
 
-  const scaleP = clamp(p/0.18,0,1);
+  // #hero-stage centers everything on the same vertical point (flex column, centered) —
+  // that's true at every viewport width, not just on narrow screens. The headline block
+  // (~250px tall) and the phone at full scale (490px tall) can't both occupy that same
+  // centered spot without overlapping, on any screen size. So the headline (+ CTAs) fully
+  // fades out early (0.04→0.20) BEFORE the phone starts growing (0.22→0.55) — the two are
+  // never both substantially visible at once, regardless of viewport.
+  const scaleP = clamp((p-0.22)/0.33,0,1);
   const easedScaleP = 1 - Math.pow(1-scaleP,3);
   const scale = lerp(0.62,1,easedScaleP);
 
@@ -1305,9 +1316,10 @@ function updateHero(){
     shadowEl.style.opacity = Math.max(shadowOpacity,0);
   }
 
-  const headlineFade = 1 - clamp((p-0.82)/0.18,0,1);
+  const headlineFade = 1 - clamp((p-0.04)/0.16,0,1);
   hh1.parentElement.style.opacity = headlineFade;
   hh1.parentElement.style.transform = `translateY(${(1-headlineFade)*-30}px) scale(${lerp(1,0.94,1-headlineFade)})`;
+  heroCtas.style.opacity = headlineFade * clamp((p-0.01)/0.05,0,1);
 
   chips.forEach((chip,i)=>{
     const o=chipOrbits[i];
