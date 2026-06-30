@@ -195,6 +195,8 @@ html{scroll-padding-top:84px}
    HERO — pinned scroll-scrubbed scene. A product on a studio floor.
 ═══════════════════════════════════════════════════ */
 #hero-pin-wrap{position:relative;height:420vh}
+@media(max-width:768px){#hero-pin-wrap{height:240vh}}
+@media(max-width:480px){#hero-pin-wrap{height:200vh}}
 #hero-stage{
   position:relative;
   position:sticky;top:0;
@@ -248,6 +250,7 @@ html{scroll-padding-top:84px}
 }
 @keyframes subIn{to{opacity:1;transform:none}}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px;opacity:0}
+@media(max-width:380px){.hero-ctas{flex-direction:column;width:100%;padding:0 16px}.hero-ctas .btn{width:100%}}
 
 /* 3D rig — phone + orbiting widgets + floating panels */
 #scene3d{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d;pointer-events:none}
@@ -425,6 +428,7 @@ html{scroll-padding-top:84px}
    TEXT-MASK SCRUB — chapter 01, light traced across a claim
 ═══════════════════════════════════════════════════ */
 #mask-pin-wrap{position:relative;height:300vh;background:var(--obsidian)}
+@media(max-width:768px){#mask-pin-wrap{height:180vh}}
 #mask-stage{
   position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;
   background:radial-gradient(ellipse 70% 50% at 50% 50%, rgba(10,102,255,.06), transparent 65%), var(--obsidian);
@@ -504,6 +508,24 @@ html{scroll-padding-top:84px}
 .gallery-progress{display:flex;gap:6px;justify-content:center;margin-top:38px;position:relative;z-index:10}
 .gp-dot{width:24px;height:3px;border-radius:2px;background:rgba(255,255,255,.14);transition:background .3s,width .3s}
 .gp-dot.active{background:var(--azure-2);width:36px;box-shadow:0 0 8px var(--azure-2)}
+
+/* ═══ MOBILE-FIRST: swap 3D scroll-jacking for a native swipe carousel ═══
+   Scrolling 480vh with a thumb is exhausting; touch devices get a real,
+   light, snap-scrolling carousel instead — same content, native feel. */
+@media(max-width:768px){
+  #gallery-pin-wrap{height:auto}
+  #gallery-stage{position:relative;top:auto;height:auto;min-height:0;padding:90px 0 70px;overflow:visible}
+  #gallery-track{height:auto;min-height:0;perspective:none;display:flex;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;gap:14px;padding:8px 22px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  #gallery-track::-webkit-scrollbar{display:none}
+  .g-card{position:relative;top:auto;left:auto;margin:0;flex:0 0 80%;max-width:300px;scroll-snap-align:center;transform:none!important;opacity:1!important;z-index:1!important}
+}
+</style>
+<style>
+@media(max-width:768px){
+  /* lighter blur cost on mobile GPUs */
+  #nav,#mmenu,#cookie-banner{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .g-card{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+}
 </style>
 
 <!-- ═══════════════ SOLUTIONS ═══════════════ -->
@@ -964,6 +986,7 @@ footer{background:var(--obsidian);padding:90px 0 40px;border-top:1px solid var(-
 .ck-text a{color:var(--azure-2);text-decoration:underline}
 .ck-btns{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}
 .ck-btn{padding:9px 18px;border-radius:980px;font-size:13.5px;font-weight:500;cursor:pointer;transition:all .2s}
+@media(max-width:768px){.ck-btn{padding:13px 20px;font-size:14.5px}.ck-btns{width:100%}.ck-btn{flex:1;text-align:center}}
 .ck-btn-accept{background:linear-gradient(135deg,var(--azure),#0850CC);color:#fff}
 .ck-btn-accept:hover{box-shadow:0 8px 24px rgba(10,102,255,.4)}
 .ck-btn-refuse{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
@@ -1342,7 +1365,11 @@ const gpDots=document.querySelectorAll('.gp-dot');
 const CARD_COUNT=galCards.length;
 const CARD_SPACING=420;
 
+const galTrack=document.getElementById('gallery-track');
+const isMobileCarousel=()=>window.matchMedia('(max-width:768px)').matches;
+
 function updateGallery(){
+  if(isMobileCarousel()) return; // native swipe carousel handles itself on mobile
   const p=scrollProgress(galWrap);
   const travel = p*(CARD_COUNT-1)*CARD_SPACING + CARD_SPACING*0.5;
 
@@ -1364,6 +1391,21 @@ function updateGallery(){
   gpDots.forEach((d,i)=>d.classList.toggle('active',i===activeIdx));
 }
 
+/* Mobile carousel: sync the progress dots to native scroll-snap position */
+let galScrollTicking=false;
+function syncCarouselDots(){
+  if(!galTrack || !isMobileCarousel()) return;
+  const cardW=galCards[0].getBoundingClientRect().width + 14;
+  const idx=clamp(Math.round(galTrack.scrollLeft/cardW),0,CARD_COUNT-1);
+  gpDots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+  galScrollTicking=false;
+}
+if(galTrack){
+  galTrack.addEventListener('scroll',()=>{
+    if(!galScrollTicking){requestAnimationFrame(syncCarouselDots);galScrollTicking=true}
+  },{passive:true});
+}
+
 /* ═══════════════════════════════════════════════════
    MASTER SCROLL LOOP (rAF throttled)
 ═══════════════════════════════════════════════════ */
@@ -1380,15 +1422,27 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 window.addEventListener('resize',masterUpdate);
 masterUpdate();
+syncCarouselDots();
 
+let dustLoopActive=true;
 function idleDustLoop(){
-  if(dustMotes.length){
-    const p = scrollProgress(heroWrap);
-    if(p<1) updateDust(p);
+  if(dustLoopActive){
+    if(dustMotes.length){
+      const p = scrollProgress(heroWrap);
+      if(p<1) updateDust(p);
+    }
+    requestAnimationFrame(idleDustLoop);
   }
-  requestAnimationFrame(idleDustLoop);
 }
 requestAnimationFrame(idleDustLoop);
+if('IntersectionObserver' in window){
+  new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      dustLoopActive = e.isIntersecting;
+      if(dustLoopActive) requestAnimationFrame(idleDustLoop);
+    });
+  },{threshold:0}).observe(heroWrap);
+}
 </script>
 <script>
 /* ═══════════════════════════════════════════════════
@@ -1401,6 +1455,10 @@ requestAnimationFrame(idleDustLoop);
   const ctx=canvas.getContext('2d');
   const W=canvas.width, H=canvas.height;
   let t=0;
+  let canvasVisible=true;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es=>{es.forEach(e=>{canvasVisible=e.isIntersecting})},{threshold:0}).observe(canvas);
+  }
   let chartData=[30,42,38,55,48,62,58,70,65,78,72,85];
   let activeItem=0;
   const menuItems=[
@@ -1438,6 +1496,7 @@ requestAnimationFrame(idleDustLoop);
   }
 
   function draw(){
+    if(!canvasVisible){requestAnimationFrame(draw);return}
     t++;
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#FAFAF9';ctx.fillRect(0,0,W,H);
