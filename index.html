@@ -12,9 +12,13 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="canonical" href="https://www.convertweb.fr/"/>
 <meta name="robots" content="index, follow"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"ConvertWEB","description":"Agence spécialisée dans la création de sites internet qui convertissent pour les restaurants.","url":"https://www.convertweb.fr","email":"[EMAIL_AGENCE]","telephone":"[TELEPHONE_AGENCE]","address":{"@type":"PostalAddress","streetAddress":"[ADRESSE_RUE]","addressLocality":"[VILLE]","postalCode":"[CODE_POSTAL]","addressCountry":"FR"}}</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>document.documentElement.style.setProperty('--vh100', window.innerHeight+'px');</script>
 
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -71,13 +75,6 @@ a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:inherit;border:none;background:none}
 :focus-visible{outline:2.5px solid var(--azure-2);outline-offset:3px;border-radius:4px}
 svg{display:block}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  #mask-pin-wrap,#gallery-pin-wrap,#ps-pin-wrap{height:auto!important}
-  #mask-stage,#gallery-stage,#ps-stage{position:relative!important;top:auto!important;height:auto!important;min-height:100svh}
-  .float-panel,.orbit-chip,#hero-dust{display:none!important}
-  #spotlight,#grain-veil{display:none!important}
-}
 /* Safe-area support for notched devices (viewport-fit=cover) */
 html{scroll-padding-top:72px}
 
@@ -266,6 +263,7 @@ html{scroll-padding-top:72px}
 }
 @media(prefers-reduced-motion:reduce){
   .dust-mote,.hero-scroll-cue::before{animation:none!important}
+  #why-aurora i,#pricing-aurora i{animation:none!important}
 }
 </style>
 
@@ -374,7 +372,7 @@ html{scroll-padding-top:72px}
 #ps-pin-wrap{position:relative;height:820vh;background:linear-gradient(180deg,#F0F0F5 0%,#FBFBFD 55%,#F5F5F7 100%)}
 @media(max-width:768px){#ps-pin-wrap{height:560vh}}
 #ps-stage{
-  position:sticky;top:0;height:100svh;overflow:hidden;isolation:isolate;
+  position:sticky;top:0;height:var(--vh100,100svh);overflow:hidden;isolation:isolate;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 #ps-glow{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 45% at 50% 42%,rgba(10,102,255,.13),transparent 65%);opacity:.6;will-change:opacity}
@@ -422,7 +420,8 @@ html{scroll-padding-top:72px}
 .ps-dot.is-done{background:rgba(10,102,255,.4)}
 @media(max-width:900px){#ps-dots{display:none}}
 
-#phone-stage{position:relative;z-index:1;width:100%;max-width:820px;display:flex;align-items:center;justify-content:center;min-height:480px;perspective:2400px;perspective-origin:50% 50%}
+#phone-stage{position:relative;z-index:1;width:100%;max-width:820px;display:flex;align-items:center;justify-content:center;min-height:480px;flex-shrink:0;perspective:2400px;perspective-origin:50% 50%}
+#phone-rig{flex-shrink:0}
 
 /* ─── iPhone 16 proportions: 240 × 519px ≈ real-world 71.6 × 149.6mm (ratio 2.163:1),
    14px depth for the titanium band, 54px corner radius matching the actual device curvature ─── */
@@ -442,6 +441,7 @@ html{scroll-padding-top:72px}
 
 /* ─── FRONT FACE: black ceramic-shield glass, sitting 7px proud of the titanium band ─── */
 .phone-face--front{
+  height:100%;width:100%;box-sizing:border-box;
   background:linear-gradient(165deg,#0c0c12 0%,#020203 55%,#0c0c12 100%);
   box-shadow:
     0 0 0 1px rgba(255,255,255,.10),
@@ -459,6 +459,7 @@ html{scroll-padding-top:72px}
 /* ─── BACK FACE: brushed titanium panel + camera plateau, gives the rig real depth
    so a slight rotateY reveals an actual back rather than empty space ─── */
 .phone-face--back{
+  height:100%;width:100%;box-sizing:border-box;
   background:
     radial-gradient(120% 90% at 30% 8%, rgba(255,255,255,.10), transparent 45%),
     linear-gradient(150deg,#3a3a3e 0%,#242427 30%,#1b1b1e 55%,#2c2c30 78%,#3a3a3e 100%);
@@ -507,24 +508,23 @@ html{scroll-padding-top:72px}
   background:radial-gradient(ellipse 60% 40% at 30% 20%, rgba(150,190,255,.55), transparent 62%);
   mix-blend-mode:screen;opacity:0;will-change:opacity,background-position;
 }
-/* ─── Titanium band: brushed metal gradient with a chamfered highlight edge,
-   14px deep to match the extruded front/back faces ─── */
-.phone-edge{
-  position:absolute;
-  background:linear-gradient(90deg,#2b2b2e 0%,#5c5c60 12%,#8d8d90 22%,#a7a7aa 30%,#8d8d90 40%,#4a4a4d 50%,#8d8d90 60%,#a7a7aa 70%,#8d8d90 78%,#5c5c60 88%,#2b2b2e 100%);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12), inset 0 0 3px rgba(0,0,0,.4);
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+/* ─── Titanium band: rendered as a stacked 2D box-shadow "rim" instead of
+   rotated 3D side-faces. Real rotateX/Y(90deg) side-panels are a known WebKit
+   compositing hazard inside deep preserve-3d stacks (the exactly-perpendicular
+   face can misrender and appear to swallow the whole rig on some iOS builds).
+   This reads as an inset metal edge at any rig rotation without touching
+   the buggy angle at all. */
+.phone-edge--left,.phone-edge--right,.phone-edge--top,.phone-edge--bottom{display:none}
+.phone-rim{
+  position:absolute;inset:0;border-radius:30px;pointer-events:none;z-index:1;
+  box-shadow:
+    0 0 0 3.5px #6a6a6e,
+    0 0 0 4.5px #2b2b2e,
+    inset 0 0 0 1px rgba(255,255,255,.12);
 }
-.phone-edge--left{left:0;top:0;bottom:0;width:14px;transform:rotateY(-90deg) translateZ(7px);transform-origin:left center}
-.phone-edge--right{right:0;top:0;bottom:0;width:14px;transform:rotateY(90deg) translateZ(7px);transform-origin:right center}
-.phone-edge--top{top:0;left:0;right:0;height:14px;transform:rotateX(90deg) translateZ(7px);transform-origin:top center;background:linear-gradient(180deg,#2b2b2e 0%,#8d8d90 30%,#a7a7aa 50%,#8d8d90 70%,#2b2b2e 100%)}
-.phone-edge--bottom{bottom:0;left:0;right:0;height:14px;transform:rotateX(-90deg) translateZ(7px);transform-origin:bottom center;background:linear-gradient(180deg,#2b2b2e 0%,#8d8d90 30%,#a7a7aa 50%,#8d8d90 70%,#2b2b2e 100%)}
-/* Action button, volume rocker, power button — matched to real iPhone 16 placement */
-.phone-edge--left::before{content:'';position:absolute;top:64px;left:50%;transform:translateX(-50%);width:2.5px;height:20px;border-radius:1.5px;background:linear-gradient(180deg,#1a1a1c,#6a6a6e,#1a1a1c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.phone-edge--left::after{content:'';position:absolute;top:104px;left:50%;transform:translateX(-50%);width:2.5px;height:36px;border-radius:1.5px;background:linear-gradient(180deg,#1a1a1c,#6a6a6e,#1a1a1c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.phone-edge--right::before{content:'';position:absolute;top:150px;left:50%;transform:translateX(-50%);width:2.5px;height:44px;border-radius:1.5px;background:linear-gradient(180deg,#1a1a1c,#6a6a6e,#1a1a1c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-/* Camera control (capture button) — the extra pill unique to iPhone 16, lower right edge */
-.phone-edge--right::after{content:'';position:absolute;bottom:88px;left:50%;transform:translateX(-50%);width:3px;height:26px;border-radius:1.5px;background:linear-gradient(180deg,#2a2a2c,#8a8a8e,#2a2a2c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+/* Action button, volume rocker — flat 2D marks on the rim */
+.phone-rim::before{content:'';position:absolute;top:64px;left:-4.5px;width:2px;height:20px;border-radius:1px;background:#1a1a1c}
+.phone-rim::after{content:'';position:absolute;top:150px;right:-4.5px;width:2px;height:44px;border-radius:1px;background:#1a1a1c}
 
 /* ─── Dynamic Island: precise pill shape + camera lens catchlight ─── */
 .phone-notch{
@@ -564,9 +564,10 @@ html{scroll-padding-top:72px}
 .wa-icons svg{width:14px;height:14px}
 
 #wa-body{flex:1 1 auto;position:relative;overflow:hidden;padding:0;
+  display:flex;flex-direction:column;justify-content:center;
   background-image:radial-gradient(rgba(10,102,255,.06) 1px,transparent 1px);background-size:14px 14px;background-color:var(--paper-2);
 }
-#wa-scroll{position:absolute;left:0;right:0;bottom:0;padding:12px 9px 10px;display:flex;flex-direction:column;gap:6px;will-change:transform}
+#wa-scroll{position:static;flex:0 0 auto;width:100%;padding:12px 9px 10px;display:flex;flex-direction:column;gap:6px;will-change:transform}
 .wa-daychip{align-self:center;background:rgba(255,255,255,.85);color:var(--mist);font-size:9px;font-weight:600;padding:3px 9px;border-radius:8px;margin:2px 0 4px;opacity:0;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 
 .wa-bubble{max-width:84%;border-radius:8px;padding:6px 8px 7px;font-size:10.5px;line-height:1.42;position:relative;opacity:0;transform:translateY(10px) scale(.96);will-change:transform,opacity;box-shadow:0 1px 2px rgba(0,0,0,.06)}
@@ -627,7 +628,7 @@ html{scroll-padding-top:72px}
 .pr-sub{font-family:var(--font-mono);font-size:10px;color:var(--mist);margin-top:2px}
 @media(max-width:900px){.float-panel{display:none}}
 
-@media(max-width:480px){#phone-rig{width:192px;height:419px}}
+@media(max-width:480px){#phone-stage{transform:scale(.8)}}
 </style>
 
 <!-- ═══════════════ PHONE SHOWCASE — scroll-pinned storytelling ═══════════════ -->
@@ -740,10 +741,7 @@ html{scroll-padding-top:72px}
               </div>
             </div>
           </div>
-          <div class="phone-edge phone-edge--left"></div>
-          <div class="phone-edge phone-edge--right"></div>
-          <div class="phone-edge phone-edge--top"></div>
-          <div class="phone-edge phone-edge--bottom"></div>
+          <div class="phone-rim" aria-hidden="true"></div>
           <div id="phone-sheen" aria-hidden="true"></div>
           <div id="phone-reflect" aria-hidden="true"></div>
         </div>
@@ -900,6 +898,13 @@ html{scroll-padding-top:72px}
   background:radial-gradient(ellipse 40% 35% at 85% 0%, rgba(10,102,255,.06), transparent 60%),
              radial-gradient(ellipse 35% 30% at 5% 100%, rgba(132,87,255,.06), transparent 60%);
 }
+#why-aurora,#pricing-aurora{position:absolute;inset:-8%;z-index:0;pointer-events:none;filter:blur(70px);opacity:.5}
+#why-aurora i,#pricing-aurora i{position:absolute;border-radius:50%;display:block;animation-play-state:paused}
+#why.in-view #why-aurora i,#pricing.in-view #pricing-aurora i{animation-play-state:running}
+#why-aurora i:nth-child(1){width:32vw;height:32vw;left:70%;top:-8%;background:radial-gradient(circle,rgba(10,102,255,.08),transparent 70%);animation:auroraDrift1 30s ease-in-out infinite}
+#why-aurora i:nth-child(2){width:26vw;height:26vw;left:-4%;bottom:-4%;background:radial-gradient(circle,rgba(132,87,255,.07),transparent 70%);animation:auroraDrift3 34s ease-in-out infinite}
+#pricing-aurora i:nth-child(1){width:30vw;height:30vw;left:8%;top:-10%;background:radial-gradient(circle,rgba(47,210,224,.07),transparent 70%);animation:auroraDrift2 32s ease-in-out infinite}
+#pricing-aurora i:nth-child(2){width:28vw;height:28vw;right:-2%;bottom:-6%;background:radial-gradient(circle,rgba(10,102,255,.07),transparent 70%);animation:auroraDrift1 28s ease-in-out infinite}
 #why .container{z-index:1}
 .section-head{position:relative}
 .section-head .t-ghost-num{position:absolute;top:-44px;right:0;font-size:clamp(56px,7vw,120px)}
@@ -995,6 +1000,7 @@ html{scroll-padding-top:72px}
 
 <!-- ═══════════════ WHY ═══════════════ -->
 <section id="why">
+  <div id="why-aurora" aria-hidden="true"><i></i><i></i></div>
   <div class="container">
     <div class="section-head">
       <p class="t-ghost-num" aria-hidden="true">03</p>
@@ -1031,6 +1037,7 @@ html{scroll-padding-top:72px}
 
 <!-- ═══════════════ PRICING ═══════════════ -->
 <section id="pricing">
+  <div id="pricing-aurora" aria-hidden="true"><i></i><i></i></div>
   <div class="container">
     <div class="section-head">
       <p class="t-ghost-num" aria-hidden="true">04</p>
@@ -1496,6 +1503,15 @@ if(canHover){
     });
     el.addEventListener('mouseleave',()=>{el.style.transform=''});
   });
+}else{
+  /* ─── TOUCH FEEDBACK — no hover, so give cards a tactile press response ─── */
+  document.querySelectorAll('.tilt-card').forEach(el=>{
+    const featured = el.classList.contains('plan--featured');
+    const base = featured ? 1.04 : 1, pressed = featured ? 1.015 : .975;
+    el.addEventListener('touchstart',()=>{el.style.transition='transform .18s var(--ease-out-expo)';el.style.transform=`scale(${pressed})`},{passive:true});
+    el.addEventListener('touchend',()=>{el.style.transform=featured?`scale(${base})`:''},{passive:true});
+    el.addEventListener('touchcancel',()=>{el.style.transform=featured?`scale(${base})`:''},{passive:true});
+  });
 }
 
 /* ─── GLOBAL SPOTLIGHT + SCROLL PROGRESS + NAV STATE ─── */
@@ -1545,6 +1561,14 @@ if(heroStageEl && 'IntersectionObserver' in window){
   },{threshold:0}).observe(heroStageEl);
 }
 
+/* Same idea for the why/pricing ambient auroras — same reasoning as above. */
+if('IntersectionObserver' in window){
+  const ambientObs=new IntersectionObserver((es)=>{
+    es.forEach(e=>e.target.classList.toggle('in-view', e.isIntersecting));
+  },{threshold:0});
+  ['why','pricing'].forEach(id=>{const el=document.getElementById(id); if(el) ambientObs.observe(el)});
+}
+
 /* ═══════════════════════════════════════════════════
    UTILITY
 ═══════════════════════════════════════════════════ */
@@ -1567,12 +1591,26 @@ function scrollProgress(el){
   const pinWrap=document.getElementById('ps-pin-wrap');
   if(!pinWrap) return;
 
+  /* ── Stable viewport height ── iOS Safari resizes the *visual* viewport
+     as its address bar collapses/expands mid-scroll, which can make
+     100svh-based pinned sections recompute their box mid-gesture and
+     visibly squash pinned children. Freeze it once on load/orientation
+     change instead of letting it float during scroll. */
+  const setStableVh=()=>document.documentElement.style.setProperty('--vh100', window.innerHeight+'px');
+  setStableVh();
+  window.addEventListener('resize', setStableVh);
+  window.addEventListener('orientationchange', ()=>setTimeout(setStableVh,120));
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduceMotion || typeof gsap==='undefined' || typeof ScrollTrigger==='undefined'){
     // Fallback: just reveal everything statically, no scroll-jacking.
-    document.getElementById('phone-rig')?.style.setProperty('opacity','1');
-    document.querySelectorAll('#phone-stage .orbit-chip,#phone-stage .float-panel').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
-    document.querySelectorAll('#wa-body .wa-bubble').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
+    const revealStatic=(sel)=>document.querySelectorAll(sel).forEach(el=>{el.style.opacity='1';el.style.transform='none'});
+    revealStatic('#phone-rig');
+    revealStatic('#wa-body .wa-bubble');
+    revealStatic('#phone-shadow');
+    revealStatic('#phone-halo');
+    revealStatic('#wa-daychip');
+    document.getElementById('ps-head')?.style.setProperty('opacity','1');
     return;
   }
 
@@ -1613,10 +1651,13 @@ function scrollProgress(el){
 
   /* ── Independent idle drift — runs on its own clock, layered under the scrub timeline.
      This is what keeps the phone feeling alive between chapter keyframes: it never
-     stops breathing, even while the user pauses mid-scroll. Pure transform, cheap. */
-  gsap.to(jitter,{x:'+=2.4',y:'+=1.6',duration:3.1,ease:'sine.inOut',yoyo:true,repeat:-1});
-  gsap.to(jitter,{rotateZ:'+=0.6',duration:4.4,ease:'sine.inOut',yoyo:true,repeat:-1,delay:.6});
-  gsap.to(jitter,{rotateX:'+=0.7',duration:3.8,ease:'sine.inOut',yoyo:true,repeat:-1,delay:1.1});
+     stops breathing, even while the user pauses mid-scroll. Pure transform, cheap.
+     Absolute keyframe values (not relative +=) so nothing can drift or accumulate
+     if the tab is backgrounded and resumes mid-cycle. */
+  gsap.set(jitter,{x:0,y:0,rotateZ:0,rotateX:0});
+  gsap.to(jitter,{x:2.4,y:1.6,duration:3.1,ease:'sine.inOut',yoyo:true,repeat:-1});
+  gsap.to(jitter,{rotateZ:0.6,duration:4.4,ease:'sine.inOut',yoyo:true,repeat:-1,delay:.6});
+  gsap.to(jitter,{rotateX:0.7,duration:3.8,ease:'sine.inOut',yoyo:true,repeat:-1,delay:1.1});
   gsap.to(halo,{opacity:'+=0.14',scale:'+=0.06',duration:2.7,ease:'sine.inOut',yoyo:true,repeat:-1});
 
   /* ── Chapters — the story the scroll tells. Each has a scroll-progress start point
