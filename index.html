@@ -395,20 +395,6 @@ html{scroll-padding-top:72px}
   display:flex;align-items:center;gap:8px;text-transform:uppercase;opacity:0;
 }
 
-/* ─── Chapter overlay — Apple-style running commentary for the scroll story ─── */
-#ps-chapter{
-  position:absolute;top:9%;left:50%;transform:translateX(-50%);z-index:2;text-align:center;
-  pointer-events:none;opacity:0;will-change:opacity,transform;
-}
-#ps-chapter-num{
-  display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;
-  color:var(--azure-2);font-weight:600;margin-bottom:6px;
-}
-#ps-chapter-label{
-  display:block;font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;
-  font-size:clamp(19px,2.4vw,27px);color:var(--ink);
-}
-@media(max-width:640px){#ps-chapter{top:6%}}
 
 /* ─── Chapter dot rail — quiet progress ladder along the right edge ─── */
 #ps-dots{
@@ -641,11 +627,6 @@ html{scroll-padding-top:72px}
     <div id="ps-head">
       <span class="t-label">En direct</span>
       <h2>Vos clients commandent, vous confirmez</h2>
-    </div>
-
-    <div id="ps-chapter" aria-hidden="true">
-      <span id="ps-chapter-num">01</span>
-      <span id="ps-chapter-label">Il apparaît</span>
     </div>
 
     <div id="ps-dots" aria-hidden="true">
@@ -962,6 +943,7 @@ html{scroll-padding-top:72px}
   border:1px solid rgba(255,255,255,.12);
   transform:scale(1.04) translateZ(0);
   box-shadow:0 44px 100px -24px rgba(10,102,255,.4), inset 0 1px 1px rgba(255,255,255,.14);
+  overflow:visible;
 }
 .plan--featured:hover{transform:scale(1.04) translateZ(0)}
 .plan--featured::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
@@ -1639,9 +1621,6 @@ function scrollProgress(el){
   const glow=document.getElementById('ps-glow');
   const head=document.getElementById('ps-head');
   const caption=document.getElementById('ps-caption');
-  const chapterWrap=document.getElementById('ps-chapter');
-  const chapterNum=document.getElementById('ps-chapter-num');
-  const chapterLabel=document.getElementById('ps-chapter-label');
   const dots=gsap.utils.toArray('.ps-dot');
   const chips=gsap.utils.toArray('#phone-stage .orbit-chip');
   const panels=gsap.utils.toArray('#phone-stage .float-panel');
@@ -1661,7 +1640,6 @@ function scrollProgress(el){
   gsap.set(typing,{opacity:0,y:6});
   gsap.set(dayChip,{opacity:0});
   gsap.set(caption,{opacity:.7});
-  gsap.set(chapterWrap,{opacity:0,y:-8});
 
   /* ── Independent idle drift — runs on its own clock, layered under the scrub timeline.
      This is what keeps the phone feeling alive between chapter keyframes: it never
@@ -1675,18 +1653,10 @@ function scrollProgress(el){
   gsap.to(halo,{opacity:'+=0.14',scale:'+=0.06',duration:2.7,ease:'sine.inOut',yoyo:true,repeat:-1});
 
   /* ── Chapters — the story the scroll tells. Each has a scroll-progress start point
-     (0–1) so the overlay/dots can react to whichever chapter is currently active,
+     (0–1) so the progress dots can react to whichever chapter is currently active,
      independent of the exact tween timings below. ── */
   const chapters=[
-    {p:0.00,n:'01',l:'Il apparaît.'},
-    {p:0.07,n:'02',l:'Il se stabilise, parfaitement centré.'},
-    {p:0.19,n:'03',l:'Un léger pivot vers la gauche.'},
-    {p:0.31,n:'04',l:'Zoom avant spectaculaire.'},
-    {p:0.43,n:'05',l:'La conversation démarre.'},
-    {p:0.58,n:'06',l:'Il pivote doucement vers la droite.'},
-    {p:0.70,n:'07',l:'Très gros plan sur l\u2019écran.'},
-    {p:0.84,n:'08',l:'Il reprend sa taille normale.'},
-    {p:0.93,n:'09',l:'Il s\u2019efface, la page reprend son cours.'},
+    {p:0.00},{p:0.07},{p:0.19},{p:0.31},{p:0.43},{p:0.58},{p:0.70},{p:0.84},{p:0.93},
   ];
   let activeChapter=-1;
   function setChapter(i){
@@ -1696,12 +1666,6 @@ function scrollProgress(el){
       d.classList.toggle('is-active',di===i);
       d.classList.toggle('is-done',di<i);
     });
-    if(i<0){ gsap.to(chapterWrap,{opacity:0,duration:.3}); return; }
-    gsap.to(chapterWrap,{opacity:0,y:-6,duration:.22,ease:'power1.in',onComplete:()=>{
-      chapterNum.textContent=chapters[i].n;
-      chapterLabel.textContent=chapters[i].l;
-      gsap.fromTo(chapterWrap,{y:6},{opacity:1,y:0,duration:.32,ease:'power2.out'});
-    }});
   }
 
   const tl=gsap.timeline({
@@ -1716,7 +1680,7 @@ function scrollProgress(el){
         const p=self.progress;
         let idx=-1;
         for(let i=0;i<chapters.length;i++){ if(p>=chapters[i].p) idx=i; }
-        if(p>0.985) idx=-1; // hide overlay during the final dissolve
+        if(p>0.985) idx=-1; // reset dots during the final dissolve
         setChapter(idx);
       }
     }
